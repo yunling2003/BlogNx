@@ -1,0 +1,65 @@
+const path = require('path')
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+module.exports = {
+    entry: {
+        app: './src/index.js'
+    },   
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html'
+        }),
+        new ExtractTextPlugin({
+            filename: 'style.css',
+            allChunks: true        
+        })
+    ],
+    optimization: {
+        runtimeChunk: {
+            name: 'manifest'
+        },
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendor',
+                    priority: -20,
+                    chunks: 'initial'
+                }
+            }
+        }
+    },
+    output: {
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    }, 
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: 'babel-loader',
+                  options: {
+                    presets: ['babel-preset-env', 'react']
+                  }
+                }
+            },
+            {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader'
+                })
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    'file-loader'
+                ]
+            }
+        ]
+    }
+}

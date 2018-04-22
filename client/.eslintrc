@@ -1,0 +1,23 @@
+{
+    "root": true,
+    "parserOptions": {
+        "ecmaVersion": 9,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "semi": ["error", "never", {"beforeStatementContinuationChars": "always"}],
+        "no-unused-vars": "off",
+        "no-console": "off",
+        "no-alert": "off",
+        "no-debugger": "off",
+        "curly": ["error", "all"]
+    }
+}

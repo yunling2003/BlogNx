@@ -38,8 +38,14 @@ module.exports = {
     module: {
         rules: [
             {
+                enforce: 'pre',
                 test: /\.js$/,
-                exclude: /node_modules/,
+                include: path.resolve(__dirname, 'src'),
+                loader: 'eslint-loader'
+            },
+            {
+                test: /\.js$/,
+                include: path.resolve(__dirname, 'src'),
                 use: {
                   loader: 'babel-loader',
                   options: {

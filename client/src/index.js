@@ -1,9 +1,12 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import './style.css'
+import { render } from 'react-dom'
+import blogStore from './blogStore'
+import Root from './containers/Root'
+import { fakeState } from './reducers/fakeState'
 
-const element = <h1 className="title">Leon's New blog</h1>
-ReactDOM.render(
-    element,
+const store = blogStore(fakeState)
+
+render(
+    <Root store={store} />,
     document.getElementById('app')
 )

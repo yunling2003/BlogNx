@@ -1,0 +1,33 @@
+.header {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid blue;
+}
+
+.footer {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid blue;
+}
+
+.mainContent {
+    position: relative;
+    box-sizing: border-box;
+    height: 700px;
+    width: 100%;    
+}
+
+.articleList {
+    margin-right: 250px;
+    height: 100%;
+    border: 1px solid blue;
+}
+
+.infoPanel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    border: 1px solid blue;
+}

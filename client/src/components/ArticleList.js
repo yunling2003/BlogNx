@@ -2,7 +2,7 @@ import React  from 'react'
 import PropTypes from 'prop-types'
 import Article from './Article'
 
-const ArticleList = ({ articles, selectArticle }) => (
+const ArticleList = ({ articles, selectArticle }) => (    
     <ul>
         {articles.map(article =>
             <Article
@@ -11,7 +11,7 @@ const ArticleList = ({ articles, selectArticle }) => (
                 onClick={() => selectArticle(article.id)}
             />
         )}
-    </ul>
+    </ul>    
 )
 
 ArticleList.propTypes = {

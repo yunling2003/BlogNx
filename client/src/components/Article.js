@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import CSSModules from 'react-css-modules'
+import styles from './Article.css'
 
 const Article = ({ onClick, text }) => (
-    <li
+    <li styleName='listItem'
         onClick={onClick}
     >
         {text}
@@ -14,5 +16,5 @@ Article.propTypes = {
     text: PropTypes.string.isRequired
 }
 
-export default Article
+export default CSSModules(Article, styles)
 

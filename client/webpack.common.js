@@ -55,6 +55,15 @@ module.exports = {
             },
             {
                 test: /\.css$/,
+                exclude: [/src/],
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader'
+                })
+            },
+            {
+                test: /\.css$/,
+                exclude: [/node_modules/],
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'

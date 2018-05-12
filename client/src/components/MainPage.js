@@ -22,7 +22,7 @@ const MainPage = (state = {}) => (
                 <InfoPanel />
             </Sider>
         </Layout>
-        <Footer>
+        <Footer style={{ textAlign: 'center' }}>
             <PageFooter />
         </Footer>
     </Layout>    

@@ -1,19 +1,24 @@
-const path = require('path')
 const webpack = require('webpack')
+const path = require('path')
+const join = require('path').join
+const resolve = require('path').resolve
+const existsSync = require('fs').existsSync
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+let theme = getTheme();
 
 module.exports = {
     entry: {
         app: './src/index.js'
-    },   
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),
         new ExtractTextPlugin({
             filename: 'style.css',
-            allChunks: true        
+            allChunks: true
         })
     ],
     optimization: {
@@ -34,10 +39,9 @@ module.exports = {
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
-    }, 
+    },
     module: {
-        rules: [
-            {
+        rules: [{
                 enforce: 'pre',
                 test: /\.js$/,
                 include: path.resolve(__dirname, 'src'),
@@ -47,10 +51,16 @@ module.exports = {
                 test: /\.js$/,
                 include: path.resolve(__dirname, 'src'),
                 use: {
-                  loader: 'babel-loader',
-                  options: {
-                    presets: ['babel-preset-env', 'react', 'stage-2']
-                  }
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['babel-preset-env', 'react', 'stage-2'],
+                        plugins: [
+                            ["import", {
+                                "libraryName": "antd",
+                                "style": true
+                            }]
+                        ]
+                    }                    
                 }
             },
             {
@@ -70,6 +80,21 @@ module.exports = {
                 })
             },
             {
+                test: /\.less$/,
+                exclude: [/src/],
+                use: ExtractTextPlugin.extract({
+                    use: [{
+                        loader: 'css-loader?sourceMap'
+                    }, {
+                        loader: 'less-loader', options: {
+                            sourceMap: true,
+                            javascriptEnabled: true,                                             
+                            modifyVars: theme
+                        }
+                    }]                        
+                })
+            },
+            {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
                     'file-loader'
@@ -77,4 +102,24 @@ module.exports = {
             }
         ]
     }
+}
+
+function getTheme() {
+    let theme = {};
+    const pkgPath = join(process.cwd(), 'package.json');    
+    const pkg = existsSync(pkgPath) ? require(pkgPath) : {};
+
+    if (pkg.theme && typeof (pkg.theme) === 'string') {
+        let cfgPath = pkg.theme;
+        // relative path
+        if (cfgPath.charAt(0) === '.') {
+            cfgPath = resolve(process.cwd(), cfgPath);
+        }
+        const getThemeConfig = require(cfgPath);
+        theme = getThemeConfig();
+    }
+    else if (pkg.theme && typeof (pkg.theme) === 'object') {
+        theme = pkg.theme;
+    }
+    return theme;
 }

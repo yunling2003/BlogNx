@@ -2,7 +2,7 @@ import React from 'react'
 import { Layout } from 'antd'
 import PageHeader from './PageHeader'
 import PageFooter from './PageFooter'
-import InfoPanel from './InfoPanel'
+import SidePanel from './SidePanel'
 import VisibleArticleList from '../containers/VisibleArticleList'
 import CSSModules from 'react-css-modules'
 import styles from './MainPage.css'
@@ -18,8 +18,8 @@ const MainPage = (state = {}) => (
             <Content>
                 <VisibleArticleList />
             </Content>
-            <Sider>
-                <InfoPanel />
+            <Sider width='400' breakpoint='lg' collapsedWidth="200">
+                <SidePanel />
             </Sider>
         </Layout>
         <Footer style={{ textAlign: 'center' }}>

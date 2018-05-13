@@ -5,6 +5,8 @@ const resolve = require('path').resolve
 const existsSync = require('fs').existsSync
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const extractAppCSS = new ExtractTextPlugin('style.css');
+const extractVendorCSS = new ExtractTextPlugin('vendor.css');
 
 let theme = getTheme();
 
@@ -16,10 +18,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),
-        new ExtractTextPlugin({
-            filename: 'style.css',
-            allChunks: true
-        })
+        extractAppCSS,
+        extractVendorCSS
     ],
     optimization: {
         runtimeChunk: {
@@ -66,15 +66,15 @@ module.exports = {
             {
                 test: /\.css$/,
                 exclude: [/src/],
-                use: ExtractTextPlugin.extract({
+                use: extractVendorCSS.extract({
                     fallback: 'style-loader',
                     use: 'css-loader'
                 })
             },
             {
                 test: /\.css$/,
-                exclude: [/node_modules/],
-                use: ExtractTextPlugin.extract({
+                include: [/src/],
+                use: extractAppCSS.extract({
                     fallback: 'style-loader',
                     use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
                 })
@@ -82,7 +82,7 @@ module.exports = {
             {
                 test: /\.less$/,
                 exclude: [/src/],
-                use: ExtractTextPlugin.extract({
+                use: extractVendorCSS.extract({
                     use: [{
                         loader: 'css-loader?sourceMap'
                     }, {

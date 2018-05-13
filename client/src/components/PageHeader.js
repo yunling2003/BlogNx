@@ -1,7 +1,9 @@
 import React from 'react'
+import CSSModules from 'react-css-modules'
+import styles from './PageHeader.css'
 
 const PageHeader = (state = {}) => (
-    <h1>Header</h1>
+    <h1 styleName='head'>Header</h1>
 )
 
-export default PageHeader
+export default CSSModules(PageHeader, styles)

@@ -101,7 +101,10 @@ module.exports = {
                 ]
             }
         ]
-    }
+    },
+    node: {
+        fs: 'empty'
+    }    
 }
 
 function getTheme() {

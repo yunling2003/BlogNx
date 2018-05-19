@@ -1,19 +1,26 @@
 import React  from 'react'
 import PropTypes from 'prop-types'
+import { Row, Col } from 'antd'
 import Article from './Article'
 import CSSModules from 'react-css-modules'
 import styles from './ArticleList.css'
 
-const ArticleList = ({ articles, selectArticle }) => (    
-    <ul styleName='list'>
-        {articles.map(article =>
-            <Article
-                key={article.id}
-                {...article}
-                onClick={() => selectArticle(article.id)}
-            />
-        )}
-    </ul>    
+const ArticleList = ({ articles, selectArticle }) => (
+    <div>
+        <Row>
+            <Col span={24}> 
+                <ul styleName='list'>
+                    {articles.map(article =>
+                        <Article
+                            key={article.id}
+                            {...article}
+                            onClick={() => selectArticle(article.id)}
+                        />
+                    )}
+                </ul>
+            </Col>
+        </Row>
+    </div>    
 )
 
 ArticleList.propTypes = {
@@ -21,7 +28,8 @@ ArticleList.propTypes = {
         PropTypes.shape({
             id: PropTypes.number.isRequired,
             selected: PropTypes.bool.isRequired,
-            text: PropTypes.string.isRequired
+            title: PropTypes.string.isRequired,
+            content: PropTypes.string.isRequired
         }).isRequired
     ).isRequired,
     selectArticle: PropTypes.func.isRequired

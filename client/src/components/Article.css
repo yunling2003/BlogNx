@@ -3,3 +3,8 @@
     color: lightblue;
     padding: 10px 10px;
 }
+
+.link {
+    text-decoration: underline;
+    cursor: pointer;
+}

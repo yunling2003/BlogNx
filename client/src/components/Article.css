@@ -1,3 +1,5 @@
 .listItem {
+    list-style: none;
     color: lightblue;
+    padding: 10px 10px;
 }

@@ -1,9 +1,11 @@
 import React  from 'react'
 import PropTypes from 'prop-types'
 import Article from './Article'
+import CSSModules from 'react-css-modules'
+import styles from './ArticleList.css'
 
 const ArticleList = ({ articles, selectArticle }) => (    
-    <ul>
+    <ul styleName='list'>
         {articles.map(article =>
             <Article
                 key={article.id}
@@ -25,4 +27,4 @@ ArticleList.propTypes = {
     selectArticle: PropTypes.func.isRequired
 }
 
-export default ArticleList
+export default CSSModules(ArticleList, styles)

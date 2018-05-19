@@ -11,14 +11,14 @@ const { Header, Footer, Sider, Content } = Layout
 
 const MainPage = (state = {}) => (    
     <Layout style={{ height: '100%' }}>
-        <Header>
+        <Header style={{ backgroundColor: 'rgba(16, 142, 233, 1)' }}>
             <PageHeader />
         </Header>
-        <Layout>
+        <Layout style={{ padding: '20px 10px' }}>
             <Content>
                 <VisibleArticleList />
             </Content>
-            <Sider width='400' breakpoint='lg' collapsedWidth="200">
+            <Sider width='400' breakpoint='lg' collapsedWidth='200' style={{ backgroundColor: '#f0f2f5', border: '1px solid blue' }}>
                 <SidePanel />
             </Sider>
         </Layout>

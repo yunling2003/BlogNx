@@ -1,7 +1,7 @@
 import React from 'react'
 
 const PageFooter = (state = {}) => (
-    <h1>Footer</h1>
+    <p>Copyright ©2018 BlogNx</p>
 )
 
 export default PageFooter

@@ -1,10 +1,14 @@
 .listItem {
     list-style: none;
-    color: lightblue;
+    color: #40a9ff;
     padding: 10px 10px;
 }
 
 .link {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.text {
+    color: black;
 }

@@ -1,3 +1,16 @@
-.head {
-    color: white;
+.layout {
+    height: 64px;
+}
+
+.head {    
+    color: white;    
+    margin: 0;
+}
+
+.visible {
+    display: block;
+}
+
+.hide {
+    display: none;
 }

@@ -51,16 +51,7 @@ module.exports = {
                 test: /\.js$/,
                 include: path.resolve(__dirname, 'src'),
                 use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['babel-preset-env', 'react', 'stage-2'],
-                        plugins: [
-                            ["import", {
-                                "libraryName": "antd",
-                                "style": true
-                            }]
-                        ]
-                    }                    
+                    loader: 'babel-loader'                                      
                 }
             },
             {

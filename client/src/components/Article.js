@@ -20,7 +20,7 @@ class Article extends Component {
             <li styleName='listItem' onClick={this.props.onClick}>
                 <a styleName='link' href='#'>{this.props.title}</a>
                 <div>
-                    <p>{this.state.digest}</p>
+                    <p styleName='text'>{this.state.digest}</p>
                 </div>        
             </li>
         )

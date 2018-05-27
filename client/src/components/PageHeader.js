@@ -3,6 +3,7 @@ import { Menu, Icon, Row, Col } from 'antd'
 import throttle from 'lodash.throttle'
 import CSSModules from 'react-css-modules'
 import styles from './PageHeader.css'
+import logo from '../../assets/images/logo.png'
 
 class PageHeader extends Component {    
     mobileBreakPoint = 576
@@ -39,8 +40,8 @@ class PageHeader extends Component {
                 <div>
                     <div styleName='layout'>
                         <Row>
-                            <Col span={6} offset={2}>
-                                <h1 styleName='head'>Header</h1>
+                            <Col span={7} offset={1}>
+                                <img src={logo} width='45px' height='45px' alt='logo'/>
                             </Col>
                             <Col span={14}></Col>
                             <Col span={2}>
@@ -78,18 +79,25 @@ class PageHeader extends Component {
         return (
             <div styleName='layout'>
                 <Row>
-                    <Col span={4} offset={2}>
-                        <h1 styleName='head'>Header</h1>
+                    <Col span={5} offset={1}>
+                        <img src={logo} width='45px' height='45px' alt='logo'/>
                     </Col>
                     <Col span={14}>
-                        <Menu theme="light" 
-                            mode="horizontal" 
+                        <Menu mode="horizontal" 
                             defaultSelectedKeys={['home']} 
-                            style={{ marginTop: '8px' }}>
-                            <Menu.Item key="home" style={{ padding: '0 10px' }}><Icon type="home" />首页</Menu.Item>
-                            <Menu.Item key="recommend" style={{ padding: '0 10px' }}><Icon type="star-o" />推荐</Menu.Item>
-                            <Menu.Item key="latest" style={{ padding: '0 10px' }}><Icon type="exclamation-circle-o" />最新</Menu.Item>
-                            <Menu.Item key="news" style={{ padding: '0 10px' }}><Icon type="book" />新闻</Menu.Item>
+                            style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
+                            <Menu.Item key="home" style={{ padding: '0 10px', borderBottom: '0' }}>
+                                <Icon type="home" />首页
+                            </Menu.Item>
+                            <Menu.Item key="recommend" style={{ padding: '0 10px', borderBottom: '0' }}>
+                                <Icon type="star-o" />推荐
+                            </Menu.Item>
+                            <Menu.Item key="latest" style={{ padding: '0 10px', borderBottom: '0' }}>
+                                <Icon type="exclamation-circle-o" />最新
+                            </Menu.Item>
+                            <Menu.Item key="news" style={{ padding: '0 10px', borderBottom: '0' }}>
+                                <Icon type="book" />新闻
+                            </Menu.Item>
                         </Menu>
                     </Col>
                     <Col span={4}></Col>

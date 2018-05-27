@@ -38,7 +38,7 @@ module.exports = {
     },
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),        
     },
     module: {
         rules: [{
@@ -88,7 +88,12 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
-                    'file-loader'
+                    {
+                        loader: 'file-loader',
+                        options: {                            
+                            name: './assets/images/[name].[ext]?[hash]'                                                   
+                        }
+                    }                    
                 ]
             }
         ]

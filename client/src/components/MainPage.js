@@ -18,7 +18,7 @@ const MainPage = (state = {}) => (
             <Content>
                 <VisibleArticleList />
             </Content>
-            <Sider trigger={null} width='350' breakpoint='sm' collapsedWidth='0' style={{ backgroundColor: '#f0f2f5', border: '1px solid blue' }}>
+            <Sider trigger={null} width='350' breakpoint='md' collapsedWidth='0' style={{ backgroundColor: '#fff' }}>
                 <SidePanel />
             </Sider>
         </Layout>

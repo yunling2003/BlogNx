@@ -13,7 +13,7 @@ const ArticleDetail = ({ article }) => (
                     {article.title}
                 </div>
             </Col>
-        </Row>
+        </Row>        
         <Row>
             <Col span={24}>
                 <div styleName='content' dangerouslySetInnerHTML={{__html: article.content}}>                    

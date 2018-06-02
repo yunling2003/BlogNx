@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import htmlToText from 'html-to-text'
 import CSSModules from 'react-css-modules'
@@ -17,8 +18,8 @@ class Article extends Component {
 
     render() {
         return (
-            <li styleName='listItem' onClick={this.props.onClick}>
-                <a styleName='link' href='#'>{this.props.title}</a>
+            <li styleName='listItem'>
+                <Link styleName='link' to={`/article/${this.props.id}`}>{this.props.title}</Link>
                 <div>
                     <p styleName='text'>{this.state.digest}</p>
                 </div>        
@@ -40,7 +41,7 @@ class Article extends Component {
 }
 
 Article.propTypes = {
-    onClick: PropTypes.func.isRequired,
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
 }

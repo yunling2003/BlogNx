@@ -13,9 +13,7 @@ const ArticleList = ({ articles, selectArticle }) => (
                     {articles.map(article =>
                         <Article
                             key={article.id}
-                            {...article}
-                            onClick={() => selectArticle(article.id)}
-                        />
+                            {...article}/>
                     )}
                 </ul>
             </Col>

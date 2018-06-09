@@ -41,7 +41,7 @@ const Root = ({ store }) => (
                             />
                         ))}
                     </Content>
-                    <Sider trigger={null} width='350' breakpoint='md' collapsedWidth='0' style={{ backgroundColor: '#fff' }}>
+                    <Sider trigger={null} width='350' breakpoint='md' collapsedWidth='0' style={{backgroundColor: 'inherit'}}>
                         {routes.map((route, index) => (          
                             <Route
                                 key={index}

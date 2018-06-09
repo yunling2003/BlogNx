@@ -1,3 +1,38 @@
-.panel {
-    color: #000;
+.search {
+    height: 82px;
+    padding: 25px 10px;
+    background-color: #fff;
+}
+
+.recommend {
+    margin: 40px 0;
+}
+
+.recommend div[class='ant-collapse'] div[class='ant-collapse-header'] {
+    color: #fff;    
+    border-left: 3px solid #ff85c0;
+}
+
+.blogList {
+    list-style: decimal;
+    padding: 5px 10px;
+}
+
+.blogList > li {
+    margin: 5px 0;
+    border-bottom: 1px dashed black;
+}
+
+.webLink {
+    margin: 20px 0;
+}
+
+.webLink div[class='ant-collapse'] div[class='ant-collapse-header'] {
+    color: #fff;
+    border-left: 3px solid #ff85c0;
+}
+
+.linkList {
+    list-style: none;
+    padding: 5px 10px;
 }

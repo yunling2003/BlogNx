@@ -13,6 +13,10 @@
     border-left: 3px solid #ff85c0;
 }
 
+.recommend div[class='ant-collapse'] div[class='ant-collapse-content-box'] {
+    padding: 0 16px;
+}
+
 .blogList {
     list-style: decimal;
     padding: 5px 10px;
@@ -30,6 +34,10 @@
 .webLink div[class='ant-collapse'] div[class='ant-collapse-header'] {
     color: #fff;
     border-left: 3px solid #ff85c0;
+}
+
+.webLink div[class='ant-collapse'] div[class='ant-collapse-content-box'] {
+    padding: 0 16px;
 }
 
 .linkList {

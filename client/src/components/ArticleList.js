@@ -5,7 +5,7 @@ import Article from './Article'
 import CSSModules from 'react-css-modules'
 import styles from './ArticleList.css'
 
-const ArticleList = ({ articles, selectArticle }) => (
+const ArticleList = ({ articles }) => (
     <div>
         <Row>
             <Col span={24}> 
@@ -29,8 +29,7 @@ ArticleList.propTypes = {
             title: PropTypes.string.isRequired,
             content: PropTypes.string.isRequired
         }).isRequired
-    ).isRequired,
-    selectArticle: PropTypes.func.isRequired
+    ).isRequired    
 }
 
 export default CSSModules(ArticleList, styles)

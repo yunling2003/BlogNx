@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Layout } from 'antd'
 import PageHeader from '../components/PageHeader'
 import PageFooter from '../components/PageFooter'
@@ -41,7 +41,7 @@ const Root = ({ store }) => (
                             />
                         ))}
                     </Content>
-                    <Sider trigger={null} width='350' breakpoint='md' collapsedWidth='0' style={{backgroundColor: 'inherit'}}>
+                    <Sider trigger={null} width={350} breakpoint='md' collapsedWidth='0' style={{backgroundColor: 'inherit'}}>
                         {routes.map((route, index) => (          
                             <Route
                                 key={index}

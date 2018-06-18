@@ -5,6 +5,10 @@
 
 /client/npm-debug.log
 
+/server/node_modules
+
+/.vscode
+
 .DS_Store
 
 npm-debug.log

@@ -1,0 +1,21 @@
+{
+  "name": "blognx",
+  "version": "0.1.0",
+  "description": "Server for blog application.",
+  "main": "server.js",
+  "private": true,
+  "author": {
+    "name": "Leon Ling",
+    "email": "yunling2003@aliyun.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.1.5"
+  },
+  "devDependencies": {}
+}

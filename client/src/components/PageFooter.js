@@ -1,7 +1,9 @@
 import React from 'react'
+import CSSModules from 'react-css-modules'
+import styles from './PageFooter.css'
 
 const PageFooter = (state = {}) => (
-    <p>Copyright ©2018 BlogNx</p>
+    <p styleName='extendToBottom'>Copyright ©2018 BlogNx</p>
 )
 
-export default PageFooter
+export default CSSModules(PageFooter, styles)

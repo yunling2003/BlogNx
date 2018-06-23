@@ -1,0 +1,9 @@
+.extendToBottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: rgb(240, 242, 245);
+    outline: 9999px solid rgb(240, 242, 245);
+    clip: rect(0 9999px 9999px 0);
+}

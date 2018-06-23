@@ -3,7 +3,7 @@ import ArticleDetail from '../components/ArticleDetail'
 
 
 const getSelectedArticle = (articles, selectedId) => {
-    return articles.find(a => a.id === selectedId)
+    return articles.items.find(a => a.id === selectedId)
 }
 
 const mapStateToProps = (state, ownProps) => ({

@@ -1,6 +1,8 @@
 export const fakeState = {
-    articles: [
-        {
+    articles: {
+        isFetching: false,
+        didInvalidate: false,
+        items: [{
             "id": 1,
             "title": "vue项目如何刷新当前页面",
             "author": 1,
@@ -65,6 +67,6 @@ export const fakeState = {
             <p></p>
             <p>HTML5移动Web开发实战》作者是HTML5&nbsp;Boilerplate项目的成员，MobileBoilerplate(//h5bp.com/mobile)的主要开发人员。《HTML5移动Web开发实战》为那些致力于实现高性能、响应式、跨平台的HTML5移动网站的程序员量身打造，也适合对移动Web开发感兴趣的读者学习参考。</p>`,
             "selected": false
-        }
-    ]
+        }]
+    }
 }

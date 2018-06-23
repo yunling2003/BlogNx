@@ -2,10 +2,10 @@ import React from 'react'
 import { render } from 'react-dom'
 import blogStore from './blogStore'
 import Root from './containers/Root'
-import { fakeState } from './reducers/fakeState'
 import 'antd/dist/antd.less'
 
-const store = blogStore(fakeState)
+const initState = { articles: { isFetching: false, didInvalidate: true, items: [] }}
+const store = blogStore(initState)
 
 render(
     <Root store={store} />,

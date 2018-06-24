@@ -1,5 +1,5 @@
 const Article = require('../models/article.model.js')
-const pageSize = 5
+const pageSize = 7
 
 exports.create = (req, res) => {
 

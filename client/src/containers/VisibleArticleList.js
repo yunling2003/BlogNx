@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchArticlesIfNeeded } from '../actions'
 import Article from '../components/Article'
-import { Row, Col } from 'antd'
+import { Row, Col, Pagination } from 'antd'
 import CSSModules from 'react-css-modules'
 import styles from './VisibleArticleList.css'
 
@@ -24,16 +24,23 @@ class VisibleArticleList extends Component {
 
     render() {
         return (
-            <div>
+            <div styleName='list'>
                 <Row>
                     <Col span={24}> 
-                        <ul styleName='list'>
+                        <ul>
                             {this.props.articles.items.map(article =>
                                 <Article
                                     key={article.id}
                                     {...article}/>
                             )}
                         </ul>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={24} style={{textAlign:'right'}}>
+                        <div styleName='pager'>
+                            <Pagination size='small' defaultCurrent={1} pageSize={7} total={10} showTotal={total => `共${total}条`}/>
+                        </div>
                     </Col>
                 </Row>
             </div>

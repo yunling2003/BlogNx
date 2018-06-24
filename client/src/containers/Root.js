@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -23,43 +23,59 @@ const routes = [
     }
   ]
 
-const Root = ({ store }) => (         
-    <Provider store={store}>        
-        <Router>      
-            <Layout style={{ height: '100%' }}>
-                <Header style={{ backgroundColor: '#1890ff', height: 'auto', padding: '0' }}>
-                    <PageHeader />
-                </Header>
-                <Layout style={{ padding: '20px 10px' }}>
-                    <Content>
-                        {routes.map((route, index) => (          
-                            <Route
-                                key={index}
-                                path={route.path}
-                                exact={route.exact}
-                                component={route.main}
-                            />
-                        ))}
-                    </Content>
-                    <Sider trigger={null} width={350} breakpoint='md' collapsedWidth='0' style={{backgroundColor: 'inherit'}}>
-                        {routes.map((route, index) => (          
-                            <Route
-                                key={index}
-                                path={route.path}
-                                exact={route.exact}
-                                component={route.sidebar}
-                            />
-                        ))}
-                    </Sider>
-                </Layout>
-                <Footer style={{ textAlign: 'center' }}>
-                    <PageFooter />
-                </Footer>
-            </Layout>
-        </Router>
-    </Provider>
-)
+class Root extends Component {
+    state = {
+        siderHeight: 'auto'
+    }
 
+    onCollapse = (collapsed) => {
+        this.setState({ siderHeight: collapsed ? 0 : 'auto' })
+    }
+
+    render() {
+        return (
+            <Provider store={this.props.store}>        
+                <Router>      
+                    <Layout style={{ height: '100%' }}>
+                        <Header style={{ backgroundColor: '#1890ff', height: 'auto', padding: '0' }}>
+                            <PageHeader />
+                        </Header>
+                        <Layout style={{ padding: '20px 10px' }}>
+                            <Content>
+                                {routes.map((route, index) => (          
+                                    <Route
+                                        key={index}
+                                        path={route.path}
+                                        exact={route.exact}
+                                        component={route.main}
+                                    />
+                                ))}
+                            </Content>
+                            <Sider collapsible onCollapse={this.onCollapse}
+                                trigger={null} 
+                                width={350} 
+                                breakpoint='md' 
+                                collapsedWidth='0' 
+                                style={{backgroundColor: 'inherit', height: this.state.siderHeight}}>
+                                {routes.map((route, index) => (          
+                                    <Route
+                                        key={index}
+                                        path={route.path}
+                                        exact={route.exact}
+                                        component={route.sidebar}
+                                    />
+                                ))}
+                            </Sider>
+                        </Layout>
+                        <Footer style={{ textAlign: 'center' }}>
+                            <PageFooter />
+                        </Footer>
+                    </Layout>
+                </Router>
+            </Provider>
+        )
+    }
+}
 
 Root.propTypes = {
     store: PropTypes.object.isRequired

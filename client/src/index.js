@@ -4,7 +4,18 @@ import blogStore from './blogStore'
 import Root from './containers/Root'
 import 'antd/dist/antd.less'
 
-const initState = { articles: { isFetching: false, didInvalidate: true, items: [] }}
+const initState = {
+    articleFilters: {
+        page: 0
+    },
+    articles: { 
+        isFetching: false, 
+        didInvalidate: true, 
+        totalCount: 0, 
+        items: [] 
+    }
+}
+
 const store = blogStore(initState)
 
 render(

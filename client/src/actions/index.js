@@ -2,6 +2,22 @@ import fetch from 'cross-fetch'
 
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES'
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES'
+export const INVALIDATE_ARTICLES = 'INVALIDATE_ARTICLES'
+
+export const SET_ARTICLEFILTER = 'SET_ARTICLEFILTER'
+
+export function setArticleFilters(filter) {
+    return {
+        type: SET_ARTICLEFILTER,
+        filter
+    }
+}
+
+export function invalidateArticles() {
+    return {
+        type: INVALIDATE_ARTICLES
+    }
+}
 
 function requestArticles() {
     return {
@@ -12,14 +28,21 @@ function requestArticles() {
 function receiveArticles(json) {
     return {
         type: RECEIVE_ARTICLES,
-        articles: json
+        totalCount: json.totalCount,
+        articles: json.articles
     }
 }
 
-function fetchArticles() {
+function createArticleFilters(state) {
+    const filters = state.articleFilters
+    const query = Object.keys(filters).map(key => `${key}=${filters[key]}`).join('&')
+    return query
+}
+
+function fetchArticles(state) {
     return dispatch => {
         dispatch(requestArticles())
-        return fetch('http://localhost:3000/articles?page=0')
+        return fetch('http://localhost:3000/articles?' + createArticleFilters(state))
             .then(response => response.json())
             .then(json => dispatch(receiveArticles(json)))
     }
@@ -39,7 +62,7 @@ function shouldFetchArticles(state) {
 export function fetchArticlesIfNeeded() {
     return (dispatch, getState) => {
         if (shouldFetchArticles(getState())) {
-            return dispatch(fetchArticles())
+            return dispatch(fetchArticles(getState()))
         }
     }
 }

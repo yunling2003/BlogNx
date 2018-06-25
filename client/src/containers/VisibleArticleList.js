@@ -1,7 +1,7 @@
 import React, {Component}  from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchArticlesIfNeeded } from '../actions'
+import { fetchArticlesIfNeeded, setArticleFilters, invalidateArticles } from '../actions'
 import Article from '../components/Article'
 import { Row, Col, Pagination } from 'antd'
 import CSSModules from 'react-css-modules'
@@ -22,13 +22,20 @@ class VisibleArticleList extends Component {
         }
     }
 
+    onChange = (pageNumber) => {
+        this.props.dispatch(setArticleFilters({page: pageNumber - 1}))
+        this.props.dispatch(invalidateArticles())
+        this.props.dispatch(fetchArticlesIfNeeded())
+    }
+
     render() {
+        const { articles, filters } = this.props
         return (
             <div styleName='list'>
                 <Row>
                     <Col span={24}> 
                         <ul>
-                            {this.props.articles.items.map(article =>
+                            {articles.items.map(article =>
                                 <Article
                                     key={article.id}
                                     {...article}/>
@@ -39,7 +46,12 @@ class VisibleArticleList extends Component {
                 <Row>
                     <Col span={24} style={{textAlign:'right'}}>
                         <div styleName='pager'>
-                            <Pagination size='small' defaultCurrent={1} pageSize={7} total={10} showTotal={total => `共${total}条`}/>
+                            <Pagination size='small' defaultCurrent={1}
+                                current={filters.page + 1}
+                                pageSize={7} 
+                                onChange={this.onChange}
+                                total={articles.totalCount} 
+                                showTotal={total => `共${total}条`}/>
                         </div>
                     </Col>
                 </Row>
@@ -50,7 +62,11 @@ class VisibleArticleList extends Component {
 }
 
 VisibleArticleList.propTypes = {
-    articles: PropTypes.shape({        
+    filters: PropTypes.shape({
+        page: PropTypes.number.isRequired
+    }).isRequired,  
+    articles: PropTypes.shape({ 
+        totalCount: PropTypes.number.isRequired,       
         items: PropTypes.arrayOf(
             PropTypes.shape({
                 id: PropTypes.number.isRequired,
@@ -64,6 +80,7 @@ VisibleArticleList.propTypes = {
 
 function mapStateToProps(state) {
     return {
+        filters: state.articleFilters,
         articles: state.articles
     }
 }

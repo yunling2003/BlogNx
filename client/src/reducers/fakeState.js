@@ -1,7 +1,11 @@
 export const fakeState = {
+    articleFilters: {
+        page: 0
+    },
     articles: {
         isFetching: false,
         didInvalidate: false,
+        totalCount: 5,
         items: [{
             "id": 1,
             "title": "vue项目如何刷新当前页面",

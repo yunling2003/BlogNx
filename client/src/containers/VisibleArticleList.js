@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { fetchArticlesIfNeeded, setArticleFilters, invalidateArticles } from '../actions'
 import Article from '../components/Article'
-import { Row, Col, Pagination } from 'antd'
+import { Row, Col, Pagination, Icon } from 'antd'
 import CSSModules from 'react-css-modules'
 import styles from './VisibleArticleList.css'
 
@@ -22,16 +22,34 @@ class VisibleArticleList extends Component {
         }
     }
 
-    onChange = (pageNumber) => {
-        this.props.dispatch(setArticleFilters({page: pageNumber - 1}))
+    onChange = (page) => {
+        this.props.dispatch(setArticleFilters({page: page - 1}))
         this.props.dispatch(invalidateArticles())
         this.props.dispatch(fetchArticlesIfNeeded())
     }
 
+    onShowSizeChange = (current, size) => {
+        this.props.dispatch(setArticleFilters({page: 0, pageSize: size}))
+        this.props.dispatch(invalidateArticles())
+        this.props.dispatch(fetchArticlesIfNeeded())
+    }
+
+    refresh = () => {
+        this.props.dispatch(invalidateArticles())
+        this.props.dispatch(fetchArticlesIfNeeded())
+    }
+   
     render() {
         const { articles, filters } = this.props
         return (
-            <div styleName='list'>
+            <div styleName='list'>                
+                <Row>
+                    <Col span={4} offset={20}>
+                        <div styleName='action'>
+                            <Icon type='reload' style={{ cursor: 'pointer' }} onClick={() => this.refresh()} />
+                        </div>
+                    </Col>
+                </Row>                                
                 <Row>
                     <Col span={24}> 
                         <ul>
@@ -44,12 +62,17 @@ class VisibleArticleList extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={24} style={{textAlign:'right'}}>
+                    <Col span={24} style={{textAlign: 'right'}}>
                         <div styleName='pager'>
-                            <Pagination size='small' defaultCurrent={1}
+                            <Pagination size='small' 
+                                showQuickJumper
+                                showSizeChanger
+                                pageSizeOptions={['5','7','10']}
+                                defaultCurrent={1}
                                 current={filters.page + 1}
-                                pageSize={7} 
+                                pageSize={filters.pageSize} 
                                 onChange={this.onChange}
+                                onShowSizeChange={this.onShowSizeChange}                            
                                 total={articles.totalCount} 
                                 showTotal={total => `共${total}条`}/>
                         </div>
@@ -63,7 +86,8 @@ class VisibleArticleList extends Component {
 
 VisibleArticleList.propTypes = {
     filters: PropTypes.shape({
-        page: PropTypes.number.isRequired
+        page: PropTypes.number.isRequired,
+        pageSize: PropTypes.number.isRequired
     }).isRequired,  
     articles: PropTypes.shape({ 
         totalCount: PropTypes.number.isRequired,       

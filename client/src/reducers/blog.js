@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { REQUEST_ARTICLES, RECEIVE_ARTICLES, INVALIDATE_ARTICLES, SET_ARTICLEFILTER } from '../actions'
 
-function getArticles(state = { isFetching: false, didInvalidate: false, totalCount: 0, items: [] }, action) {
+function getArticles(state = {}, action) {
     switch (action.type) {
         case INVALIDATE_ARTICLES:
             return Object.assign({}, state, {

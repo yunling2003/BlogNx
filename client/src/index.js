@@ -3,10 +3,13 @@ import { render } from 'react-dom'
 import blogStore from './blogStore'
 import Root from './containers/Root'
 import 'antd/dist/antd.less'
+import zhCN from 'antd/lib/locale-provider/zh_CN'
+import { LocaleProvider } from 'antd'
 
 const initState = {
     articleFilters: {
-        page: 0
+        page: 0,
+        pageSize: 7
     },
     articles: { 
         isFetching: false, 
@@ -19,6 +22,8 @@ const initState = {
 const store = blogStore(initState)
 
 render(
-    <Root store={store} />,
+    <LocaleProvider locale={zhCN}>
+        <Root store={store} />
+    </LocaleProvider>,
     document.getElementById('app')
 )

@@ -11,7 +11,7 @@ exports.findAll = (req, res) => {
     const sortCol = req.query.sortCol || 'id'
     const sortSeq = req.query.sortSeq || -1
     const sortObj = JSON.parse("{ \"" + sortCol + "\": " + sortSeq + "}")
-    const pageSize = req.query.pageSize || defaultPageSize
+    const pageSize = +req.query.pageSize || defaultPageSize
     Article.find().sort(sortObj).skip(pageNum * pageSize).limit(pageSize).then(articles => {
         Article.count().then(totalCount => {
             res.send({ totalCount, articles })

@@ -1,6 +1,7 @@
 export const fakeState = {
     articleFilters: {
-        page: 0
+        page: 0,
+        pageSize: 7
     },
     articles: {
         isFetching: false,

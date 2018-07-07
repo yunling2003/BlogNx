@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import Article from '../../src/components/Article.js'
 import { shallow } from 'enzyme'
 
@@ -17,7 +16,7 @@ const setup = () => {
 }
 
 describe('Article', () => {
-    const { props, wrapper } = setup()
+    const { wrapper } = setup()
 
     it('Article should render', () => {       
         expect(wrapper.find('Link').exists()).toBeTruthy()

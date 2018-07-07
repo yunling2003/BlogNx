@@ -3,6 +3,8 @@
 
 /client/dist
 
+/client/coverage
+
 /client/npm-debug.log
 
 /server/node_modules

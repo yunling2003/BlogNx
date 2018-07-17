@@ -7,12 +7,12 @@ import { Row, Col, Pagination, Icon } from 'antd'
 import CSSModules from 'react-css-modules'
 import styles from './VisibleArticleList.css'
 
-class VisibleArticleList extends Component {
+export class VisibleArticleList extends Component {
     constructor(props) {
         super(props)
     }
 
-    componentDidMount() {
+    componentDidMount() {                  
         this.props.dispatch(fetchArticlesIfNeeded())
     }
 

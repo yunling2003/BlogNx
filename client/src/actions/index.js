@@ -1,4 +1,4 @@
-import fetch from 'cross-fetch'
+import  'cross-fetch/polyfill'
 
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES'
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES'
@@ -19,13 +19,13 @@ export function invalidateArticles() {
     }
 }
 
-function requestArticles() {
+export function requestArticles() {
     return {
         type: REQUEST_ARTICLES
     }
 }
 
-function receiveArticles(json) {
+export function receiveArticles(json) {
     return {
         type: RECEIVE_ARTICLES,
         totalCount: json.totalCount,

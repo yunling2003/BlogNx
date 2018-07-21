@@ -24,7 +24,7 @@ function getArticles(state = {}, action) {
     }
 }
 
-function articles(state = {}, action) {
+export function articles(state = {}, action) {
     switch (action.type) {
         case INVALIDATE_ARTICLES:
         case REQUEST_ARTICLES:
@@ -35,7 +35,7 @@ function articles(state = {}, action) {
     }
 }
 
-function articleFilters(state = {}, action) {
+export function articleFilters(state = {}, action) {
     switch (action.type) {
         case SET_ARTICLEFILTER:
             return Object.assign({}, state, action.filter)

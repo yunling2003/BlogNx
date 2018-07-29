@@ -7,7 +7,7 @@ const getSelectedArticle = (articles, selectedId) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    article: getSelectedArticle(state.articles, parseInt(ownProps.match.params.id))
+    article: getSelectedArticle(state.articles, parseInt(ownProps.computedMatch.params.id))
 })
 
 export default connect(

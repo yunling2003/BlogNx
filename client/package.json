@@ -56,6 +56,7 @@
     "jest": "^23.3.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
+    "react-router-enzyme-context": "^1.2.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-mock-store": "^1.5.3",
     "style-loader": "0.20.3",

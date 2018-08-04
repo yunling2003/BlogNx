@@ -30,7 +30,7 @@ class PageHeader extends Component {
       }, this.applyViewportChange)
 
     handleMenuVisibility = (visible) => {
-        this.setState({
+        this.setState({            
             menuVisible: visible
         })
     }    

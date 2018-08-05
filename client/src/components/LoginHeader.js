@@ -7,8 +7,18 @@ import logo from '../../assets/images/logo.png'
 
 class LoginHeader extends Component {
     handleClick = (e) => {
-        if(e.key === '.$home') {
-            this.props.history.push('/')
+        switch(e.key) {
+            case '.$home':
+                this.props.history.push('/')
+                break
+            case '.$login':
+                this.props.history.push('/login')
+                break
+            case '.$register':
+                this.props.history.push('/register')
+                break
+            default:
+                return
         }
     }
     
@@ -27,10 +37,12 @@ class LoginHeader extends Component {
                                 <Menu.Item key="home" style={{ padding: '0 5px', borderBottom: '0' }}>
                                     <Icon type="home" />首页
                                 </Menu.Item>                                
-                                <Menu.Item key="register" style={{ padding: '0 5px', borderBottom: '0' }}>
+                                <Menu.Item key="register" style={{ padding: '0 5px', borderBottom: '0', 
+                                    display: this.props.page === 'register' ? 'none' : 'block' }}>
                                     <Icon type="play-circle-o" />注册
                                 </Menu.Item>
-                                <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0' }}>
+                                <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0',
+                                    display: this.props.page === 'login' ? 'none' : 'block' }}>
                                     <Icon type="login" />登录
                                 </Menu.Item>
                             </Menu>

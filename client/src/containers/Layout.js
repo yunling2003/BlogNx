@@ -49,12 +49,12 @@ export class ArticleListLayout extends Component {
 
 export class LoginLayout extends Component {
     render() {
-        const { component: Component, ...rest } = this.props
+        const { component: Component, page, ...rest } = this.props
         return (
             <Route {...rest} render={props => (
                 <Layout style={{ height: '100%' }}>
                     <Header style={{ backgroundColor: '#1890ff', height: 'auto', padding: '0' }}>
-                        <LoginHeader />
+                        <LoginHeader page={page} />
                     </Header>
                     <Layout style={{ padding: '20px 10px' }}>
                         <Content>

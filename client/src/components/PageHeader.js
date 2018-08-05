@@ -36,9 +36,16 @@ class PageHeader extends Component {
     }    
 
     handleClick = (e) => {
-        if(e.key === '.$login') {
-            this.props.history.push('/login')
-        }
+        switch(e.key) {
+            case '.$login':
+                this.props.history.push('/login')
+                break
+            case '.$register':
+                this.props.history.push('/register')
+                break
+            default:
+                return
+        }        
     }
 
     render() {

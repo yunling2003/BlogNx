@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import VisibleArticleList from './VisibleArticleList'
 import SelectedArticle from './SelectedArticle'
 import Login from '../components/Login'
+import RegisterForm from '../components/RegisterForm'
 import { ArticleListLayout, LoginLayout } from './Layout'
 
 class Root extends Component {    
@@ -15,7 +16,8 @@ class Root extends Component {
                     <Switch>   
                         <ArticleListLayout path="/" exact component={VisibleArticleList} />
                         <ArticleListLayout path="/article/:id" component={SelectedArticle} />
-                        <LoginLayout path="/login" component={Login} />
+                        <LoginLayout path="/login" page="login" component={Login} />
+                        <LoginLayout path="/register" page="register" component={RegisterForm} />
                     </Switch>
                 </Router>
             </Provider>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import { Form, Input, Select, Tooltip, Icon, Checkbox, Button, Row, Col } from 'antd'
+import Captcha from './Captcha'
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -11,7 +11,8 @@ function hasErrors(fieldsError) {
 
 export class RegisterForm extends Component {    
     state = {
-        confirmDirty: false    
+        confirmDirty: false,
+        captcha: ''
     }    
 
     handleSubmit = (e) => {
@@ -43,6 +44,10 @@ export class RegisterForm extends Component {
     handleConfirmBlur = (e) => {
         const value = e.target.value
         this.setState({ confirmDirty: this.state.confirmDirty || !!value })
+    }
+
+    handleCaptcha = (value) => {
+        this.setState({ captcha: value })
     }
 
     render() {
@@ -129,15 +134,15 @@ export class RegisterForm extends Component {
                 </FormItem>
                 <FormItem {...formItemLayout} label='验证码'>
                     <Row gutter={8}>
-                        <Col span={12}>
+                        <Col span={7}>
                             {getFieldDecorator('captcha', {
                                 rules: [{ required: true, message: '请输入验证码!' }],
                             })(
                                 <Input />
                             )}
-                        </Col>
-                        <Col span={12}>
-                            <Button>验证码</Button>
+                        </Col>                                  
+                        <Col span={17}>
+                            <Captcha notifyCaptcha={this.handleCaptcha} />
                         </Col>
                     </Row>
                 </FormItem>

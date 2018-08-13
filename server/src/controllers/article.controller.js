@@ -6,19 +6,28 @@ exports.create = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
-    let pageNum = +req.query.page || 0
-    pageNum = pageNum < 0 ? 0 : pageNum
+    const pageNum = +req.query.page || 0
+    if(pageNum < 0) {
+        res.status(404).send({
+            message: 'Invalid request'
+        })
+    }
+
     const sortCol = req.query.sortCol || 'id'
-    const sortSeq = req.query.sortSeq || -1
+    const sortSeq = req.query.sortSeq || -1    
     const sortObj = JSON.parse("{ \"" + sortCol + "\": " + sortSeq + "}")
     const pageSize = +req.query.pageSize || defaultPageSize
-    Article.find().sort(sortObj).skip(pageNum * pageSize).limit(pageSize).then(articles => {
-        Article.count().then(totalCount => {
-            res.send({ totalCount, articles })
-        })        
+    const findPromise = Article.find().sort(sortObj).skip(pageNum * pageSize).limit(pageSize)
+    const countPromise = Article.count()
+
+    Promise.all([findPromise, countPromise]).then(result => {        
+        res.send({ 
+            totalCount: result[1], 
+            articles: result[0] 
+        })
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Error occurs when retrieving articles"
+            message: err.message || 'Error occurs when retrieving articles'
         })
     })
 }

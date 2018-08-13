@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { Form, Input, Select, Tooltip, Icon, Checkbox, Button, Row, Col } from 'antd'
+import  'cross-fetch/polyfill'
 import Captcha from './Captcha'
 
 const FormItem = Form.Item
@@ -18,9 +19,25 @@ export class RegisterForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault()
         this.props.form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-              console.log('Received values of form: ', values)
+            if (err) {
+                console.log(values)
+                return
             }
+            fetch('http://localhost:3000/register', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({                    
+                    email: values.email,
+                    userName: values.nickname,
+                    password: values.password,
+                    chineseName: values.name,
+                    mobilePhone: values.prefix + '-' + values.phone
+                })
+            }).then(res => res.json())
+            .then(json => console.log(json))            
         })
     }
 
@@ -44,6 +61,22 @@ export class RegisterForm extends Component {
     handleConfirmBlur = (e) => {
         const value = e.target.value
         this.setState({ confirmDirty: this.state.confirmDirty || !!value })
+    }
+
+    checkDuplicateName = (e) => {
+        const value = e.target.value
+        fetch('http://localhost:3000/register/checkDuplicate?userName=' + value)
+            .then(res => res.json())
+            .then(obj => {
+                if(obj.duplicate) {
+                   this.props.form.setFields({
+                       nickname: {
+                           value: value,
+                           errors: [new Error('用户名已存在!')]
+                       }
+                   })
+                } 
+            })
     }
 
     handleCaptcha = (value) => {
@@ -108,19 +141,19 @@ export class RegisterForm extends Component {
                         <Input type='password' onBlur={this.handleConfirmBlur} />
                     )}
                 </FormItem>
-                <FormItem {...formItemLayout}
+                <FormItem {...formItemLayout} hasFeedback
                     label={(<span>昵称&nbsp;
                                 <Tooltip title='你想别人怎么称呼你?'>
                                     <Icon type="question-circle-o" />
                                 </Tooltip>
                             </span>)}>
                     {getFieldDecorator('nickname', {
-                        rules: [{ required: true, message: '请输入你的昵称!', whitespace: true }],
+                        rules: [{ required: true, message: '请输入你的昵称!', whitespace: true }]
                     })(
-                        <Input />
+                        <Input onBlur={this.checkDuplicateName} />
                     )}
                 </FormItem>
-                <FormItem {...formItemLayout} label='姓名'>
+                <FormItem {...formItemLayout} label='姓名' hasFeedback>
                     {getFieldDecorator('name', {
                         rules: [{ required: true, message: '请输入你的姓名!', whitespace: true }],
                     })(

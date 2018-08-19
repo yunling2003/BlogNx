@@ -1,0 +1,24 @@
+.container {
+    overflow: hidden;
+    margin-top: 50px;
+}
+
+.left {
+    margin-bottom: -9999px;
+    padding-bottom: 9999px;
+    background-color: #ffffff;
+}
+
+.right {
+    margin-bottom: -9999px;
+    padding-bottom: 9999px;
+    background-color: #ffffff;
+}
+
+.imgContainer {
+    padding: 5px;
+}
+
+.imgLeft {
+    width: 100%;
+}

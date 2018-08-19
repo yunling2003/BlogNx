@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { withRouter } from 'react-router-dom'
 import { Form, Input, Select, Tooltip, Icon, Checkbox, Button, Row, Col } from 'antd'
 import  'cross-fetch/polyfill'
 import Captcha from './Captcha'
@@ -37,7 +38,14 @@ export class RegisterForm extends Component {
                     mobilePhone: values.prefix + '-' + values.phone
                 })
             }).then(res => res.json())
-            .then(json => console.log(json))            
+            .then(json => {
+                if(json.code === 'success') {
+                    this.props.history.push('/registerresult/success')
+                } else if(json.code === 'error') {
+                    this.props.history.push('/registerresult/error')
+                }
+                console.log(json.message)
+            })            
         })
     }
 
@@ -77,6 +85,14 @@ export class RegisterForm extends Component {
                    })
                 } 
             })
+    }
+
+    validateCaptcha = (rule, value, callback) => {
+        if(value.toLowerCase() !== this.state.captcha.toLowerCase()) {
+            callback('验证码不匹配!')
+        } else {
+            callback()
+        }
     }
 
     handleCaptcha = (value) => {
@@ -169,7 +185,7 @@ export class RegisterForm extends Component {
                     <Row gutter={8}>
                         <Col span={7}>
                             {getFieldDecorator('captcha', {
-                                rules: [{ required: true, message: '请输入验证码!' }],
+                                rules: [{ required: true, message: '请输入验证码!' }, {validator: this.validateCaptcha}],
                             })(
                                 <Input />
                             )}
@@ -194,4 +210,4 @@ export class RegisterForm extends Component {
     }
 }
 
-export default Form.create()(RegisterForm)
+export default withRouter(Form.create()(RegisterForm))

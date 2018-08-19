@@ -6,6 +6,7 @@ import VisibleArticleList from './VisibleArticleList'
 import SelectedArticle from './SelectedArticle'
 import Login from '../components/Login'
 import RegisterForm from '../components/RegisterForm'
+import RegisterResult from '../components/RegisterResult'
 import { ArticleListLayout, LoginLayout } from './Layout'
 
 class Root extends Component {    
@@ -18,6 +19,7 @@ class Root extends Component {
                         <ArticleListLayout path="/article/:id" component={SelectedArticle} />
                         <LoginLayout path="/login" page="login" component={Login} />
                         <LoginLayout path="/register" page="register" component={RegisterForm} />
+                        <LoginLayout path="/registerresult/:result" component={RegisterResult} />
                     </Switch>
                 </Router>
             </Provider>

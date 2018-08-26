@@ -1,5 +1,12 @@
 import { combineReducers } from 'redux'
-import { REQUEST_ARTICLES, RECEIVE_ARTICLES, INVALIDATE_ARTICLES, SET_ARTICLEFILTER } from '../actions'
+import { REQUEST_ARTICLES, 
+    RECEIVE_ARTICLES, 
+    INVALIDATE_ARTICLES, 
+    SET_ARTICLEFILTER, 
+    BEGIN_SIGNIN, 
+    SIGNIN_SUCCESS, 
+    SIGNIN_ERROR,
+    CLEAR_ERROR } from '../actions'
 
 function getArticles(state = {}, action) {
     switch (action.type) {
@@ -44,7 +51,46 @@ export function articleFilters(state = {}, action) {
     }
 }
 
+function getCurrentUser(state = {}, action) {
+    switch (action.type) {
+        case BEGIN_SIGNIN:
+            return Object.assign({}, state, {
+                isLoggingIn: true
+            })
+        case SIGNIN_SUCCESS:
+            return Object.assign({}, state, {
+                isLoggingIn: false,
+                userName: action.userName,
+                token: action.token
+            })
+        case SIGNIN_ERROR:
+            return Object.assign({}, state, {
+                isLoggingIn: false,
+                logInMessage: action.message
+            })
+        case CLEAR_ERROR:
+            return Object.assign({}, state, {
+                logInMessage: null
+            })
+        default:
+            return state
+    }
+}
+
+export function currentUser(state = {}, action) {
+    switch (action.type) {
+        case BEGIN_SIGNIN:
+        case SIGNIN_SUCCESS:
+        case SIGNIN_ERROR:
+        case CLEAR_ERROR:
+            return Object.assign({}, state, getCurrentUser(state, action))
+        default:
+            return state
+    }
+}
+
 const blogReducer = combineReducers({
+    currentUser,
     articleFilters,
     articles
 })

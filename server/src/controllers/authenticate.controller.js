@@ -1,5 +1,26 @@
 const User = require('../models/user.model.js')
+const ck = require('../constkeys.js')
 const svgCaptcha = require('svg-captcha')
+const jwt = require('jsonwebtoken')
+
+exports.signIn = (req, res) => {
+    const userName = req.body.userName
+    const password = req.body.password
+    User.findOne({ 'userName': userName, 'password': password }).then(user => {
+        if(user) {
+            const token = jwt.sign({ user: user.userName }, ck.secretKey, { expiresIn: '1h' })
+            res.status(200).send({ 
+                code: 'success',
+                authToken: token 
+            })
+        } else {
+            res.status(403).send({
+                code: 'error',
+                message: 'Authenticate failed'
+            })
+        }
+    })
+}
 
 exports.checkDuplicate = (req, res) => {
     const userName = req.query.userName
@@ -18,7 +39,7 @@ exports.register = (req, res) => {
     }).save().then(user => {
         res.send({
             code: 'success',
-            message: `user ${user.userName} saved`
+            message: `User ${user.userName} saved`
         })            
     }).catch(err => {
         res.status(500).send({

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import VisibleArticleList from './VisibleArticleList'
 import SelectedArticle from './SelectedArticle'
-import Login from '../components/Login'
+import LoginForm from './LoginForm'
 import RegisterForm from '../components/RegisterForm'
 import RegisterResult from '../components/RegisterResult'
 import { ArticleListLayout, LoginLayout } from './Layout'
@@ -17,7 +17,7 @@ class Root extends Component {
                     <Switch>   
                         <ArticleListLayout path="/" exact component={VisibleArticleList} />
                         <ArticleListLayout path="/article/:id" component={SelectedArticle} />
-                        <LoginLayout path="/login" page="login" component={Login} />
+                        <LoginLayout path="/login" page="login" component={LoginForm} />
                         <LoginLayout path="/register" page="register" component={RegisterForm} />
                         <LoginLayout path="/registerresult/:result" component={RegisterResult} />
                     </Switch>

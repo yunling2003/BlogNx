@@ -1,4 +1,10 @@
 export const fakeState = {
+    currentUser: {
+        userName: 'ling',
+        isLoggingIn: false,
+        logInMessage: '',
+        token: 'cxrliwe.23dvsk.23sflkf'
+    },
     articleFilters: {
         page: 0,
         pageSize: 7

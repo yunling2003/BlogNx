@@ -7,6 +7,12 @@ import zhCN from 'antd/lib/locale-provider/zh_CN'
 import { LocaleProvider } from 'antd'
 
 const initState = {
+    currentUser: {
+        userName: null,
+        isLoggingIn: false,
+        logInMessage: null,
+        token: null
+    },
     articleFilters: {
         page: 0,
         pageSize: 7

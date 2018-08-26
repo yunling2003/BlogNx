@@ -1,7 +1,7 @@
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import fetchMock from 'fetch-mock'
-import { fetchArticlesIfNeeded, requestArticles, receiveArticles } from '../../src/actions'
+import { fetchArticlesIfNeeded, requestArticles, receiveArticles } from '../../src/actions/article'
 import { articles } from '../fakeData'
 
 const initState = {

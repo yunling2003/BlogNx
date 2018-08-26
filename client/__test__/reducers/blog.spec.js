@@ -1,5 +1,5 @@
 import { articles, articleFilters } from '../../src/reducers/blog'
-import { REQUEST_ARTICLES, RECEIVE_ARTICLES, INVALIDATE_ARTICLES, SET_ARTICLEFILTER } from '../../src/actions'
+import { REQUEST_ARTICLES, RECEIVE_ARTICLES, INVALIDATE_ARTICLES, SET_ARTICLEFILTER } from '../../src/actions/article'
 
 describe('blog reducer', () => {
     it('should return initial empty article', () => {

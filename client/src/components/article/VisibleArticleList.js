@@ -1,7 +1,7 @@
 import React, {Component}  from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchArticlesIfNeeded, setArticleFilters, invalidateArticles } from '../../actions'
+import { fetchArticlesIfNeeded, setArticleFilters, invalidateArticles } from '../../actions/article'
 import Article from './Article'
 import { Row, Col, Pagination, Icon } from 'antd'
 import CSSModules from 'react-css-modules'

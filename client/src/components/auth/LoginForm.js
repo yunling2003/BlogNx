@@ -2,7 +2,7 @@ import React, {Component}  from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { signIn, clearError } from '../../actions'
+import { signIn, clearError } from '../../actions/auth'
 import { Form, Icon, Input, Button, Checkbox, Row, Col } from 'antd'
 
 function validateField(value, message) {

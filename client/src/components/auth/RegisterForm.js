@@ -24,7 +24,7 @@ export class RegisterForm extends Component {
                 console.log(values)
                 return
             }
-            fetch('http://localhost:3000/register', {
+            fetch(process.env.API_URL + '/register', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -73,7 +73,7 @@ export class RegisterForm extends Component {
 
     checkDuplicateName = (e) => {
         const value = e.target.value
-        fetch('http://localhost:3000/register/checkDuplicate?userName=' + value)
+        fetch(process.env.API_URL + '/register/checkDuplicate?userName=' + value)
             .then(res => res.json())
             .then(obj => {
                 if(obj.duplicate) {

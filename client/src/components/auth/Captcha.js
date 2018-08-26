@@ -10,7 +10,7 @@ export class Captcha extends Component {
     }
     
     componentDidMount() {
-        fetch('http://localhost:3000/recaptcha')
+        fetch(process.env.API_URL + '/recaptcha')
             .then(res => res.json())
             .then(json => {
                 this.setState({
@@ -22,7 +22,7 @@ export class Captcha extends Component {
     }
 
     changeCaptcha = (e) => {
-        fetch('http://localhost:3000/recaptcha')
+        fetch(process.env.API_URL + '/recaptcha')
             .then(res => res.json())
             .then(json => {
                 this.setState({

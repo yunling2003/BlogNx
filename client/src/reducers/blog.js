@@ -1,12 +1,6 @@
 import { combineReducers } from 'redux'
-import { REQUEST_ARTICLES, 
-    RECEIVE_ARTICLES, 
-    INVALIDATE_ARTICLES, 
-    SET_ARTICLEFILTER, 
-    BEGIN_SIGNIN, 
-    SIGNIN_SUCCESS, 
-    SIGNIN_ERROR,
-    CLEAR_ERROR } from '../actions'
+import { REQUEST_ARTICLES, RECEIVE_ARTICLES, INVALIDATE_ARTICLES, SET_ARTICLEFILTER} from '../actions/article'
+import { BEGIN_SIGNIN, SIGNIN_SUCCESS, SIGNIN_ERROR, CLEAR_ERROR } from '../actions/auth'
 
 function getArticles(state = {}, action) {
     switch (action.type) {

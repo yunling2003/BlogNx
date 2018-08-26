@@ -19,6 +19,11 @@ exports.signIn = (req, res) => {
                 message: 'Authenticate failed'
             })
         }
+    }).catch(err => {
+        res.status(500).send({
+            code: 'error',
+            message: err
+        })
     })
 }
 

@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { mount } from 'enzyme'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
-import ConnectedArticleList from '../../src/containers/VisibleArticleList.js'
+import ConnectedArticleList from '../../src/components/article/VisibleArticleList.js'
 
 const setup = () => {        
     const initState = {

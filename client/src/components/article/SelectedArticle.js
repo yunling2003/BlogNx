@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import ArticleDetail from '../components/ArticleDetail'
+import ArticleDetail from './ArticleDetail'
 
 
 const getSelectedArticle = (articles, selectedId) => {

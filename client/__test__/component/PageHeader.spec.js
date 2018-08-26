@@ -1,5 +1,5 @@
 import React from 'react'
-import PageHeader from '../../src/components/PageHeader.js'
+import PageHeader from '../../src/components/shared/PageHeader.js'
 import ReactRouterEnzymeContext from 'react-router-enzyme-context'
 import { mount } from 'enzyme'
 

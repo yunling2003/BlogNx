@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 import { Layout } from 'antd'
-import PageHeader from '../components/PageHeader'
-import LoginHeader from '../components/LoginHeader'
-import PageFooter from '../components/PageFooter'
-import SidePanel from '../components/SidePanel'
+import PageHeader from './shared/PageHeader'
+import LoginHeader from './shared/LoginHeader'
+import PageFooter from './shared/PageFooter'
+import SidePanel from './shared/SidePanel'
 
 const { Header, Footer, Sider, Content } = Layout
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import ArticleDetail  from '../../src/components/ArticleDetail.js'
+import ArticleDetail  from '../../src/components/article/ArticleDetail.js'
 import { shallow } from 'enzyme'
 
 const setup = () => {

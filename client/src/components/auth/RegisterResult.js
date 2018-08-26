@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { Card, Row, Col } from 'antd'
 import CSSModules from 'react-css-modules'
 import styles from './RegisterResult.css'
-import thankyou from '../../assets/images/thankyou.png'
-import error from '../../assets/images/error.png'
+import thankyou from '../../../assets/images/thankyou.png'
+import error from '../../../assets/images/error.png'
 
 export class RegisterResult extends Component {
 

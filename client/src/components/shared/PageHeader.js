@@ -4,7 +4,7 @@ import { Menu, Icon, Row, Col } from 'antd'
 import throttle from 'lodash.throttle'
 import CSSModules from 'react-css-modules'
 import styles from './PageHeader.css'
-import logo from '../../assets/images/logo.png'
+import logo from '../../../assets/images/logo.png'
 
 class PageHeader extends Component {    
     mobileBreakPoint = 576

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import blogStore from './blogStore'
-import Root from './containers/Root'
+import Root from './components/Root'
 import 'antd/dist/antd.less'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
 import { LocaleProvider } from 'antd'

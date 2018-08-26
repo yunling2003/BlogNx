@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { Menu, Icon, Row, Col } from 'antd'
 import CSSModules from 'react-css-modules'
 import styles from './LoginHeader.css'
-import logo from '../../assets/images/logo.png'
+import logo from '../../../assets/images/logo.png'
 
 class LoginHeader extends Component {
     handleClick = (e) => {

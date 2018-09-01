@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'antd'
-import  'cross-fetch/polyfill'
+import http from '../../utils/http'
 
 export class Captcha extends Component {    
     state = {
@@ -10,27 +10,29 @@ export class Captcha extends Component {
     }
     
     componentDidMount() {
-        fetch(process.env.API_URL + '/recaptcha')
-            .then(res => res.json())
-            .then(json => {
+        http.get('/recaptcha')            
+            .then(res => {
                 this.setState({
-                    data: json.data,
-                    text: json.text
+                    data: res.data.data,
+                    text: res.data.text
                 })
                 this.props.notifyCaptcha(this.state.text)
-            })        
+            }).catch(err => {
+                console.log(err)
+            })       
     }
 
     changeCaptcha = (e) => {
-        fetch(process.env.API_URL + '/recaptcha')
-            .then(res => res.json())
-            .then(json => {
+        http.get('/recaptcha')            
+            .then(res => {
                 this.setState({
-                    data: json.data,
-                    text: json.text
+                    data: res.data.data,
+                    text: res.data.text
                 })
                 this.props.notifyCaptcha(this.state.text)
-            })        
+            }).catch(err => {
+                console.log(err)
+            })       
     }
 
     render() {

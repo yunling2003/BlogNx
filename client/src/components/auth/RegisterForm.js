@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
 import { Form, Input, Select, Tooltip, Icon, Checkbox, Button, Row, Col } from 'antd'
-import  'cross-fetch/polyfill'
+import http from '../../utils/http'
 import Captcha from './Captcha'
 
 const FormItem = Form.Item
@@ -24,27 +24,21 @@ export class RegisterForm extends Component {
                 console.log(values)
                 return
             }
-            fetch(process.env.API_URL + '/register', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({                    
-                    email: values.email,
-                    userName: values.nickname,
-                    password: values.password,
-                    chineseName: values.name,
-                    mobilePhone: values.prefix + '-' + values.phone
-                })
-            }).then(res => res.json())
-            .then(json => {
-                if(json.code === 'success') {
+            http.post('/register', {                                                    
+                email: values.email,
+                userName: values.nickname,
+                password: values.password,
+                chineseName: values.name,
+                mobilePhone: `${values.prefix}-${values.phone}`
+            }).then(res => {
+                if(res.data.code === 'success') {
                     this.props.history.push('/registerresult/success')
-                } else if(json.code === 'error') {
+                } else if(res.data.code === 'error') {
                     this.props.history.push('/registerresult/error')
                 }
-                console.log(json.message)
+                console.log(res.data.message)
+            }).catch(err => {
+                console.log(err)
             })            
         })
     }
@@ -73,10 +67,9 @@ export class RegisterForm extends Component {
 
     checkDuplicateName = (e) => {
         const value = e.target.value
-        fetch(process.env.API_URL + '/register/checkDuplicate?userName=' + value)
-            .then(res => res.json())
-            .then(obj => {
-                if(obj.duplicate) {
+        http.get('/register/checkDuplicate?userName=' + value)            
+            .then(res => {
+                if(res.data.duplicate) {
                    this.props.form.setFields({
                        nickname: {
                            value: value,
@@ -84,7 +77,9 @@ export class RegisterForm extends Component {
                        }
                    })
                 } 
-            })
+            }).catch(err => {
+                console.log(err)
+            }) 
     }
 
     validateCaptcha = (rule, value, callback) => {

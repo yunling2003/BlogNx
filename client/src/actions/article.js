@@ -1,4 +1,4 @@
-import  'cross-fetch/polyfill'
+import http from '../utils/http'
 
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES'
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES'
@@ -40,9 +40,9 @@ function createArticleFilters(state) {
 function fetchArticles(state) {
     return dispatch => {
         dispatch(requestArticles())
-        return fetch(process.env.API_URL + '/articles?' + createArticleFilters(state))
-            .then(response => response.json())
-            .then(json => dispatch(receiveArticles(json)))
+        return http.get('/articles?' + createArticleFilters(state))            
+            .then(res => dispatch(receiveArticles(res.data)))
+            .catch(err => console.log(err))
     }
 }
 

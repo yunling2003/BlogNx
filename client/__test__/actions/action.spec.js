@@ -1,6 +1,7 @@
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import fetchMock from 'fetch-mock'
+import axios from '../../src/utils/http'
+import mockAdapter from 'axios-mock-adapter'
 import { fetchArticlesIfNeeded, requestArticles, receiveArticles } from '../../src/actions/article'
 import { articles } from '../fakeData'
 
@@ -19,17 +20,11 @@ const initState = {
 const mockStore = configureStore([thunk])
 const store = mockStore(initState)
 
-describe('test actions', () => {
-    afterEach(() => {
-        fetchMock.reset()
-        fetchMock.restore()
-    })
-
+describe('test actions', () => {    
+    
     it('creates actions when fetching has been done', () => {
-       fetchMock.mock('*', { 
-           body: articles, 
-           headers: { 'content-type': 'application/json' } 
-       })
+       const mock = new mockAdapter(axios)
+       mock.onGet(/articles/).reply(200, articles)       
 
        return store.dispatch(fetchArticlesIfNeeded())
         .then(() => {

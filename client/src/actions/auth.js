@@ -1,4 +1,4 @@
-import  'cross-fetch/polyfill'
+import http from '../utils/http'
 
 export const BEGIN_SIGNIN = 'BEGIN_SIGNIN'
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS'
@@ -36,27 +36,19 @@ function signInUser(loginObj) {
     const { userName, password } = loginObj
     return dispatch => {
         dispatch(beginSignIn())
-        return fetch(process.env.API_URL + '/signin', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({                                    
-                userName: userName.value,
-                password: password.value                
-            })
-        }).then(res => res.json())
-        .then(json => {
-            if(json.code === 'success') {
+        return http.post('/signin', {                                                           
+            userName: userName.value,
+            password: password.value           
+        }).then(res => {
+            if(res.data.code === 'success') {
                 dispatch(signInSuccess({
                     userName: userName.value,
-                    token: json.authToken
+                    token: res.data.authToken
                 }))
             }
-            if(json.code === 'error') {
+            if(res.data.code === 'error') {
                 dispatch(signInError({
-                    message: json.message
+                    message: res.data.message
                 }))
             }
         }).catch(err => {

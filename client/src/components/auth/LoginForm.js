@@ -66,7 +66,7 @@ export class LoginForm extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.currentUser.userName && nextProps.currentUser.userName !== this.props.currentUser.userName) {
-            this.props.history.push('/')
+            this.props.history.push('/myblog/articles')
         }
     }
 
@@ -79,8 +79,7 @@ export class LoginForm extends Component {
     render() {
         const userName = this.state.userName
         const password = this.state.password
-        const { currentUser } = this.props   
-        const { logInMessage } = currentUser     
+        const { logInMessage } = this.props.currentUser   
 
         return (
             <div style={{margin: '0 1.5em', padding: '1.5em'}}>                                                             
@@ -126,7 +125,7 @@ export class LoginForm extends Component {
                     <Row>
                         <Col xs={4} sm={6} md={8}></Col>
                         <Col xs={16} sm={12} md={8}>
-                            <p style={{color: 'red'}}>登录失败.错误原因: {logInMessage}</p>
+                            <p style={{color: 'red'}}>登录失败!请检查用户名和密码是否正确.</p>
                         </Col>
                         <Col xs={4} sm={6} md={8}></Col>
                     </Row> 

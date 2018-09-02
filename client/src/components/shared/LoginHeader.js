@@ -30,8 +30,8 @@ class LoginHeader extends Component {
                         <Col span={7} offset={1}>
                             <img src={logo} width='45px' height='45px' alt='logo'/>
                         </Col>
-                        <Col span={4}></Col>
-                        <Col span={12}>
+                        <Col span={8}></Col>
+                        <Col span={8}>
                             <Menu mode="horizontal" onClick={this.handleClick}
                             style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
                                 <Menu.Item key="home" style={{ padding: '0 5px', borderBottom: '0' }}>

@@ -1,0 +1,6 @@
+.layout {
+    height: 8px;
+    background: -webkit-linear-gradient(#1890ff, #fff);     
+    background: -moz-linear-gradient(#1890ff, #fff); 
+    background: linear-gradient(#1890ff, #fff); 
+}

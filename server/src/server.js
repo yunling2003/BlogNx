@@ -15,12 +15,12 @@ mongoose.connect(dbConfig.url).then(() => {
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.all('*', function(req, res, next) {  
-    res.header("Access-Control-Allow-Origin", "*");  
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");  
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");      
-    res.header("Content-Type", "application/json;charset=utf-8");  
-    next();  
+app.all('*', (req, res, next) => {  
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS")     
+    res.header("Content-Type", "application/json;charset=utf-8")
+    next() 
 });  
 
 app.get('/', (req, res) => {    
@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
 
 require('./routes/article.routes.js')(app)
 require('./routes/authenticate.routes.js')(app)
+require('./routes/myblog.routes.js')(app)
 
 app.listen(3000, () => {
     console.log("Server is listening on port 3000!")

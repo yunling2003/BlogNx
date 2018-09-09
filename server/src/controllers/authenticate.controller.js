@@ -1,29 +1,33 @@
 const User = require('../models/user.model.js')
-const ck = require('../constkeys.js')
+const tokenHelper = require('../tokenHelper.js')
+const signHelper = require('../signHelper.js')
 const svgCaptcha = require('svg-captcha')
-const jwt = require('jsonwebtoken')
-const md5 = require('crypto-js/md5')
-const rand = require('csprng')
+
+exports.signOut = (req, res) => {
+
+}
 
 exports.signIn = (req, res) => {
     const userName = req.body.userName
     const password = req.body.password
     User.findOne({ 'userName': userName }).then(user => {
         if(user) {               
-            if(user.password !== hashPassword(password, user.salt).toString()) {
+            if(user.password !== signHelper.genMd5Sign(password + user.salt)) {
                 res.status(403).send({
                     code: 'error',
                     message: 'Authentication failed'
                 })
                 return
-            }
-            const token = jwt.sign({ user: user.userName }, ck.secretKey, { expiresIn: '1h' })
-            res.status(200).send({ 
-                code: 'success',
-                authToken: token 
-            })
+            }            
+            user.token = tokenHelper.createToken(user.userName)
+            user.save().then(user => {
+                res.status(200).send({ 
+                    code: 'success',
+                    authToken: user.token 
+                })
+            })            
         } else {
-            res.status(403).send({
+            res.status(401).send({
                 code: 'error',
                 message: 'Authenticate failed'
             })
@@ -44,12 +48,13 @@ exports.checkDuplicate = (req, res) => {
 }
 
 exports.register = (req, res) => {
-    const sVal = generateSalt()        
+    const sVal = signHelper.genSalt()  
     new User({
         email: req.body.email,
         userName: req.body.userName,
-        password: hashPassword(req.body.password, sVal),
+        password: signHelper.genMd5Sign(req.body.password + sVal),
         salt: sVal,
+        token: '',
         chineseName: req.body.chineseName,
         mobilePhone: req.body.mobilePhone
     }).save().then(user => {
@@ -73,12 +78,4 @@ exports.captcha = (req, res) => {
         data: captcha.data,
         text: captcha.text
     })
-}
-
-const generateSalt = () => {
-    return rand(160, 36)
-}
-
-const hashPassword = (password, sVal) => {
-    return md5(password + sVal)
 }

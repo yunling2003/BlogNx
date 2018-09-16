@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'antd'
-import http from '../../utils/http'
+import * as API from '../../api'
 
 export class Captcha extends Component {    
     state = {
@@ -10,7 +10,7 @@ export class Captcha extends Component {
     }
     
     componentDidMount() {
-        http.get('/recaptcha')            
+        API.getRecaptcha()            
             .then(res => {
                 this.setState({
                     data: res.data.data,
@@ -23,7 +23,7 @@ export class Captcha extends Component {
     }
 
     changeCaptcha = (e) => {
-        http.get('/recaptcha')            
+        API.getRecaptcha()            
             .then(res => {
                 this.setState({
                     data: res.data.data,

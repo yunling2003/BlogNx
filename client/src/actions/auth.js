@@ -1,9 +1,10 @@
-import http from '../utils/http'
+import * as API from '../api'
 
 export const BEGIN_SIGNIN = 'BEGIN_SIGNIN'
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS'
 export const SIGNIN_ERROR = 'SIGNIN_ERROR'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
+export const SIGN_OUT = 'SIGN_OUT'
 
 export function beginSignIn() {
     return {
@@ -32,13 +33,19 @@ export function clearError() {
     }
 }
 
+export function signOut() {
+    return {
+        type: SIGN_OUT
+    }
+}
+
 function signInUser(loginObj) {
     const { userName, password } = loginObj
     return dispatch => {
         dispatch(beginSignIn())
-        return http.post('/signin', {                                                           
+        return API.signIn({
             userName: userName.value,
-            password: password.value           
+            password: password.value
         }).then(res => {
             if(res.data.code === 'success') {
                 dispatch(signInSuccess({

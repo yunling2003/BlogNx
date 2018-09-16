@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
 import { Form, Input, Select, Tooltip, Icon, Checkbox, Button, Row, Col } from 'antd'
-import http from '../../utils/http'
+import * as API from '../../api'
 import Captcha from './Captcha'
 
 const FormItem = Form.Item
@@ -24,7 +24,7 @@ export class RegisterForm extends Component {
                 console.log(values)
                 return
             }
-            http.post('/register', {                                                    
+            API.register({
                 email: values.email,
                 userName: values.nickname,
                 password: values.password,
@@ -67,7 +67,7 @@ export class RegisterForm extends Component {
 
     checkDuplicateName = (e) => {
         const value = e.target.value
-        http.get('/register/checkDuplicate?userName=' + value)            
+        API.checkDuplicateName(value)        
             .then(res => {
                 if(res.data.duplicate) {
                    this.props.form.setFields({

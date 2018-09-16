@@ -1,4 +1,3 @@
-import http from '../utils/http'
 import { call, put, all, takeEvery, select } from 'redux-saga/effects'
 import {     
     ARTICLE_FETCH_REQUESTED,
@@ -6,18 +5,16 @@ import {
     receiveArticles,
     endFetchArticles  
  } from '../actions/myblog'
- import crypt from '../utils/crypt'
+import * as API from '../api'
 
 function* fetchArticles(action) {    
     yield put(beginFetchArticles())
     const uid = yield select(state => state.currentUser.userName)
     const token = yield select(state => state.currentUser.token) 
     if(uid && token) {
-        const res = yield call(http.get, '/myblog/articles', {
-            params: {
-                uid: uid,
-                sign: crypt.genSha256Sign(uid + token)
-            }
+        const res = yield call(API.getMyPublishedArticles, {            
+            uid: uid,
+            token: token
         })
         if(res) {
             yield put(receiveArticles(res.data))

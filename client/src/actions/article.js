@@ -1,4 +1,4 @@
-import http from '../utils/http'
+import * as API from '../api'
 
 export const REQUEST_ARTICLES = 'REQUEST_ARTICLES'
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES'
@@ -40,7 +40,7 @@ function createArticleFilters(state) {
 function fetchArticles(state) {
     return dispatch => {
         dispatch(requestArticles())
-        return http.get('/articles?' + createArticleFilters(state))            
+        return API.getAllArticles(createArticleFilters(state))            
             .then(res => dispatch(receiveArticles(res.data)))
             .catch(err => console.log(err))
     }

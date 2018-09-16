@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Menu, Icon, Row, Col } from 'antd'
+import { signOut } from '../../actions/auth'
 import CSSModules from 'react-css-modules'
 import styles from './MyBlogHeader.css'
 import logo from '../../../assets/images/logo.png'
@@ -9,6 +12,7 @@ class MyBlogHeader extends Component {
     handleClick = (e) => {
         switch(e.key) {
             case '.$logout':
+                this.props.signOut()
                 this.props.history.push('/login')
                 break            
             default:
@@ -17,6 +21,7 @@ class MyBlogHeader extends Component {
     }
 
     render() {
+        const { user } = this.props
         return (
             <div>
                 <div>
@@ -28,7 +33,7 @@ class MyBlogHeader extends Component {
                             <Menu mode="horizontal" onClick={this.handleClick}
                             style={{ lineHeight: '64px', color: '#1890ff', border: '1px' }}>                                                            
                                 <Menu.Item key="welcome" style={{ padding: '0 5px', borderBottom: '0' }}>
-                                    <Icon type="user" />ling
+                                    <Icon type="user" />{ user.userName }
                                 </Menu.Item>
                                 <Menu.Item key="logout" style={{ padding: '0 5px', borderBottom: '0' }}>
                                     <Icon type="logout" />注销
@@ -43,4 +48,27 @@ class MyBlogHeader extends Component {
     }
 }
 
-export default withRouter(CSSModules(MyBlogHeader, styles))
+MyBlogHeader.propTypes = {
+    user: PropTypes.shape({
+        userName: PropTypes.string.isRequired,
+        isLoggingIn: PropTypes.bool.isRequired,        
+        token: PropTypes.string.isRequired
+    }).isRequired
+}
+
+function mapStateToProps(state) {
+    return {
+        user: state.currentUser
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        signOut: () => dispatch(signOut())
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(CSSModules(MyBlogHeader, styles)))

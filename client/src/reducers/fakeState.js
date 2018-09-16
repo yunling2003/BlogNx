@@ -79,5 +79,38 @@ export const fakeState = {
             <p>HTML5移动Web开发实战》作者是HTML5&nbsp;Boilerplate项目的成员，MobileBoilerplate(//h5bp.com/mobile)的主要开发人员。《HTML5移动Web开发实战》为那些致力于实现高性能、响应式、跨平台的HTML5移动网站的程序员量身打造，也适合对移动Web开发感兴趣的读者学习参考。</p>`,
             "selected": false
         }]
+    },
+    myArticles: {
+        isFetching: false,
+        totalCount: 2,
+        didInvalidate: false,
+        items: [{
+            "id": 1,
+            "title": "vue项目如何刷新当前页面",
+            "author": "ling",
+            "publishDate": "2018-05-21 17:30:00",
+            "content": `<p><strong>1.场景</strong></p>
+            <p>在处理列表时，常常有删除一条数据或者新增数据之后需要重新刷新当前页面的需求。</p>
+            <p><strong>2.遇到的问题</strong></p>
+            <p>1. 用vue-router重新路由到当前页面，页面是不进行刷新的</p>
+            <p>2.采用window.reload()，或者router.go(0)刷新时，整个浏览器进行了重新加载，闪烁，体验不好</p>
+            <p><strong>3.解决方法</strong></p>
+            <p>provide / inject&nbsp;组合</p>
+            <p>作用：允许一个祖先组件向其所有子孙后代注入一个依赖，<strong>不论组件层次有多深</strong>，并在起上下游关系成立的时间里始终生效。</p>
+            `,
+            "selected": false
+        },
+        {
+            "id": 2,
+            "title": "cooke, session, token",
+            "author": "ling",
+            "publishDate": "2018-04-07 8:16:39",
+            "content": `<p><strong><span>发展史</span></strong></p>
+            <p>1、很久很久以前，Web 基本上就是文档的浏览而已， 既然是浏览，作为服务器， 不需要记录谁在某一段时间里都浏览了什么文档，每次请求都是一个新的HTTP协议， 就是请求加响应， &nbsp;尤其是我不用记住是谁刚刚发了HTTP请求， &nbsp; 每个请求对我来说都是全新的。这段时间很嗨皮</p>
+            <p>2、但是随着交互式Web应用的兴起，像在线购物网站，需要登录的网站等等，马上就面临一个问题，那就是要管理会话，必须记住哪些人登录系统， &nbsp;哪些人往自己的购物车中放商品， &nbsp;也就是说我必须把每个人区分开，这就是一个不小的挑战，因为HTTP请求是无状态的，所以想出的办法就是给大家发一个会话标识(session id), 说白了就是一个随机的字串，每个人收到的都不一样， &nbsp;每次大家向我发起HTTP请求的时候，把这个字符串给一并捎过来， 这样我就能区分开谁是谁了</p>
+            <p>3、这样大家很嗨皮了，可是服务器就不嗨皮了，每个人只需要保存自己的session id，而服务器要保存所有人的session id ！ &nbsp;如果访问服务器多了， 就得由成千上万，甚至几十万个。</p>
+            `,
+            "selected": false
+        }]
     }
 }

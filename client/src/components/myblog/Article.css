@@ -1,0 +1,10 @@
+.listItem {
+    list-style: none;
+    color: #40a9ff;
+    padding: 10px 10px;
+}
+
+.link {
+    text-decoration: underline;
+    cursor: pointer;
+}

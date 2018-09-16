@@ -22,6 +22,12 @@ const initState = {
         didInvalidate: true, 
         totalCount: 0, 
         items: [] 
+    },
+    myArticles: {
+        isFetching: false,
+        didInvalidate: true,
+        totalCount: 0,
+        items: []
     }
 }
 

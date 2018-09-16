@@ -1,6 +1,16 @@
 import { combineReducers } from 'redux'
-import { REQUEST_ARTICLES, RECEIVE_ARTICLES, INVALIDATE_ARTICLES, SET_ARTICLEFILTER} from '../actions/article'
-import { BEGIN_SIGNIN, SIGNIN_SUCCESS, SIGNIN_ERROR, CLEAR_ERROR } from '../actions/auth'
+import { REQUEST_ARTICLES, 
+    RECEIVE_ARTICLES, 
+    INVALIDATE_ARTICLES, 
+    SET_ARTICLEFILTER } from '../actions/article'
+import { BEGIN_SIGNIN, 
+    SIGNIN_SUCCESS, 
+    SIGNIN_ERROR, 
+    CLEAR_ERROR } from '../actions/auth'
+import { ARTICLE_FETCH_BEGIN,
+    ARTICLE_FETCH_REQUESTED,
+    ARTICLE_FETCH_END,
+    ARTICLE_RECEIVED } from '../actions/myblog'
 
 function getArticles(state = {}, action) {
     switch (action.type) {
@@ -83,10 +93,37 @@ export function currentUser(state = {}, action) {
     }
 }
 
+export function myArticles(state = {}, action) {
+    switch (action.type) {
+        case ARTICLE_FETCH_BEGIN:
+            return Object.assign({}, state, {
+                isFetching: true,
+                didInvalidate: false
+            })
+        case ARTICLE_FETCH_REQUESTED:
+            return Object.assign({}, state, {
+                didInvalidate: true
+            })
+        case ARTICLE_FETCH_END:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: false
+            })
+        case ARTICLE_RECEIVED:
+            return Object.assign({}, state, {                
+                totalCount: action.totalCount,
+                items: action.articles
+            })
+        default:
+            return state
+    }
+}
+
 const blogReducer = combineReducers({
     currentUser,
     articleFilters,
-    articles
+    articles,
+    myArticles
 })
 
 export default blogReducer

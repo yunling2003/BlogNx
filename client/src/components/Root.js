@@ -7,6 +7,7 @@ import SelectedArticle from './article/SelectedArticle'
 import LoginForm from './auth/LoginForm'
 import RegisterForm from './auth/RegisterForm'
 import RegisterResult from './auth/RegisterResult'
+import requireAuth from './myblog/RequireAuth'
 import ArticleList from './myblog/ArticleList'
 import { ArticleListLayout, LoginLayout, MyBlogLayout } from './Layout'
 
@@ -21,7 +22,7 @@ class Root extends Component {
                         <LoginLayout path="/login" page="login" component={LoginForm} />
                         <LoginLayout path="/register" page="register" component={RegisterForm} />
                         <LoginLayout path="/registerresult/:result" component={RegisterResult} />
-                        <MyBlogLayout path="/myblog/articles" component={ArticleList} />
+                        <MyBlogLayout path="/myblog/articles" component={requireAuth(ArticleList)} />
                     </Switch>
                 </Router>
             </Provider>

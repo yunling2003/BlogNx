@@ -50,9 +50,9 @@ class MyBlogHeader extends Component {
 
 MyBlogHeader.propTypes = {
     user: PropTypes.shape({
-        userName: PropTypes.string.isRequired,
+        userName: PropTypes.string,
         isLoggingIn: PropTypes.bool.isRequired,        
-        token: PropTypes.string.isRequired
+        token: PropTypes.string
     }).isRequired
 }
 

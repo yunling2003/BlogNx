@@ -22,7 +22,7 @@ export class ArticleList extends Component {
             <div styleName='list'>
                 <Row>
                     <Col span={23} offset={1}>
-                        <p>共{articles.totalCount}条</p>
+                        <p>共发布{articles.totalCount}篇文章</p>
                     </Col>
                 </Row>                                                     
                 <Row>

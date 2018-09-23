@@ -18,7 +18,7 @@ const ArticleDetail = ({ article }) => (
         <Row>
             <Col span={24}>
                 <div styleName='subTitle'>
-                    <span stlyeName='subItem'>{getFormatDate(article.publishDate)}</span><span styleName='subItem'>{article.author}</span>
+                    <span styleName='subItem'>{getFormatDate(article.publishDate)}</span><span styleName='subItem'>{article.author}</span>
                 </div>
             </Col>
         </Row>        

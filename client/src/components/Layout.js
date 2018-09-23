@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
 import PageHeader from './shared/PageHeader'
@@ -72,7 +73,20 @@ export class LoginLayout extends Component {
     }
 }
 
-export class MyBlogLayout extends Component {
+class MyBlogLayout extends Component {
+    handleClick = (e) => {
+        switch(e.key) {
+            case 'article_list':
+                this.props.history.push('/myblog/articles')
+                break
+            case 'article_publish':
+                this.props.history.push('/myblog/article/publish')
+                break
+            default:
+                return
+        }
+    }
+
     render() {
         const { component: Component, ...rest } = this.props
         return (
@@ -92,6 +106,7 @@ export class MyBlogLayout extends Component {
                               mode='inline'
                               defaultSelectedKeys={['article_list']}
                               defaultOpenKeys={['info', 'article']}
+                              onClick={this.handleClick}
                               style={{ height: '100%', borderRight: 0 }}
                             >
                                 <SubMenu key="info" title={<span><Icon type="profile" />基本信息</span>}>
@@ -123,3 +138,5 @@ export class MyBlogLayout extends Component {
         )
     }
 }
+
+exports.MyBlogLayout = withRouter(MyBlogLayout)

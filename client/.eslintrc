@@ -20,5 +20,8 @@
         "no-alert": "off",
         "no-debugger": "off",
         "curly": ["error", "all"]
+    },
+    "globals": {
+        "Promise": true        
     }
 }

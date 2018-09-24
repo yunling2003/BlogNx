@@ -66,7 +66,7 @@ export class LoginForm extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.currentUser.userName && nextProps.currentUser.userName !== this.props.currentUser.userName) {
-            this.props.history.push('/myblog/articles')
+            this.props.history.push('/myblog/article/list')
         }
     }
 

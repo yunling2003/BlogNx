@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Route } from 'react-router-dom'
-import { Layout, Menu, Breadcrumb, Icon } from 'antd'
+import { Layout, Menu, Icon } from 'antd'
 import PageHeader from './shared/PageHeader'
 import LoginHeader from './shared/LoginHeader'
 import MyBlogHeader from './shared/MyBlogHeader'
 import PageFooter from './shared/PageFooter'
 import SidePanel from './shared/SidePanel'
+import MyBlogBreadCrumb from './shared/MyBlogBreadCrumb'
 
 const { Header, Footer, Sider, Content } = Layout
 const { SubMenu } = Menu
@@ -77,7 +78,7 @@ class MyBlogLayout extends Component {
     handleClick = (e) => {
         switch(e.key) {
             case 'article_list':
-                this.props.history.push('/myblog/articles')
+                this.props.history.push('/myblog/article/list')
                 break
             case 'article_publish':
                 this.props.history.push('/myblog/article/publish')
@@ -120,11 +121,7 @@ class MyBlogLayout extends Component {
                             </Menu>
                         </Sider>
                         <Layout style={{ padding: '0 24px 24px' }}>
-                            <Breadcrumb separator=">" style={{ margin: '16px 0' }}>
-                                <Breadcrumb.Item>主页</Breadcrumb.Item>
-                                <Breadcrumb.Item>博文管理</Breadcrumb.Item>
-                                <Breadcrumb.Item>我的发布</Breadcrumb.Item>
-                            </Breadcrumb>
+                            <MyBlogBreadCrumb />
                             <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
                                 <Component {...this.props} />
                             </Content>

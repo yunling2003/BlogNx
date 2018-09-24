@@ -5,6 +5,14 @@ export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS'
 export const SIGNIN_ERROR = 'SIGNIN_ERROR'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 export const SIGN_OUT = 'SIGN_OUT'
+export const REFRESH_TOKEN = 'REFRESH_TOKEN'
+
+export function refreshToken(token) {
+    return {
+        type: REFRESH_TOKEN,
+        token: token
+    }
+}
 
 export function beginSignIn() {
     return {

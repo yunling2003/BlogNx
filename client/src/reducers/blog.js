@@ -7,6 +7,7 @@ import { BEGIN_SIGNIN,
     SIGNIN_SUCCESS, 
     SIGNIN_ERROR, 
     CLEAR_ERROR,
+    REFRESH_TOKEN,
     SIGN_OUT } from '../actions/auth'
 import { ARTICLE_FETCH_BEGIN,
     ARTICLE_FETCH_REQUESTED,
@@ -83,6 +84,10 @@ function getCurrentUser(state = {}, action) {
                 token: null,
                 logInMessage: ''
             })
+        case REFRESH_TOKEN:
+            return Object.assign({}, state, {
+                token: action.token
+            })
         default:
             return state
     }
@@ -94,6 +99,7 @@ export function currentUser(state = {}, action) {
         case SIGNIN_SUCCESS:
         case SIGNIN_ERROR:
         case SIGN_OUT:
+        case REFRESH_TOKEN:
         case CLEAR_ERROR:
             return Object.assign({}, state, getCurrentUser(state, action))
         default:

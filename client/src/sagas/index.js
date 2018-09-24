@@ -5,6 +5,7 @@ import {
     receiveArticles,
     endFetchArticles  
  } from '../actions/myblog'
+import { refreshToken } from '../actions/auth'
 import * as API from '../api'
 
 function* fetchArticles(action) {    
@@ -16,7 +17,8 @@ function* fetchArticles(action) {
             uid: uid,
             token: token
         })
-        if(res) {
+        if(res) {            
+            yield put(refreshToken(res.headers.authtoken))
             yield put(receiveArticles(res.data))
         } else {
             console.error('Error occurred!')    

@@ -44,7 +44,10 @@ exports.refreshToken = (uid) => {
 
 exports.findAllArticles = (req, res) => {
     const uid = req.query.uid
-    Article.find({ author: uid }).then(articles => {        
+    const sortCol = 'publishDate'
+    const sortSeq = -1    
+    const sortObj = JSON.parse("{ \"" + sortCol + "\": " + sortSeq + "}")
+    Article.find({ author: uid }).sort(sortObj).then(articles => {        
         res.send({             
             articles
         })
@@ -53,6 +56,30 @@ exports.findAllArticles = (req, res) => {
         res.status(500).send({
             message: err.message || 'Error occurs when retrieving articles'
         })
+    })    
+}
+
+exports.publishArticle = (req, res) => {
+    const uid = req.query.uid
+    const articleObj = req.body.article
+
+    const article = new Article({
+        title: articleObj.title,
+        author: uid,
+        publishDate: Date.now().toString(),
+        content: articleObj.content,
+        selected: false
     })
-    
+
+    article.save().then(result => {
+        res.send({
+            status: 'success'
+        })
+    }).catch(err => {
+        console.error(err)
+        res.status(500).send({
+            status: 'fail',
+            message: err.message || 'Error occurs when pubilsh article'
+        })
+    })
 }

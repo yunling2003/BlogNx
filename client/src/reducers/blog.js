@@ -12,9 +12,13 @@ import { BEGIN_SIGNIN,
 import { ARTICLE_FETCH_BEGIN,
     ARTICLE_FETCH_REQUESTED,
     ARTICLE_FETCH_END,
-    ARTICLE_RECEIVED } from '../actions/myblog'
+    ARTICLE_RECEIVED,    
+    ARTICLE_PUBLISH_BEGIN,
+    ARTICLE_PUBLISH_END,
+    ARTICLE_PUBLISH_RESPONSE,
+    CLEAR_ARTICLE_PUBLISH_STATUS } from '../actions/myblog'
 
-function getArticles(state = {}, action) {
+export function articles(state = {}, action) {
     switch (action.type) {
         case INVALIDATE_ARTICLES:
             return Object.assign({}, state, {
@@ -37,17 +41,6 @@ function getArticles(state = {}, action) {
     }
 }
 
-export function articles(state = {}, action) {
-    switch (action.type) {
-        case INVALIDATE_ARTICLES:
-        case REQUEST_ARTICLES:
-        case RECEIVE_ARTICLES:
-            return Object.assign({}, state, getArticles(state, action))
-        default:
-            return state
-    }
-}
-
 export function articleFilters(state = {}, action) {
     switch (action.type) {
         case SET_ARTICLEFILTER:
@@ -57,7 +50,7 @@ export function articleFilters(state = {}, action) {
     }
 }
 
-function getCurrentUser(state = {}, action) {
+export function currentUser(state = {}, action) {
     switch (action.type) {
         case BEGIN_SIGNIN:
             return Object.assign({}, state, {
@@ -93,20 +86,6 @@ function getCurrentUser(state = {}, action) {
     }
 }
 
-export function currentUser(state = {}, action) {
-    switch (action.type) {
-        case BEGIN_SIGNIN:
-        case SIGNIN_SUCCESS:
-        case SIGNIN_ERROR:
-        case SIGN_OUT:
-        case REFRESH_TOKEN:
-        case CLEAR_ERROR:
-            return Object.assign({}, state, getCurrentUser(state, action))
-        default:
-            return state
-    }
-}
-
 export function myArticles(state = {}, action) {
     switch (action.type) {
         case ARTICLE_FETCH_BEGIN:
@@ -127,6 +106,38 @@ export function myArticles(state = {}, action) {
             return Object.assign({}, state, {                
                 totalCount: action.totalCount,
                 items: action.articles
+            })
+        case ARTICLE_PUBLISH_BEGIN:
+            return Object.assign({}, state, {
+                publish: {
+                    isPublishing: true,
+                    status: state.publish.status,
+                    publishMessage: state.publish.publishMessage
+                }
+            })
+        case ARTICLE_PUBLISH_END:
+            return Object.assign({}, state, {
+                publish: {
+                    isPublishing: false,
+                    status: state.publish.status,
+                    publishMessage: state.publish.publishMessage
+                }
+            })
+        case ARTICLE_PUBLISH_RESPONSE:
+            return Object.assign({}, state, {
+                publish: {
+                    isPublishing: state.publish.isPublishing,
+                    status: action.status,
+                    publishMessage: action.publishMessage || ''
+                }
+            })
+        case CLEAR_ARTICLE_PUBLISH_STATUS:
+            return Object.assign({}, state, {
+                publish: {
+                    isPublishing: false,
+                    status: 'init',
+                    publishMessage: ''
+                }
             })
         default:
             return state

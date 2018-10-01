@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
-const ArticleSchema = mongoose.Schema({
-    id: Number,
+const ArticleSchema = mongoose.Schema({    
     title: String,
     author: String,
     publishDate: Date,

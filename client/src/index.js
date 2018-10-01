@@ -24,6 +24,11 @@ const initState = {
         items: [] 
     },
     myArticles: {
+        publish: {
+            isPublishing: false,
+            status: 'init',
+            publishMessage: ''
+        },
         isFetching: false,
         didInvalidate: true,
         totalCount: 0,

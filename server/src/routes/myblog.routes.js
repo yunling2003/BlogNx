@@ -1,7 +1,7 @@
 module.exports = (app) => {
     const myBlog = require('../controllers/myblog.controller.js')
 
-    app.all('/myblog/*', (req, res, next) => {
+    function authenticate(req, res, next) {
         const uid = req.query.uid || ''
         const sign = req.query.sign || ''
         myBlog.validateCredential(uid, sign).then(valid => {
@@ -22,7 +22,8 @@ module.exports = (app) => {
                 message: err
             })
         })        
-    })
+    }    
 
-    app.get('/myblog/articles', myBlog.findAllArticles)
+    app.get('/myblog/articles', authenticate, myBlog.findAllArticles)
+    app.post('/myblog/article/publish', authenticate, myBlog.publishArticle)
 }

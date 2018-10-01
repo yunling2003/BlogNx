@@ -33,7 +33,7 @@ const ArticleDetail = ({ article }) => (
 
 ArticleDetail.propTypes = {
     article: PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        _id: PropTypes.string.isRequired,
         selected: PropTypes.bool.isRequired,
         title: PropTypes.string.isRequired,
         publishDate: PropTypes.string.isRequired,

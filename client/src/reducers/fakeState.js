@@ -14,7 +14,7 @@ export const fakeState = {
         didInvalidate: false,
         totalCount: 5,
         items: [{
-            "id": 1,
+            "_id": "23478fdsljkl423",
             "title": "vue项目如何刷新当前页面",
             "author": 1,
             "publishDate": "2018-05-21 17:30:00",
@@ -30,7 +30,7 @@ export const fakeState = {
             "selected": false
         },
         {
-            "id": 2,
+            "_id": "hkl3458dfg0dfg",
             "title": "cooke, session, token",
             "author": 2,
             "publishDate": "2018-04-07 8:16:39",
@@ -42,7 +42,7 @@ export const fakeState = {
             "selected": false
         },
         {
-            "id": 3,
+            "_id": "2345jkldfuiotre",
             "title": "纯前端实现图片背景透明化",
             "author": 3,
             "publishDate": "2018-03-11 12:08:00",
@@ -56,7 +56,7 @@ export const fakeState = {
             "selected": false
         },
         {
-            "id": 4,
+            "_id": "cvjkl234789dfgdfg",
             "title": "HTML5基础知识总结(一)",
             "author": 4,
             "publishDate": "2017-11-11 21:54:00",
@@ -70,7 +70,7 @@ export const fakeState = {
             "selected": false
         },
         {
-            "id": 5,
+            "_id": "234jlkdfsg908dsf",
             "title": "HTML5移动开发即学即用(双色)",
             "author": 5,
             "publishDate": "2018-01-31 10:22:00",
@@ -81,11 +81,16 @@ export const fakeState = {
         }]
     },
     myArticles: {
+        publish: {
+            isPublishing: false,
+            status: 'init',
+            publishMessage: ''
+        },
         isFetching: false,
         totalCount: 2,
         didInvalidate: false,
         items: [{
-            "id": 1,
+            "_id": "345jkldfg90890df890g",
             "title": "vue项目如何刷新当前页面",
             "author": "ling",
             "publishDate": "2018-05-21 17:30:00",
@@ -101,7 +106,7 @@ export const fakeState = {
             "selected": false
         },
         {
-            "id": 2,
+            "_id": "2345jkldfsg908sdfsd",
             "title": "cooke, session, token",
             "author": "ling",
             "publishDate": "2018-04-07 8:16:39",

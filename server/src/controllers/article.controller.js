@@ -13,7 +13,7 @@ exports.findAll = (req, res) => {
         })
     }
 
-    const sortCol = req.query.sortCol || 'id'
+    const sortCol = req.query.sortCol || 'publishDate'
     const sortSeq = req.query.sortSeq || -1    
     const sortObj = JSON.parse("{ \"" + sortCol + "\": " + sortSeq + "}")
     const pageSize = +req.query.pageSize || defaultPageSize

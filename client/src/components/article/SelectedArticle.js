@@ -3,11 +3,11 @@ import ArticleDetail from './ArticleDetail'
 
 
 const getSelectedArticle = (articles, selectedId) => {
-    return articles.items.find(a => a.id === selectedId)
+    return articles.items.find(a => a._id === selectedId)
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    article: getSelectedArticle(state.articles, parseInt(ownProps.computedMatch.params.id))
+    article: getSelectedArticle(state.articles, ownProps.computedMatch.params.id)
 })
 
 export default connect(

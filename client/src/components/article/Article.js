@@ -18,7 +18,7 @@ class Article extends Component {
     render() {
         return (
             <li styleName='listItem'>
-                <Link styleName='link' to={`/article/${this.props.id}`}>{this.props.title}</Link>
+                <Link styleName='link' to={`/article/${this.props._id}`}>{this.props.title}</Link>
                 <div>
                     <p styleName='text'>{this.state.digest}</p>
                 </div>        
@@ -40,7 +40,7 @@ class Article extends Component {
 }
 
 Article.propTypes = {
-    id: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
 }

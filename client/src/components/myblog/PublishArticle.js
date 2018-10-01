@@ -1,7 +1,11 @@
 import React, {Component}  from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { requestPublishArticle, clearArticlePublishStatus } from '../../actions/myblog'
 import { Row, Col, Form, Input, Button } from 'antd'
-import { EditorState } from 'draft-js'
+import { EditorState, convertToRaw } from 'draft-js'
+import draftToHtml from 'draftjs-to-html'
 import { Editor } from 'react-draft-wysiwyg'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
@@ -51,7 +55,10 @@ export class PublishArticle extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-
+        this.props.publishArticle({
+            title: this.state.title.value,
+            content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
+        })
     }
 
     uploadImageCallBack = (file) => {
@@ -62,8 +69,20 @@ export class PublishArticle extends Component {
         )
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.articles.publish.status === 'success') {            
+            this.props.history.push('/myblog/article/list')
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.clearPublishStatus()
+    }
+
     render() {
         const { title, editorState } = this.state        
+        const { publish } = this.props.articles
+        const { status, publishMessage } = publish
 
         return (            
             <Form onSubmit={this.handleSubmit}>
@@ -107,10 +126,40 @@ export class PublishArticle extends Component {
                             </Form.Item> 
                         </Col>
                     </Row>
+                    {status === 'fail' ? 
+                        <Row>
+                            <Col span={24}>
+                                <p style={{color: 'red'}}>发布文章失败!{publishMessage}</p>
+                            </Col>                        
+                        </Row> 
+                        : null
+                    }
                 </div>                
             </Form>                    
         )
     }
 }
 
-export default connect()(PublishArticle)
+PublishArticle.propTypes = {
+    articles: PropTypes.shape({
+        publish: PropTypes.shape({
+            status: PropTypes.string.isRequired,       
+            publishMessage: PropTypes.string.isRequired
+        }).isRequired        
+    }).isRequired
+}
+
+function mapStateToProps(state) {
+    return {
+        articles: state.myArticles
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        publishArticle: (article) => dispatch(requestPublishArticle(article)),
+        clearPublishStatus: () => dispatch(clearArticlePublishStatus())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PublishArticle))

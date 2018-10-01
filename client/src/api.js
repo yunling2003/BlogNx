@@ -38,3 +38,17 @@ export function getMyPublishedArticles(credentials) {
         }
     })
 }
+
+export function publishArticle(articleObj, credentials) {
+    return http({
+        method: 'post',
+        url: '/myblog/article/publish',
+        params: {
+            uid: credentials.uid,
+            sign: crypt.genSha256Sign(credentials.uid + credentials.token)
+        },
+        data: {
+            article: articleObj
+        }
+    })    
+}

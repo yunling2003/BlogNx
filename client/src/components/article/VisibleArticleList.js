@@ -55,7 +55,7 @@ export class VisibleArticleList extends Component {
                         <ul>
                             {articles.items.map(article =>
                                 <Article
-                                    key={article.id}
+                                    key={article._id}
                                     {...article}/>
                             )}
                         </ul>
@@ -93,7 +93,7 @@ VisibleArticleList.propTypes = {
         totalCount: PropTypes.number.isRequired,       
         items: PropTypes.arrayOf(
             PropTypes.shape({
-                id: PropTypes.number.isRequired,
+                _id: PropTypes.string.isRequired,
                 selected: PropTypes.bool.isRequired,
                 title: PropTypes.string.isRequired,
                 content: PropTypes.string.isRequired

@@ -1,7 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const path = require('path')
 const dbConfig = require('./config/database.js')
 const mongoose = require('mongoose')
+const configKeys = require('./constkeys.js')
 const app = express()
 
 mongoose.Promise = global.Promise
@@ -28,10 +30,12 @@ app.get('/', (req, res) => {
     res.json({"message": "Welcome to BlogNx application."})
 })
 
+app.use(express.static(path.join(__dirname, "../resource")))
+
 require('./routes/article.routes.js')(app)
 require('./routes/authenticate.routes.js')(app)
 require('./routes/myblog.routes.js')(app)
 
-app.listen(3000, () => {
+app.listen(configKeys.port, () => {
     console.log("Server is listening on port 3000!")
 })

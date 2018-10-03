@@ -52,3 +52,7 @@ export function publishArticle(articleObj, credentials) {
         }
     })    
 }
+
+export function uploadImage(imgObj, config) {
+    return http.post('/myblog/article/uploadImage', imgObj, config)
+}

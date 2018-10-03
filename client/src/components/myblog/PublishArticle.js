@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { requestPublishArticle, clearArticlePublishStatus } from '../../actions/myblog'
+import * as API from '../../api'
 import { Row, Col, Form, Input, Button } from 'antd'
 import { EditorState, convertToRaw } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
@@ -64,7 +65,16 @@ export class PublishArticle extends Component {
     uploadImageCallBack = (file) => {
         return new Promise(
           (resolve, reject) => {
-             resolve(true)
+            let imgObj = new FormData()
+            imgObj.append('file', file, file.name)                        
+            let config = {
+              headers:{'Content-Type':'multipart/form-data'}
+            }
+            API.uploadImage(imgObj, config)
+                .then(res=>{
+                    console.log(res.data)
+                    resolve(res.data)
+                }) 
           }
         )
     }
@@ -110,9 +120,13 @@ export class PublishArticle extends Component {
                                                 options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 
                                                     'Verdana', 'SimSun', 'SimHei', 'FangSong', 'KaiTi', 'Microsoft YaHei', 
                                                     'STXihei', 'STHeiti', 'STKaiti', 'STSong', 'STFangsong'],                                                
-                                            },                                       
-                                            image: { uploadCallback: this.uploadImageCallBack, alt: { present: true, mandatory: true } },
-                                            }}
+                                            },                                                                                  
+                                            image: { 
+                                                uploadCallback: this.uploadImageCallBack, 
+                                                inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg', 
+                                                alt: { present: true, mandatory: true } 
+                                            },
+                                        }}
                                         onEditorStateChange={this.onEditorStateChange} />
                             </Form.Item>
                         </Col>

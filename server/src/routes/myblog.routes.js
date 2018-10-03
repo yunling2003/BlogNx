@@ -26,4 +26,5 @@ module.exports = (app) => {
 
     app.get('/myblog/articles', authenticate, myBlog.findAllArticles)
     app.post('/myblog/article/publish', authenticate, myBlog.publishArticle)
+    app.post('/myblog/article/uploadImage', myBlog.uploadImage)
 }

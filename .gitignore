@@ -9,6 +9,8 @@
 
 /server/node_modules
 
+/server/resource
+
 /.vscode
 
 .DS_Store

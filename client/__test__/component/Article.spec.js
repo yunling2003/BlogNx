@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 
 const setup = () => {
     const props = {
-        id: 1,
+        _id: '1',
         title: 'Test title',
         content: '<p>Test article content</p>'
     }

@@ -3,10 +3,10 @@ import { withRouter } from 'react-router-dom'
 import { Menu, Icon, Row, Col } from 'antd'
 import throttle from 'lodash.throttle'
 import CSSModules from 'react-css-modules'
-import styles from './PageHeader.css'
+import styles from './ArticleHeader.css'
 import logo from '../../../assets/images/logo.png'
 
-class PageHeader extends Component {    
+class ArticleHeader extends Component {    
     mobileBreakPoint = 576
     applyViewportChangeInterval = 250
     state = {
@@ -148,4 +148,4 @@ class PageHeader extends Component {
     }
 }
 
-export default withRouter(CSSModules(PageHeader, styles))
+export default withRouter(CSSModules(ArticleHeader, styles))

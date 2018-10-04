@@ -8,10 +8,23 @@ import { Row, Col, Form, Input, Button } from 'antd'
 import { EditorState, convertToRaw } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
 import { Editor } from 'react-draft-wysiwyg'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 function validateField(value, message) {
     if(value) {
+        return {
+            validateStatus: 'success',
+            errorMsg: null
+        }
+    }
+    return {
+        validateStatus: 'error',
+        errorMsg: message
+    }
+}
+
+function validateContent(contentState, message) {
+    if(contentState.hasText()) {
         return {
             validateStatus: 'success',
             errorMsg: null
@@ -28,7 +41,10 @@ export class PublishArticle extends Component {
         super(props)
         this.state = {
             title: {
-                value: '',
+                value: ''
+            },
+            content: {
+                value: ''
             },
             editorState: EditorState.createEmpty()
         }
@@ -36,12 +52,16 @@ export class PublishArticle extends Component {
 
     onEditorStateChange = (editorState) => {
         this.setState({
-            editorState
+            editorState,
+            content: {
+                ...validateContent(editorState.getCurrentContent(), '请输入文章内容!'),
+                value: editorState.getCurrentContent()
+            }
         })
     }
 
     hasErrors = () => {
-        return this.state.title.validateStatus !== 'success'
+        return this.state.title.validateStatus !== 'success' || this.state.content.validateStatus !== 'success'
     }
 
     handleTitleChange = (e) => {
@@ -71,8 +91,7 @@ export class PublishArticle extends Component {
               headers:{'Content-Type':'multipart/form-data'}
             }
             API.uploadImage(imgObj, config)
-                .then(res=>{
-                    console.log(res.data)
+                .then(res=>{                    
                     resolve(res.data)
                 }) 
           }
@@ -90,7 +109,7 @@ export class PublishArticle extends Component {
     }
 
     render() {
-        const { title, editorState } = this.state        
+        const { title, content, editorState } = this.state        
         const { publish } = this.props.articles
         const { status, publishMessage } = publish
 
@@ -111,9 +130,12 @@ export class PublishArticle extends Component {
                     </Row>
                     <Row>
                         <Col span={24}>
-                            <Form.Item>
+                            <Form.Item
+                                validateStatus={content.validateStatus}
+                                help={content.errorMsg || ''}>
                                 <Editor editorState={editorState}
                                         editorStyle={{ height: '400px', border: '1px solid #F1F1F1', lineHeight: '1em' }}
+                                        localization={{ locale: 'zh' }}
                                         placeholder='输入正文'
                                         toolbar={{     
                                             fontFamily: {

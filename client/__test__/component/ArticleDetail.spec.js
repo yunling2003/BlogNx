@@ -5,10 +5,12 @@ import { shallow } from 'enzyme'
 const setup = () => {
     const props = {
         article: {
-            id: 1,
+            _id: '1',
             selected: true,
             title: 'Test title',
-            content: '<p>This is test article content</p>'
+            author: 'ling',
+            content: '<p>This is test article content</p>',
+            publishDate: '2018-10-02',
         }
     }
     const wrapper = shallow(<ArticleDetail {...props} />)

@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import { Layout, Menu, Icon } from 'antd'
-import PageHeader from './shared/PageHeader'
-import LoginHeader from './shared/LoginHeader'
-import MyBlogHeader from './shared/MyBlogHeader'
+import ArticleHeader from './article/ArticleHeader'
+import SidePanel from './article/SidePanel'
+import LoginHeader from './auth/LoginHeader'
+import MyBlogHeader from './myblog/MyBlogHeader'
+import MyBlogBreadCrumb from './myblog/MyBlogBreadCrumb'
 import PageFooter from './shared/PageFooter'
-import SidePanel from './shared/SidePanel'
-import MyBlogBreadCrumb from './shared/MyBlogBreadCrumb'
 
 const { Header, Footer, Sider, Content } = Layout
 const { SubMenu } = Menu
@@ -27,7 +27,7 @@ export class ArticleListLayout extends Component {
             <Route {...rest} render={props => (
                 <Layout style={{ height: '100%' }}>
                     <Header style={{ backgroundColor: '#1890ff', height: 'auto', padding: '0' }}>
-                        <PageHeader />
+                        <ArticleHeader />
                     </Header>
                     <Layout style={{ padding: '20px 10px' }}>
                         <Content>

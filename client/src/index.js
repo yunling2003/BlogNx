@@ -29,6 +29,7 @@ const initState = {
             status: 'init',
             publishMessage: ''
         },
+        selectedMenu: 'article_list',
         isFetching: false,
         didInvalidate: true,
         totalCount: 0,

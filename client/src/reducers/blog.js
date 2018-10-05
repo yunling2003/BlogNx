@@ -16,7 +16,8 @@ import { ARTICLE_FETCH_BEGIN,
     ARTICLE_PUBLISH_BEGIN,
     ARTICLE_PUBLISH_END,
     ARTICLE_PUBLISH_RESPONSE,
-    CLEAR_ARTICLE_PUBLISH_STATUS } from '../actions/myblog'
+    CLEAR_ARTICLE_PUBLISH_STATUS,
+    SELECT_MENU } from '../actions/myblog'
 
 export function articles(state = {}, action) {
     switch (action.type) {
@@ -138,6 +139,10 @@ export function myArticles(state = {}, action) {
                     status: 'init',
                     publishMessage: ''
                 }
+            })
+        case SELECT_MENU:
+            return Object.assign({}, state, {
+                selectedMenu: action.menu
             })
         default:
             return state

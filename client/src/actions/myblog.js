@@ -10,6 +10,8 @@ export const ARTICLE_PUBLISH_END = 'ARTICLE_PUBLISH_END'
 export const ARTICLE_PUBLISH_RESPONSE = 'ARTICLE_PUBLISH_RESPONSE'
 export const CLEAR_ARTICLE_PUBLISH_STATUS = 'CLEAR_ARTICLE_PUBLISH_STATUS'
 
+export const SELECT_MENU = 'SELECT_MENU'
+
 export function beginFetchArticles() {
     return {
         type: ARTICLE_FETCH_BEGIN
@@ -66,5 +68,12 @@ export function receiveArticlePublishResponse(json) {
 export function clearArticlePublishStatus() {
     return {
         type: CLEAR_ARTICLE_PUBLISH_STATUS
+    }
+}
+
+export function selectMenu(menu) {
+    return {
+        type: SELECT_MENU,
+        menu
     }
 }

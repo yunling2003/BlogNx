@@ -2,7 +2,9 @@ import React, {Component}  from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { requestPublishArticle, clearArticlePublishStatus } from '../../actions/myblog'
+import { requestPublishArticle, 
+    clearArticlePublishStatus,
+    selectMenu } from '../../actions/myblog'
 import * as API from '../../api'
 import { Row, Col, Form, Input, Button } from 'antd'
 import { EditorState, convertToRaw } from 'draft-js'
@@ -101,6 +103,7 @@ export class PublishArticle extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.articles.publish.status === 'success') {            
             this.props.history.push('/myblog/article/list')
+            this.props.selectMenu('article_list')
         }
     }
 
@@ -194,7 +197,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         publishArticle: (article) => dispatch(requestPublishArticle(article)),
-        clearPublishStatus: () => dispatch(clearArticlePublishStatus())
+        clearPublishStatus: () => dispatch(clearArticlePublishStatus()),
+        selectMenu: (menu) => dispatch(selectMenu(menu))
     }
 }
 

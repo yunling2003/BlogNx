@@ -86,6 +86,7 @@ export const fakeState = {
             status: 'init',
             publishMessage: ''
         },
+        selectedMenu: 'article_list',
         isFetching: false,
         totalCount: 2,
         didInvalidate: false,

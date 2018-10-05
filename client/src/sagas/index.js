@@ -7,7 +7,8 @@ import {
     ARTICLE_PUBLISH_REQUESTED,
     beginPublishArticle,
     endPublishArticle,
-    receiveArticlePublishResponse
+    receiveArticlePublishResponse,
+    ARTICLE_EDIT_REQUESTED
  } from '../actions/myblog'
 import { refreshToken } from '../actions/auth'
 import * as API from '../api'
@@ -58,9 +59,33 @@ function* publishArticleAsync() {
     yield takeEvery(ARTICLE_PUBLISH_REQUESTED, publishArticle)
 }
 
+function* editArticle(action) {
+    yield put(beginPublishArticle())
+    const uid = yield select(state => state.currentUser.userName)
+    const token = yield select(state => state.currentUser.token) 
+    if(uid && token) {
+        const res = yield call(API.editArticle, action.article, {
+            uid: uid,
+            token: token
+        })
+        if(res) {
+            yield put(refreshToken(res.headers.authtoken))
+            yield put(receiveArticlePublishResponse(res.data))
+        } else {
+            console.error('Error occurred!')
+        }
+    }
+    yield put(endPublishArticle())
+}
+
+function* editArticleAsync() {
+    yield takeEvery(ARTICLE_EDIT_REQUESTED, editArticle)
+}
+
 export default function* rootSaga() {
     yield all([
         fetchArticlesAsync(), 
-        publishArticleAsync()
+        publishArticleAsync(),
+        editArticleAsync()
     ])
 }

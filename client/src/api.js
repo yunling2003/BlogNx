@@ -53,6 +53,20 @@ export function publishArticle(articleObj, credentials) {
     })    
 }
 
+export function editArticle(articleObj, credentials) {
+    return http({
+        method: 'post',
+        url: '/myblog/article/edit',
+        params: {
+            uid: credentials.uid,
+            sign: crypt.genSha256Sign(credentials.uid + credentials.token)
+        },
+        data: {
+            article: articleObj
+        }
+    }) 
+}
+
 export function uploadImage(imgObj, config) {
     return http.post('/myblog/article/uploadImage', imgObj, config)
 }

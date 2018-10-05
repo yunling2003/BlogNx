@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const ArticleSchema = mongoose.Schema({    
+const ArticleSchema = mongoose.Schema({     
     title: String,
     author: String,
     publishDate: Date,

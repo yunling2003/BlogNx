@@ -6,7 +6,8 @@ const breadcrumbNameMap = {
     '/myblog': '主页',
     '/myblog/article': '博文管理',
     '/myblog/article/publish': '发布文章',
-    '/myblog/article/list': '我的发布'
+    '/myblog/article/list': '我的发布',
+    '/myblog/article/edit': '编辑文章'
 }
 
 export class MyBlogBreadCrumb extends Component {

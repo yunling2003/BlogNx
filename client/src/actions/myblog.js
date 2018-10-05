@@ -9,6 +9,7 @@ export const ARTICLE_PUBLISH_BEGIN = 'ARTICLE_PUBLISH_BEGIN'
 export const ARTICLE_PUBLISH_END = 'ARTICLE_PUBLISH_END'
 export const ARTICLE_PUBLISH_RESPONSE = 'ARTICLE_PUBLISH_RESPONSE'
 export const CLEAR_ARTICLE_PUBLISH_STATUS = 'CLEAR_ARTICLE_PUBLISH_STATUS'
+export const ARTICLE_EDIT_REQUESTED = 'ARTICLE_EDIT_REQUESTED'
 
 export const SELECT_MENU = 'SELECT_MENU'
 
@@ -47,6 +48,13 @@ export function beginPublishArticle() {
 export function requestPublishArticle(article) {
     return {
         type: ARTICLE_PUBLISH_REQUESTED,
+        article
+    }
+}
+
+export function requestEditArticle(article) {
+    return {
+        type: ARTICLE_EDIT_REQUESTED,
         article
     }
 }

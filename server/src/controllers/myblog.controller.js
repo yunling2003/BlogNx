@@ -87,6 +87,32 @@ exports.publishArticle = (req, res) => {
     })
 }
 
+exports.editArticle = (req, res) => {
+    const articleObj = req.body.article
+    Article.findById({ _id: articleObj.id }).then(article => {
+        if(article) {
+            article.title = articleObj.title
+            article.content = articleObj.content
+            article.save().then(result => {
+                res.send({
+                    status: 'success'
+                })
+            }).catch(err => {
+                console.error(err)
+                res.status(500).send({
+                    status: 'fail',
+                    message: err.message || 'Error occurs when edit article'
+                })
+            })
+        } else {
+            res.status(500).send({
+                status: 'fail',
+                message: 'Article does not exists'
+            })
+        }    
+    })    
+}
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {      
       cb(null, path.join(__dirname, "../../resource/image"))

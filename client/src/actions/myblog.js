@@ -10,6 +10,9 @@ export const ARTICLE_PUBLISH_END = 'ARTICLE_PUBLISH_END'
 export const ARTICLE_PUBLISH_RESPONSE = 'ARTICLE_PUBLISH_RESPONSE'
 export const CLEAR_ARTICLE_PUBLISH_STATUS = 'CLEAR_ARTICLE_PUBLISH_STATUS'
 export const ARTICLE_EDIT_REQUESTED = 'ARTICLE_EDIT_REQUESTED'
+export const ARTICLE_DELETE_BEGIN = 'ARTICLE_DELETE_BEGIN'
+export const ARTICLE_DELETE_REQUESTED = 'ARTICLE_DELETE_REQUESTED'
+export const ARTICLE_DELETE_END = 'ARTICLE_DELETE_END'
 
 export const SELECT_MENU = 'SELECT_MENU'
 
@@ -76,6 +79,25 @@ export function receiveArticlePublishResponse(json) {
 export function clearArticlePublishStatus() {
     return {
         type: CLEAR_ARTICLE_PUBLISH_STATUS
+    }
+}
+
+export function beginDeleteArticle() {
+    return {
+        type: ARTICLE_DELETE_BEGIN
+    }
+}
+
+export function deleteArticle(id) {
+    return {
+        type: ARTICLE_DELETE_REQUESTED,
+        id
+    }
+}
+
+export function endDeleteArticle() {
+    return {
+        type: ARTICLE_DELETE_END
     }
 }
 

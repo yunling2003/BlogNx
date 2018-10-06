@@ -8,12 +8,15 @@ import {
     beginPublishArticle,
     endPublishArticle,
     receiveArticlePublishResponse,
-    ARTICLE_EDIT_REQUESTED
+    ARTICLE_EDIT_REQUESTED,
+    beginDeleteArticle,
+    endDeleteArticle,
+    ARTICLE_DELETE_REQUESTED
  } from '../actions/myblog'
 import { refreshToken } from '../actions/auth'
 import * as API from '../api'
 
-function* fetchArticles(action) {    
+function* fetchArticles() {    
     yield put(beginFetchArticles())
     const uid = yield select(state => state.currentUser.userName)
     const token = yield select(state => state.currentUser.token) 
@@ -82,10 +85,35 @@ function* editArticleAsync() {
     yield takeEvery(ARTICLE_EDIT_REQUESTED, editArticle)
 }
 
+function* deleteArticle(action) {
+    yield put(beginDeleteArticle())
+    const uid = yield select(state => state.currentUser.userName)
+    const token = yield select(state => state.currentUser.token) 
+    if(uid && token) {
+        const res = yield call(API.deleteArticle, action.id, { uid: uid, token: token})        
+        if(res) {            
+            yield put(refreshToken(res.headers.authtoken))            
+        } else {
+            console.error('Error occurred!')    
+        }   
+    }
+    yield put(endDeleteArticle())
+}
+
+function* deleteArticleAndRefresh(action) {
+    yield call(deleteArticle, action)
+    yield call(fetchArticles)
+}
+
+function* deleteArticleAndRefreshAsync() {
+    yield takeEvery(ARTICLE_DELETE_REQUESTED, deleteArticleAndRefresh)
+}
+
 export default function* rootSaga() {
     yield all([
         fetchArticlesAsync(), 
         publishArticleAsync(),
-        editArticleAsync()
+        editArticleAsync(),
+        deleteArticleAndRefreshAsync()
     ])
 }

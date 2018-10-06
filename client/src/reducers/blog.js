@@ -17,6 +17,8 @@ import { ARTICLE_FETCH_BEGIN,
     ARTICLE_PUBLISH_END,
     ARTICLE_PUBLISH_RESPONSE,
     CLEAR_ARTICLE_PUBLISH_STATUS,
+    ARTICLE_DELETE_BEGIN,
+    ARTICLE_DELETE_END,
     SELECT_MENU } from '../actions/myblog'
 
 export function articles(state = {}, action) {
@@ -139,6 +141,14 @@ export function myArticles(state = {}, action) {
                     status: 'init',
                     publishMessage: ''
                 }
+            })
+        case ARTICLE_DELETE_BEGIN:
+            return Object.assign({}, state, {
+                isDeleting: true
+            })
+        case ARTICLE_DELETE_END:
+            return Object.assign({}, state, {
+                isDeleting: false
             })
         case SELECT_MENU:
             return Object.assign({}, state, {

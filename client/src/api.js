@@ -67,6 +67,20 @@ export function editArticle(articleObj, credentials) {
     }) 
 }
 
+export function deleteArticle(id, credentials) {
+    return http({
+        method: 'post',
+        url: '/myblog/article/delete',
+        params: {
+            uid: credentials.uid,
+            sign: crypt.genSha256Sign(credentials.uid + credentials.token)
+        },
+        data: {
+            id
+        }
+    })
+}
+
 export function uploadImage(imgObj, config) {
     return http.post('/myblog/article/uploadImage', imgObj, config)
 }

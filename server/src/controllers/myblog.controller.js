@@ -113,6 +113,20 @@ exports.editArticle = (req, res) => {
     })    
 }
 
+exports.deleteArticle = (req, res) => {
+    const id = req.body.id
+    Article.findByIdAndDelete(id).then(result => {
+        res.send({
+            status: 'success'
+        })
+    }).catch(err => {
+        res.status(500).send({
+            status: 'fail',
+            message: err.message || 'Error occurs when delete article'
+        })
+    })
+}
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {      
       cb(null, path.join(__dirname, "../../resource/image"))

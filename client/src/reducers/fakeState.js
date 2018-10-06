@@ -88,6 +88,7 @@ export const fakeState = {
         },
         selectedMenu: 'article_list',
         isFetching: false,
+        isDeleting: false,
         totalCount: 2,
         didInvalidate: false,
         items: [{

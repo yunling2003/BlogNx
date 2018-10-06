@@ -31,6 +31,7 @@ const initState = {
         },
         selectedMenu: 'article_list',
         isFetching: false,
+        isDeleting: false,
         didInvalidate: true,
         totalCount: 0,
         items: []

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Menu, Icon, Row, Col } from 'antd'
+import { Menu, Popover, Icon, Row, Col } from 'antd'
+import { signOut } from '../../actions/auth'
 import throttle from 'lodash.throttle'
 import CSSModules from 'react-css-modules'
 import styles from './ArticleHeader.css'
@@ -48,7 +50,34 @@ class ArticleHeader extends Component {
         }        
     }
 
+    handleUserAreaClick = (e) => {
+        switch(e.key) {
+            case '.$myblog':
+                this.props.history.push('/myblog/article/list')
+                break
+            case '.$logout':
+                this.props.signOut()
+                this.props.history.push('/login')
+                break
+            default:
+                return
+        }
+    }
+
     render() {
+        const { currentUser } = this.props
+
+        const userArea = (
+            <Menu theme="light" mode="vertical" onClick={this.handleUserAreaClick}>
+                <Menu.Item style={{ backgroundColor: '#e6f7ff', margin: '0' }} key="myblog">
+                    <Icon type="file" />我的博客
+                </Menu.Item>
+                <Menu.Item style={{ backgroundColor: '#bae7ff', margin: '0' }} key="logout">
+                    <Icon type="logout" />注销
+                </Menu.Item>                
+            </Menu>
+        )
+
         if (this.state.viewportWidth <= this.mobileBreakPoint) {
             return (
                 <div>
@@ -59,18 +88,24 @@ class ArticleHeader extends Component {
                             </Col>
                             <Col span={8}></Col>
                             <Col span={6}>
-                                <Menu mode="horizontal" onClick={this.handleClick}
-                                style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
-                                    <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0' }}>
-                                        登录
-                                    </Menu.Item>
-                                    <Menu.Item key="seperator" style={{ padding: '0', borderBottom: '0' }}>
-                                        |
-                                    </Menu.Item>
-                                    <Menu.Item key="register" style={{ padding: '0 5px', borderBottom: '0' }}>
-                                        注册
-                                    </Menu.Item>
-                                </Menu>
+                                {currentUser.userName ? 
+                                    <Popover placement="bottomRight" content={userArea}>
+                                        <Icon type="user" style={{ color: '#fff' }} />
+                                        <span style={{ color: '#fff' }}>{ currentUser.userName }</span>
+                                    </Popover>
+                                    :  <Menu mode="horizontal" onClick={this.handleClick}
+                                        style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
+                                            <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0' }}>
+                                                登录
+                                            </Menu.Item>
+                                            <Menu.Item key="seperator" style={{ padding: '0', borderBottom: '0' }}>
+                                                |
+                                            </Menu.Item>
+                                            <Menu.Item key="register" style={{ padding: '0 5px', borderBottom: '0' }}>
+                                                注册
+                                            </Menu.Item>
+                                        </Menu>
+                                }                                
                             </Col>
                             <Col span={2}>
                                 <Icon style={{ fontSize: '25px', cursor: 'pointer', color: 'white', verticalAlign: 'middle' }} 
@@ -129,18 +164,24 @@ class ArticleHeader extends Component {
                         </Menu>
                     </Col>
                     <Col span={4}>
-                        <Menu mode="horizontal" onClick={this.handleClick}
-                            style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
-                            <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0' }}>
-                                登录
-                            </Menu.Item>
-                            <Menu.Item key="seperator" style={{ padding: '0', borderBottom: '0' }}>
-                                |
-                            </Menu.Item>
-                            <Menu.Item key="register" style={{ padding: '0 5px', borderBottom: '0' }}>
-                                注册
-                            </Menu.Item>
-                        </Menu>
+                        {currentUser.userName ?
+                            <Popover placement="bottomRight" content={userArea}>
+                                <Icon type="user" style={{ color: '#fff' }} />
+                                <span style={{ color: '#fff' }}>{ currentUser.userName }</span>
+                            </Popover> 
+                            :   <Menu mode="horizontal" onClick={this.handleClick}
+                                    style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
+                                    <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0' }}>
+                                        登录
+                                    </Menu.Item>
+                                    <Menu.Item key="seperator" style={{ padding: '0', borderBottom: '0' }}>
+                                        |
+                                    </Menu.Item>
+                                    <Menu.Item key="register" style={{ padding: '0 5px', borderBottom: '0' }}>
+                                        注册
+                                    </Menu.Item>
+                                </Menu>
+                        }                        
                     </Col>
                 </Row>
             </div>
@@ -148,4 +189,19 @@ class ArticleHeader extends Component {
     }
 }
 
-export default withRouter(CSSModules(ArticleHeader, styles))
+function mapStateToProps(state) {
+    return {
+        currentUser: state.currentUser
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        signOut: () => dispatch(signOut())
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(CSSModules(ArticleHeader, styles)))

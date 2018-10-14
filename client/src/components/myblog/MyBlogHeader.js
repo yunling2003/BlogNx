@@ -14,7 +14,10 @@ class MyBlogHeader extends Component {
             case '.$logout':
                 this.props.signOut()
                 this.props.history.push('/login')
-                break            
+                break
+            case '.$home':
+                this.props.history.push('/') 
+                break           
             default:
                 return
         }
@@ -28,10 +31,13 @@ class MyBlogHeader extends Component {
                     <Row>
                         <Col xs={5} sm={11} md={15} offset={1}>
                             <img src={logo} width='45px' height='45px' alt='logo'/>
-                        </Col>                        
+                        </Col>                                                
                         <Col xs={18} sm={12} md={8}>
                             <Menu mode="horizontal" onClick={this.handleClick}
-                            style={{ lineHeight: '64px', color: '#1890ff', border: '1px' }}>                                                            
+                            style={{ lineHeight: '64px', color: '#1890ff', border: '1px' }}>
+                                <Menu.Item key="home" style={{ padding: '0 10px', borderBottom: '0' }}>
+                                    <Icon type="home" />首页
+                                </Menu.Item>                                                          
                                 <Menu.Item key="welcome" style={{ padding: '0 5px', borderBottom: '0' }}>
                                     <Icon type="user" />{ user.userName }
                                 </Menu.Item>

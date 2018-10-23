@@ -50,16 +50,18 @@ exports.findAllArticles = (req, res) => {
     const sortCol = 'publishDate'
     const sortSeq = -1    
     const sortObj = JSON.parse("{ \"" + sortCol + "\": " + sortSeq + "}")
-    Article.find({ author: uid }).sort(sortObj).then(articles => {        
-        res.send({             
-            articles
-        })
-    }).catch(err => {
-        console.error(err)
-        res.status(500).send({
-            message: err.message || 'Error occurs when retrieving articles'
-        })
-    })    
+    Article.find({ author: uid }, 'title author content publishDate')
+            .sort(sortObj)
+            .then(articles => {        
+                res.send({             
+                    articles
+                })
+            }).catch(err => {
+                console.error(err)
+                res.status(500).send({
+                    message: err.message || 'Error occurs when retrieving articles'
+                })
+            })    
 }
 
 exports.publishArticle = (req, res) => {

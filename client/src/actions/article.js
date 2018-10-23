@@ -5,6 +5,11 @@ export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES'
 export const INVALIDATE_ARTICLES = 'INVALIDATE_ARTICLES'
 export const SET_ARTICLEFILTER = 'SET_ARTICLEFILTER'
 
+export const GET_COMMENTSCOUNT = 'GET_COMMENTSCOUNT'
+export const RECEIVE_COMMENTSCOUNT = 'RECEIVE_COMMENTSCOUNT'
+export const LOAD_COMMENTS = 'LOAD_COMMENTS'
+export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
+
 export function setArticleFilters(filter) {
     return {
         type: SET_ARTICLEFILTER,
@@ -62,5 +67,37 @@ export function fetchArticlesIfNeeded() {
         if (shouldFetchArticles(getState())) {
             return dispatch(fetchArticles(getState()))
         }
+    }
+}
+
+export function getCommentsCount(articleId) {
+    return {
+        type: GET_COMMENTSCOUNT,
+        articleId
+    }
+}
+
+export function receiveCommentsCount(articleId, count) {
+    return {
+        type: RECEIVE_COMMENTSCOUNT,
+        articleId,
+        count
+    }
+}
+
+export function loadComments(articleId, page, pageSize) {
+    return {
+        type: LOAD_COMMENTS,
+        articleId,
+        page,
+        pageSize
+    }
+}
+
+export function receiveComments(articleId, comments) {
+    return {
+        type: RECEIVE_COMMENTS,
+        articleId,
+        comments
     }
 }

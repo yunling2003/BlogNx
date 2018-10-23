@@ -81,6 +81,24 @@ export function deleteArticle(id, credentials) {
     })
 }
 
+export function getCommentsCount(id) {
+    return http.get('article/comments/count', {
+        params: {
+            id: id
+        }
+    })
+}
+
+export function loadComments(id, page, pageSize) {
+    return http.get('/article/comments/load', {
+        params: {
+            id: id,
+            page: page,
+            pageSize: pageSize
+        }
+    })
+}
+
 export function uploadImage(imgObj, config) {
     return http.post('/myblog/article/uploadImage', imgObj, config)
 }

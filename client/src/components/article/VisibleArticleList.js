@@ -93,10 +93,9 @@ VisibleArticleList.propTypes = {
         totalCount: PropTypes.number.isRequired,       
         items: PropTypes.arrayOf(
             PropTypes.shape({
-                _id: PropTypes.string.isRequired,
-                selected: PropTypes.bool.isRequired,
+                _id: PropTypes.string.isRequired,                
                 title: PropTypes.string.isRequired,
-                content: PropTypes.string.isRequired
+                content: PropTypes.string.isRequired                
             }).isRequired
         ).isRequired
     }).isRequired    

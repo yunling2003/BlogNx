@@ -2,7 +2,9 @@ import { combineReducers } from 'redux'
 import { REQUEST_ARTICLES, 
     RECEIVE_ARTICLES, 
     INVALIDATE_ARTICLES, 
-    SET_ARTICLEFILTER } from '../actions/article'
+    SET_ARTICLEFILTER,
+    RECEIVE_COMMENTSCOUNT,
+    RECEIVE_COMMENTS } from '../actions/article'
 import { BEGIN_SIGNIN, 
     SIGNIN_SUCCESS, 
     SIGNIN_ERROR, 
@@ -38,6 +40,28 @@ export function articles(state = {}, action) {
                 didInvalidate: false,
                 totalCount: action.totalCount,
                 items: action.articles
+            })
+        case RECEIVE_COMMENTSCOUNT:
+            return Object.assign({}, state, {
+                items: state.items.map(item => {
+                    if(item._id === action.articleId) {
+                        return Object.assign({}, item, {
+                            commentsCount: action.count
+                        })
+                    }
+                    return item
+                })                
+            })
+        case RECEIVE_COMMENTS:
+            return Object.assign({}, state, {
+                items: state.items.map(item => {
+                    if(item._id === action.articleId) {
+                        return Object.assign({}, item, {
+                            comments: action.comments
+                        })
+                    }
+                    return item
+                })
             })
         default:
             return state

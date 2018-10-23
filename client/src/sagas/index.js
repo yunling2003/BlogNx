@@ -1,4 +1,8 @@
 import { call, put, all, takeEvery, select } from 'redux-saga/effects'
+import { GET_COMMENTSCOUNT,
+    LOAD_COMMENTS,
+    receiveCommentsCount,
+    receiveComments } from '../actions/article'
 import {     
     ARTICLE_FETCH_REQUESTED,
     beginFetchArticles,
@@ -109,11 +113,35 @@ function* deleteArticleAndRefreshAsync() {
     yield takeEvery(ARTICLE_DELETE_REQUESTED, deleteArticleAndRefresh)
 }
 
+function* getCommentsCount(action) {
+    const res = yield call(API.getCommentsCount, action.articleId)
+    if(res) {
+        yield put(receiveCommentsCount(action.articleId, res.data.count))
+    }
+}
+
+function* getCommentsCountAsync() {
+    yield takeEvery(GET_COMMENTSCOUNT, getCommentsCount)
+}
+
+function* loadComments(action) {
+    const res = yield call(API.loadComments, action.articleId, action.page, action.pageSize)
+    if(res) {
+        yield put(receiveComments(action.articleId, res.data.comments))
+    }
+}
+
+function* loadCommentsAsync() {
+    yield takeEvery(LOAD_COMMENTS, loadComments)
+}
+
 export default function* rootSaga() {
     yield all([
         fetchArticlesAsync(), 
         publishArticleAsync(),
         editArticleAsync(),
-        deleteArticleAndRefreshAsync()
+        deleteArticleAndRefreshAsync(),
+        getCommentsCountAsync(),
+        loadCommentsAsync()
     ])
 }

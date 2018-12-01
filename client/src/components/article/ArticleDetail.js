@@ -4,6 +4,7 @@ import { Row, Col } from 'antd'
 import CSSModules from 'react-css-modules'
 import styles from './ArticleDetail.css'
 import CommentList from './CommentList'
+import PublishComment from './PublishComment'
 import { getFormatDate } from '../../utils/date'
 
 
@@ -30,6 +31,9 @@ const ArticleDetail = ({ article }) => (
                     </div>
                 </Col>
             </Row>
+        </div>
+        <div styleName='comments'>
+            <PublishComment artcileId={article._id} />
         </div>
         <div styleName='comments'>
             <CommentList articleId={article._id} />

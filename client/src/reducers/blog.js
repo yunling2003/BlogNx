@@ -24,25 +24,29 @@ import { ARTICLE_FETCH_BEGIN,
     SELECT_MENU } from '../actions/myblog'
 
 export function articles(state = {}, action) {
+    let newState
     switch (action.type) {
         case INVALIDATE_ARTICLES:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 didInvalidate: true
             })
+            break
         case REQUEST_ARTICLES:
-            return Object.assign({}, state, { 
+            newState =  Object.assign({}, state, { 
                 isFetching: true,
                 didInvalidate: false
             })
+            break
         case RECEIVE_ARTICLES:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 isFetching: false,
                 didInvalidate: false,
                 totalCount: action.totalCount,
                 items: action.articles
             })
+            break
         case RECEIVE_COMMENTSCOUNT:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 items: state.items.map(item => {
                     if(item._id === action.articleId) {
                         return Object.assign({}, item, {
@@ -52,8 +56,9 @@ export function articles(state = {}, action) {
                     return item
                 })                
             })
+            break
         case RECEIVE_COMMENTS:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 items: state.items.map(item => {
                     if(item._id === action.articleId) {
                         return Object.assign({}, item, {
@@ -63,124 +68,166 @@ export function articles(state = {}, action) {
                     return item
                 })
             })
+            break
         default:
-            return state
+            newState = Object.assign({}, state)                
     }
+
+    if(Object.keys(newState).length > 0) {  //Not an empty object
+        sessionStorage.setItem("articles", JSON.stringify(newState))
+    }    
+    return newState
 }
 
 export function articleFilters(state = {}, action) {
+    let newState
     switch (action.type) {
         case SET_ARTICLEFILTER:
-            return Object.assign({}, state, action.filter)
+            newState = Object.assign({}, state, action.filter)
+            break
         default:
-            return state
+            newState = Object.assign({}, state)
     }
+
+    if(Object.keys(newState).length > 0) {
+        sessionStorage.setItem("articleFilters", JSON.stringify(newState))
+    }
+    return newState
 }
 
 export function currentUser(state = {}, action) {
+    let newState
     switch (action.type) {
         case BEGIN_SIGNIN:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 isLoggingIn: true
             })
+            break
         case SIGNIN_SUCCESS:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 isLoggingIn: false,
                 userName: action.userName,
                 token: action.token
             })
+            break
         case SIGNIN_ERROR:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 isLoggingIn: false,
                 logInMessage: action.message
             })
+            break
         case CLEAR_ERROR:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 logInMessage: null
             })
+            break
         case SIGN_OUT:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 userName: null,
                 token: null,
                 logInMessage: ''
             })
+            break
         case REFRESH_TOKEN:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 token: action.token
             })
+            break
         default:
-            return state
+            newState = Object.assign({}, state)
     }
+
+    if(Object.keys(newState).length > 0) {
+        sessionStorage.setItem("currentUser", JSON.stringify(newState))
+    }
+    return newState
 }
 
 export function myArticles(state = {}, action) {
+    let newState
     switch (action.type) {
         case ARTICLE_FETCH_BEGIN:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 isFetching: true,
                 didInvalidate: false
             })
+            break
         case ARTICLE_FETCH_REQUESTED:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 didInvalidate: true
             })
+            break
         case ARTICLE_FETCH_END:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 isFetching: false,
                 didInvalidate: false
             })
+            break
         case ARTICLE_RECEIVED:
-            return Object.assign({}, state, {                
+            newState = Object.assign({}, state, {                
                 totalCount: action.totalCount,
                 items: action.articles
             })
+            break
         case ARTICLE_PUBLISH_BEGIN:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 publish: {
                     isPublishing: true,
                     status: state.publish.status,
                     publishMessage: state.publish.publishMessage
                 }
             })
+            break
         case ARTICLE_PUBLISH_END:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 publish: {
                     isPublishing: false,
                     status: state.publish.status,
                     publishMessage: state.publish.publishMessage
                 }
             })
+            break
         case ARTICLE_PUBLISH_RESPONSE:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 publish: {
                     isPublishing: state.publish.isPublishing,
                     status: action.status,
                     publishMessage: action.publishMessage || ''
                 }
             })
+            break
         case CLEAR_ARTICLE_PUBLISH_STATUS:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 publish: {
                     isPublishing: false,
                     status: 'init',
                     publishMessage: ''
                 }
             })
+            break
         case ARTICLE_DELETE_BEGIN:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 isDeleting: true
             })
+            break
         case ARTICLE_DELETE_END:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 isDeleting: false
             })
+            break
         case SELECT_MENU:
-            return Object.assign({}, state, {
+            newState = Object.assign({}, state, {
                 selectedMenu: action.menu
             })
+            break
         default:
-            return state
+            newState = Object.assign({}, state)
     }
+
+    if(Object.keys(newState).length > 0) {
+        sessionStorage.setItem("myArticles", JSON.stringify(newState))
+    }
+    return newState
 }
 
 const blogReducer = combineReducers({

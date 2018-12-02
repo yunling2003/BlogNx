@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Row, Col, Form, Input, Button } from 'antd'
 import { connect } from 'react-redux'
-import CSSModules from 'react-css-modules'
-import styles from './PublishComment.css'
+import { withRouter } from 'react-router-dom'
 
 const { TextArea } = Input
 
@@ -22,7 +21,7 @@ function validateField(value, message) {
 export class PublishComment extends Component {
     constructor(props) {
         super(props)
-        this.state = {            
+        this.state = {             
             comment: {
                 value: ''
             }            
@@ -31,7 +30,7 @@ export class PublishComment extends Component {
 
     hasErrors = () => {
         return this.state.comment.validateStatus !== 'success'
-    }
+    }    
 
     handleCommentChange = (e) => {
         const value = e.target.value
@@ -43,6 +42,10 @@ export class PublishComment extends Component {
         })
     }
 
+    goLogin = () => {
+        this.props.history.push('/login')
+    }
+
     render() {
         const { comment } = this.state
         const { userName } = this.props.currentUser
@@ -50,7 +53,7 @@ export class PublishComment extends Component {
         return (
             <Form>
                 <div>
-                    <h3 styleName='main'>发表评论</h3>
+                    <h3>发表评论</h3>
                     <Row>
                         <Col span={24}>
                             <Form.Item
@@ -66,23 +69,28 @@ export class PublishComment extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={{ span: 6, offset: 12 }} md={{ span: 5, offset: 14 }} lg={{ span: 3, offset: 18 }}>
+                        <Col xs={{ span: 6, offset: 18 }} md={{ span: 5, offset: 19 }} lg={{ span: 3, offset: 21 }}>
                             {!userName ?
                                 <Form.Item>
-                                    <Button type="primary" ghost>登录</Button>
+                                    <Button 
+                                        type="primary" 
+                                        onClick={this.goLogin} 
+                                        ghost>
+                                        登录
+                                    </Button>
+                                </Form.Item> :                             
+                                <Form.Item>                                
+                                    <Button 
+                                        type="primary" 
+                                        htmlType="submit"
+                                        disabled={this.hasErrors()} >
+                                        发表
+                                    </Button>                                
                                 </Form.Item>
-                                : null
                             }                            
-                        </Col>
-                        <Col xs={{ span: 6 }} md={{ span: 5 }} lg={{ span: 3 }}>
-                            <Form.Item>                                
-                                <Button type="primary" 
-                                    htmlType="submit"
-                                    disabled={this.hasErrors()} >发表</Button>                                
-                            </Form.Item> 
-                        </Col>
+                        </Col>                        
                     </Row>
-                </div>
+                </div>                
             </Form>
         )
     }
@@ -102,4 +110,4 @@ function mapStateToProps(state) {
 //     }
 // }
 
-export default connect(mapStateToProps, null)(CSSModules(PublishComment, styles))
+export default connect(mapStateToProps, null)(withRouter(PublishComment))

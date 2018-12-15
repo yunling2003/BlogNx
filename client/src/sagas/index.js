@@ -1,8 +1,11 @@
 import { call, put, all, takeEvery, select } from 'redux-saga/effects'
 import { GET_COMMENTSCOUNT,
     LOAD_COMMENTS,
+    CREATE_COMMENT,
     receiveCommentsCount,
-    receiveComments } from '../actions/article'
+    receiveComments,
+    loadComments,
+    getCommentsCount } from '../actions/article'
 import {     
     ARTICLE_FETCH_REQUESTED,
     beginFetchArticles,
@@ -113,7 +116,7 @@ function* deleteArticleAndRefreshAsync() {
     yield takeEvery(ARTICLE_DELETE_REQUESTED, deleteArticleAndRefresh)
 }
 
-function* getCommentsCount(action) {
+function* getArticleCommentsCount(action) {
     const res = yield call(API.getCommentsCount, action.articleId)
     if(res) {
         yield put(receiveCommentsCount(action.articleId, res.data.count))
@@ -121,10 +124,10 @@ function* getCommentsCount(action) {
 }
 
 function* getCommentsCountAsync() {
-    yield takeEvery(GET_COMMENTSCOUNT, getCommentsCount)
+    yield takeEvery(GET_COMMENTSCOUNT, getArticleCommentsCount)
 }
 
-function* loadComments(action) {
+function* loadArticleComments(action) {
     const res = yield call(API.loadComments, action.articleId, action.page, action.pageSize)
     if(res) {
         yield put(receiveComments(action.articleId, res.data.comments))
@@ -132,7 +135,26 @@ function* loadComments(action) {
 }
 
 function* loadCommentsAsync() {
-    yield takeEvery(LOAD_COMMENTS, loadComments)
+    yield takeEvery(LOAD_COMMENTS, loadArticleComments)
+}
+
+function* createComment(action) {
+    const uid = yield select(state => state.currentUser.userName)
+    const token = yield select(state => state.currentUser.token) 
+    if(uid && token) {
+        const res = yield call(API.createComment, action.articleId, action.reviewer, action.content, { uid: uid, token: token })        
+        if(res) {            
+            yield put(refreshToken(res.headers.authtoken))
+            yield put(loadComments(action.articleId, 0, 10))
+            yield put(getCommentsCount(action.articleId))
+        } else {
+            console.error('Error occurred!')    
+        }   
+    }    
+}
+
+function* createCommentAsync() {
+    yield takeEvery(CREATE_COMMENT, createComment)
 }
 
 export default function* rootSaga() {
@@ -142,6 +164,7 @@ export default function* rootSaga() {
         editArticleAsync(),
         deleteArticleAndRefreshAsync(),
         getCommentsCountAsync(),
-        loadCommentsAsync()
+        loadCommentsAsync(),
+        createCommentAsync()
     ])
 }

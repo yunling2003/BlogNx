@@ -33,7 +33,7 @@ const ArticleDetail = ({ article }) => (
             </Row>
         </div>
         <div styleName='comments'>
-            <PublishComment artcileId={article._id} />
+            <PublishComment articleId={article._id} />
         </div>
         <div styleName='comments'>
             <CommentList articleId={article._id} />

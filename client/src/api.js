@@ -99,6 +99,22 @@ export function loadComments(id, page, pageSize) {
     })
 }
 
+export function createComment(articleId, reviewer, content, credentials) {
+    return http({
+        method: 'post',
+        url: '/article/comment/add',
+        params: {
+            uid: credentials.uid,
+            sign: crypt.genSha256Sign(credentials.uid + credentials.token)
+        },
+        data: {
+            articleId: articleId,
+            reviewer: reviewer,
+            content: content
+        }
+    })
+}
+
 export function uploadImage(imgObj, config) {
     return http.post('/myblog/article/uploadImage', imgObj, config)
 }

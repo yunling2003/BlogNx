@@ -9,6 +9,7 @@ export const GET_COMMENTSCOUNT = 'GET_COMMENTSCOUNT'
 export const RECEIVE_COMMENTSCOUNT = 'RECEIVE_COMMENTSCOUNT'
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
+export const CREATE_COMMENT = 'CREATE_COMMENT'
 
 export function setArticleFilters(filter) {
     return {
@@ -99,5 +100,14 @@ export function receiveComments(articleId, comments) {
         type: RECEIVE_COMMENTS,
         articleId,
         comments
+    }
+}
+
+export function createComment(articleId, reviewer, content) {
+    return {
+        type: CREATE_COMMENT,
+        articleId,
+        reviewer,
+        content
     }
 }

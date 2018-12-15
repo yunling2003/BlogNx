@@ -51,7 +51,7 @@ exports.loadComments = (req, res) => {
         .populate({
             path: 'comments',
             options: { 
-                sort: { commentDate: 1 },
+                sort: { commentDate: -1 },
                 skip: pageNum * pageSize,
                 limit: pageSize 
             }
@@ -63,14 +63,28 @@ exports.loadComments = (req, res) => {
 }
 
 exports.createComment = (req, res) => {
-    let comments = []
-    comments.push({
+    let comment = new Comment({
         article: req.body.articleId,
         reviewer: req.body.reviewer,
         content: req.body.content,
         commentDate: Date.now().toString()
     })
-    Comment.create(comments).then(result => {        
-        //todo: update article
+    
+    comment.save().then(newComment => {                
+        Article.findOne({'_id': newComment.article})
+            .then(a => {
+                a.comments.push(newComment._id)
+                a.save().then(result => {
+                    res.send({ 
+                        status: 'success'
+                    })
+                })
+            })
+    }).catch(err => {
+        console.error(err)
+        res.status(500).send({
+            status: 'fail',
+            message: err.message || 'Error occurs when create comment'
+        })
     })
 }

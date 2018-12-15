@@ -28,8 +28,8 @@ exports.authenticate = (req, res, next) => {
 function validateCredential(uid, sign) {
     return new Promise(resolve => {
         User.findOne({ 'userName': uid }).then(user => {
-            if(user) {
-                if(sign === signHelper.genSha256Sign(uid + user.token)) {
+            if(user) {                
+                if(sign === signHelper.genSha256Sign(uid + user.token)) {                    
                     if(tokenHelper.verifyToken(user.token).user === uid) {
                         resolve(true)
                     } else {

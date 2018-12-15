@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Row, Col, Form, Input, Button } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { createComment } from '../../actions/article'
 
 const { TextArea } = Input
 
@@ -42,6 +43,11 @@ export class PublishComment extends Component {
         })
     }
 
+    handlePublishComment = (e) => {
+        e.preventDefault()
+        this.props.createComment(this.props.articleId, this.props.currentUser.userName, this.state.comment.value)
+    }
+
     goLogin = () => {
         this.props.history.push('/login')
     }
@@ -51,7 +57,7 @@ export class PublishComment extends Component {
         const { userName } = this.props.currentUser
 
         return (
-            <Form>
+            <Form onSubmit={this.handlePublishComment}>
                 <div>
                     <h3>发表评论</h3>
                     <Row>
@@ -102,12 +108,10 @@ function mapStateToProps(state) {
     }
 }
 
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         publishArticle: (article) => dispatch(requestPublishArticle(article)),
-//         clearPublishStatus: () => dispatch(clearArticlePublishStatus()),
-//         selectMenu: (menu) => dispatch(selectMenu(menu))
-//     }
-// }
+function mapDispatchToProps(dispatch) {
+    return {
+        createComment: (articleId, reviewer, content) => dispatch(createComment(articleId, reviewer, content)),        
+    }
+}
 
-export default connect(mapStateToProps, null)(withRouter(PublishComment))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PublishComment))

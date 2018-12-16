@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Comment = require('./comment.model.js')
 const Schema = mongoose.Schema
 
 const ArticleSchema = mongoose.Schema({     
@@ -11,5 +12,11 @@ const ArticleSchema = mongoose.Schema({
 }, {
     timestamps: true
 })
+
+ArticleSchema.pre('remove', function(next) {    
+    console.log('pre test')
+    Comment.remove({ article: this._id }).exec();    
+    next();
+});
 
 module.exports = mongoose.model('Article', ArticleSchema, 'article')

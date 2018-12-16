@@ -75,10 +75,12 @@ exports.editArticle = (req, res) => {
 
 exports.deleteArticle = (req, res) => {
     const id = req.body.id
-    Article.findByIdAndDelete(id).then(result => {
-        res.send({
-            status: 'success'
-        })
+    Article.findById(id).then(article => {
+        article.remove().then(result => {
+            res.send({
+                status: 'success'
+            })
+        })        
     }).catch(err => {
         res.status(500).send({
             status: 'fail',

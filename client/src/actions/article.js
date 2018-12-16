@@ -4,6 +4,7 @@ export const REQUEST_ARTICLES = 'REQUEST_ARTICLES'
 export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES'
 export const INVALIDATE_ARTICLES = 'INVALIDATE_ARTICLES'
 export const SET_ARTICLEFILTER = 'SET_ARTICLEFILTER'
+export const CLEAR_ARTICLES = 'CLEAR_ARTICLES'
 
 export const GET_COMMENTSCOUNT = 'GET_COMMENTSCOUNT'
 export const RECEIVE_COMMENTSCOUNT = 'RECEIVE_COMMENTSCOUNT'
@@ -38,6 +39,12 @@ export function receiveArticles(json) {
     }
 }
 
+export function clearArticles() {
+    return {
+        type: CLEAR_ARTICLES
+    }
+}
+
 function createArticleFilters(state) {
     const filters = state.articleFilters
     return Object.keys(filters).map(key => `${key}=${filters[key]}`).join('&')    
@@ -54,7 +61,7 @@ function fetchArticles(state) {
 
 function shouldFetchArticles(state) {
     const articles = state.articles
-    if (!articles) {
+    if (articles.items.length === 0) {
         return true
     } else if (articles.isFetching) {
         return false

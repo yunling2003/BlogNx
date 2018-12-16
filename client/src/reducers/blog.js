@@ -3,6 +3,7 @@ import { REQUEST_ARTICLES,
     RECEIVE_ARTICLES, 
     INVALIDATE_ARTICLES, 
     SET_ARTICLEFILTER,
+    CLEAR_ARTICLES,
     RECEIVE_COMMENTSCOUNT,
     RECEIVE_COMMENTS } from '../actions/article'
 import { BEGIN_SIGNIN, 
@@ -43,6 +44,11 @@ export function articles(state = {}, action) {
                 didInvalidate: false,
                 totalCount: action.totalCount,
                 items: action.articles
+            })
+            break
+        case CLEAR_ARTICLES:
+            newState = Object.assign({}, state, {
+                items: []
             })
             break
         case RECEIVE_COMMENTSCOUNT:

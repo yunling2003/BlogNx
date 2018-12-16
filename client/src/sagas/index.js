@@ -1,7 +1,7 @@
 import { call, put, all, takeEvery, select } from 'redux-saga/effects'
 import { GET_COMMENTSCOUNT,
     LOAD_COMMENTS,
-    CREATE_COMMENT,
+    CREATE_COMMENT,    
     receiveCommentsCount,
     receiveComments,
     loadComments,
@@ -23,7 +23,7 @@ import {
 import { refreshToken } from '../actions/auth'
 import * as API from '../api'
 
-function* fetchArticles() {    
+function* fetchMyArticles() {    
     yield put(beginFetchArticles())
     const uid = yield select(state => state.currentUser.userName)
     const token = yield select(state => state.currentUser.token) 
@@ -42,8 +42,8 @@ function* fetchArticles() {
     yield put(endFetchArticles())
 }
 
-function* fetchArticlesAsync() {
-    yield takeEvery(ARTICLE_FETCH_REQUESTED, fetchArticles)
+function* fetchMyArticlesAsync() {
+    yield takeEvery(ARTICLE_FETCH_REQUESTED, fetchMyArticles)
 }
 
 function* publishArticle(action) {
@@ -57,7 +57,7 @@ function* publishArticle(action) {
         })
         if(res) {
             yield put(refreshToken(res.headers.authtoken))
-            yield put(receiveArticlePublishResponse(res.data))
+            yield put(receiveArticlePublishResponse(res.data))            
         } else {
             console.error('Error occurred!')
         }
@@ -80,7 +80,7 @@ function* editArticle(action) {
         })
         if(res) {
             yield put(refreshToken(res.headers.authtoken))
-            yield put(receiveArticlePublishResponse(res.data))
+            yield put(receiveArticlePublishResponse(res.data))            
         } else {
             console.error('Error occurred!')
         }
@@ -99,7 +99,7 @@ function* deleteArticle(action) {
     if(uid && token) {
         const res = yield call(API.deleteArticle, action.id, { uid: uid, token: token})        
         if(res) {            
-            yield put(refreshToken(res.headers.authtoken))            
+            yield put(refreshToken(res.headers.authtoken))                  
         } else {
             console.error('Error occurred!')    
         }   
@@ -109,7 +109,7 @@ function* deleteArticle(action) {
 
 function* deleteArticleAndRefresh(action) {
     yield call(deleteArticle, action)
-    yield call(fetchArticles)
+    yield call(fetchMyArticles)    
 }
 
 function* deleteArticleAndRefreshAsync() {
@@ -159,7 +159,7 @@ function* createCommentAsync() {
 
 export default function* rootSaga() {
     yield all([
-        fetchArticlesAsync(), 
+        fetchMyArticlesAsync(), 
         publishArticleAsync(),
         editArticleAsync(),
         deleteArticleAndRefreshAsync(),

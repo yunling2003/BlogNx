@@ -1,7 +1,10 @@
 import React, {Component}  from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchArticlesIfNeeded, setArticleFilters, invalidateArticles } from '../../actions/article'
+import { fetchArticlesIfNeeded, 
+    setArticleFilters, 
+    invalidateArticles, 
+    clearArticles } from '../../actions/article'
 import Article from './Article'
 import { Row, Col, Pagination, Icon } from 'antd'
 import CSSModules from 'react-css-modules'
@@ -12,31 +15,26 @@ export class VisibleArticleList extends Component {
         super(props)
     }
 
-    componentDidMount() {                  
-        this.props.dispatch(fetchArticlesIfNeeded())
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.articles !== this.props.articles) {
-            nextProps.dispatch(fetchArticlesIfNeeded())
-        }
+    componentWillMount() {
+        this.props.clearArticles()                  
+        this.props.fetchArticlesIfNeeded()
     }
 
     onChange = (page) => {
-        this.props.dispatch(setArticleFilters({page: page - 1}))
-        this.props.dispatch(invalidateArticles())
-        this.props.dispatch(fetchArticlesIfNeeded())
+        this.props.setArticleFilters({page: page - 1})
+        this.props.invalidateArticles()
+        this.props.fetchArticlesIfNeeded()
     }
 
     onShowSizeChange = (current, size) => {
-        this.props.dispatch(setArticleFilters({page: 0, pageSize: size}))
-        this.props.dispatch(invalidateArticles())
-        this.props.dispatch(fetchArticlesIfNeeded())
+        this.props.setArticleFilters({page: 0, pageSize: size})
+        this.props.invalidateArticles()
+        this.props.fetchArticlesIfNeeded()
     }
 
     refresh = () => {
-        this.props.dispatch(invalidateArticles())
-        this.props.dispatch(fetchArticlesIfNeeded())
+        this.props.invalidateArticles()
+        this.props.fetchArticlesIfNeeded()
     }
    
     render() {
@@ -102,12 +100,22 @@ VisibleArticleList.propTypes = {
 }
 
 function mapStateToProps(state) {
-    return {
+    return {    
         filters: state.articleFilters,
-        articles: state.articles
+        articles: state.articles    
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        fetchArticlesIfNeeded: () => dispatch(fetchArticlesIfNeeded()),
+        invalidateArticles: () => dispatch(invalidateArticles()),
+        setArticleFilters: (options) => dispatch(setArticleFilters(options)),
+        clearArticles: () => dispatch(clearArticles())
     }
 }
 
 export default connect(
-    mapStateToProps    
+    mapStateToProps,
+    mapDispatchToProps    
 )(CSSModules(VisibleArticleList, styles))

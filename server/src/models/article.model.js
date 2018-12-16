@@ -13,8 +13,7 @@ const ArticleSchema = mongoose.Schema({
     timestamps: true
 })
 
-ArticleSchema.pre('remove', function(next) {    
-    console.log('pre test')
+ArticleSchema.pre('remove', function(next) {        
     Comment.remove({ article: this._id }).exec();    
     next();
 });

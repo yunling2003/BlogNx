@@ -37,7 +37,7 @@ class ArticleHeader extends Component {
         })
     }    
 
-    handleClick = (e) => {
+    handleAuthClick = (e) => {
         switch(e.key) {
             case '.$login':
                 this.props.history.push('/login')
@@ -48,6 +48,16 @@ class ArticleHeader extends Component {
             default:
                 return
         }        
+    }
+
+    handleMenuClick = (e) => {
+        switch(e.key) {
+            case '.$home':
+                this.props.history.push('/')
+                break
+            default:
+                return
+        }
     }
 
     handleUserAreaClick = (e) => {
@@ -93,7 +103,7 @@ class ArticleHeader extends Component {
                                         <Icon type="user" style={{ color: '#fff' }} />
                                         <span style={{ color: '#fff' }}>{ currentUser.userName }</span>
                                     </Popover>
-                                    :  <Menu mode="horizontal" onClick={this.handleClick}
+                                    :  <Menu mode="horizontal" onClick={this.handleAuthClick}
                                         style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
                                             <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0' }}>
                                                 登录
@@ -117,8 +127,10 @@ class ArticleHeader extends Component {
                     <div styleName={this.state.menuVisible ? 'visible' : 'hide'}>
                         <Row>
                             <Col span={24}>
-                                <Menu theme="light" mode="vertical"
-                                     defaultSelectedKeys={['home']}>
+                                <Menu theme="light" 
+                                    mode="vertical"
+                                    onClick={this.handleMenuClick}
+                                    defaultSelectedKeys={['home']}>
                                     <Menu.Item style={{ backgroundColor: '#e6f7ff', margin: '0' }} key="home">
                                         <Icon type="home" />首页
                                     </Menu.Item>
@@ -148,6 +160,7 @@ class ArticleHeader extends Component {
                     <Col span={14}>
                         <Menu mode="horizontal" 
                             defaultSelectedKeys={['home']} 
+                            onClick={this.handleMenuClick}
                             style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
                             <Menu.Item key="home" style={{ padding: '0 10px', borderBottom: '0' }}>
                                 <Icon type="home" />首页
@@ -169,7 +182,7 @@ class ArticleHeader extends Component {
                                 <Icon type="user" style={{ color: '#fff' }} />
                                 <span style={{ color: '#fff' }}>{ currentUser.userName }</span>
                             </Popover> 
-                            :   <Menu mode="horizontal" onClick={this.handleClick}
+                            :   <Menu mode="horizontal" onClick={this.handleAuthClick}
                                     style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
                                     <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0' }}>
                                         登录

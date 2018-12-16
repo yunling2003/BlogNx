@@ -23,22 +23,22 @@ import {
 import { refreshToken } from '../actions/auth'
 import * as API from '../api'
 
+function* getCredentials() {
+    return {
+        uid: yield select(state => state.currentUser.userName),
+        token: yield select(state => state.currentUser.token)
+    }
+}
+
 function* fetchMyArticles() {    
-    yield put(beginFetchArticles())
-    const uid = yield select(state => state.currentUser.userName)
-    const token = yield select(state => state.currentUser.token) 
-    if(uid && token) {
-        const res = yield call(API.getMyPublishedArticles, {            
-            uid: uid,
-            token: token
-        })
-        if(res) {            
-            yield put(refreshToken(res.headers.authtoken))
-            yield put(receiveArticles(res.data))
-        } else {
-            console.error('Error occurred!')    
-        }            
-    }       
+    yield put(beginFetchArticles())        
+    const res = yield call(API.getMyPublishedArticles, yield call(getCredentials))
+    if(res) {            
+        yield put(refreshToken(res.headers.authtoken))
+        yield put(receiveArticles(res.data))
+    } else {
+        console.error('Error occurred!')    
+    }                
     yield put(endFetchArticles())
 }
 
@@ -47,21 +47,14 @@ function* fetchMyArticlesAsync() {
 }
 
 function* publishArticle(action) {
-    yield put(beginPublishArticle())
-    const uid = yield select(state => state.currentUser.userName)
-    const token = yield select(state => state.currentUser.token) 
-    if(uid && token) {
-        const res = yield call(API.publishArticle, action.article, {
-            uid: uid,
-            token: token
-        })
-        if(res) {
-            yield put(refreshToken(res.headers.authtoken))
-            yield put(receiveArticlePublishResponse(res.data))            
-        } else {
-            console.error('Error occurred!')
-        }
-    }
+    yield put(beginPublishArticle())    
+    const res = yield call(API.publishArticle, action.article, yield call(getCredentials))
+    if(res) {
+        yield put(refreshToken(res.headers.authtoken))
+        yield put(receiveArticlePublishResponse(res.data))            
+    } else {
+        console.error('Error occurred!')
+    }    
     yield put(endPublishArticle())
 }
 
@@ -70,21 +63,14 @@ function* publishArticleAsync() {
 }
 
 function* editArticle(action) {
-    yield put(beginPublishArticle())
-    const uid = yield select(state => state.currentUser.userName)
-    const token = yield select(state => state.currentUser.token) 
-    if(uid && token) {
-        const res = yield call(API.editArticle, action.article, {
-            uid: uid,
-            token: token
-        })
-        if(res) {
-            yield put(refreshToken(res.headers.authtoken))
-            yield put(receiveArticlePublishResponse(res.data))            
-        } else {
-            console.error('Error occurred!')
-        }
-    }
+    yield put(beginPublishArticle())    
+    const res = yield call(API.editArticle, action.article, yield call(getCredentials))
+    if(res) {
+        yield put(refreshToken(res.headers.authtoken))
+        yield put(receiveArticlePublishResponse(res.data))            
+    } else {
+        console.error('Error occurred!')
+    }    
     yield put(endPublishArticle())
 }
 
@@ -93,17 +79,13 @@ function* editArticleAsync() {
 }
 
 function* deleteArticle(action) {
-    yield put(beginDeleteArticle())
-    const uid = yield select(state => state.currentUser.userName)
-    const token = yield select(state => state.currentUser.token) 
-    if(uid && token) {
-        const res = yield call(API.deleteArticle, action.id, { uid: uid, token: token})        
-        if(res) {            
-            yield put(refreshToken(res.headers.authtoken))                  
-        } else {
-            console.error('Error occurred!')    
-        }   
-    }
+    yield put(beginDeleteArticle())    
+    const res = yield call(API.deleteArticle, action.id, yield call(getCredentials))        
+    if(res) {            
+        yield put(refreshToken(res.headers.authtoken))                  
+    } else {
+        console.error('Error occurred!')    
+    }       
     yield put(endDeleteArticle())
 }
 
@@ -138,19 +120,15 @@ function* loadCommentsAsync() {
     yield takeEvery(LOAD_COMMENTS, loadArticleComments)
 }
 
-function* createComment(action) {
-    const uid = yield select(state => state.currentUser.userName)
-    const token = yield select(state => state.currentUser.token) 
-    if(uid && token) {
-        const res = yield call(API.createComment, action.articleId, action.reviewer, action.content, { uid: uid, token: token })        
-        if(res) {            
-            yield put(refreshToken(res.headers.authtoken))
-            yield put(loadComments(action.articleId, 0, 10))
-            yield put(getCommentsCount(action.articleId))
-        } else {
-            console.error('Error occurred!')    
-        }   
-    }    
+function* createComment(action) {   
+    const res = yield call(API.createComment, action.articleId, action.reviewer, action.content, yield call(getCredentials))        
+    if(res) {            
+        yield put(refreshToken(res.headers.authtoken))
+        yield put(loadComments(action.articleId, 0, 10))
+        yield put(getCommentsCount(action.articleId))
+    } else {
+        console.error('Error occurred!')    
+    }       
 }
 
 function* createCommentAsync() {

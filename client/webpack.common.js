@@ -16,7 +16,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html'
+            template: './index.html',
+            favicon: './assets/images/favicon.ico'
         }),
         extractAppCSS,
         extractVendorCSS

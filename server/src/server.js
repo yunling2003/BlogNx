@@ -4,6 +4,9 @@ const path = require('path')
 const dbConfig = require('./config/database.js')
 const mongoose = require('mongoose')
 const configKeys = require('./constkeys.js')
+const article = require('./routes/article.routes.js')
+const authentication = require('./routes/authenticate.routes.js')
+const myblog = require('./routes/myblog.routes.js')
 const app = express()
 
 mongoose.Promise = global.Promise
@@ -22,7 +25,7 @@ app.all('*', (req, res, next) => {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS")   
     res.header("Access-Control-Expose-Headers", "AuthToken")  
-    res.header("Content-Type", "application/json;charset=utf-8")
+    res.header("Content-Type", "application/json;charset=utf-8")      
     next() 
 });  
 
@@ -32,9 +35,9 @@ app.get('/', (req, res) => {
 
 app.use(express.static(path.join(__dirname, "../resource")))
 
-require('./routes/article.routes.js')(app)
-require('./routes/authenticate.routes.js')(app)
-require('./routes/myblog.routes.js')(app)
+app.use('/api/article', article)
+app.use('/api/auth', authentication)
+app.use('/api/myblog', myblog)
 
 app.listen(configKeys.port, () => {
     console.log("Server is listening on port 3000!")

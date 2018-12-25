@@ -1,10 +1,12 @@
-module.exports = (app) => {
-    const myBlog = require('../controllers/myblog.controller.js')
-    const auth = require('./auth.middleware.js')
+const express = require('express')
+const router = express.Router()
+const myBlog = require('../controllers/myblog.controller.js')
+const auth = require('./auth.middleware.js')
 
-    app.get('/myblog/articles', auth.authenticate, myBlog.findAllArticles)
-    app.post('/myblog/article/publish', auth.authenticate, myBlog.publishArticle)
-    app.post('/myblog/article/edit', auth.authenticate, myBlog.editArticle)
-    app.post('/myblog/article/delete', auth.authenticate, myBlog.deleteArticle)
-    app.post('/myblog/article/uploadImage', myBlog.uploadImage)
-}
+router.get('/articles', auth.authenticate, myBlog.findAllArticles)
+router.post('/article/publish', auth.authenticate, myBlog.publishArticle)
+router.post('/article/edit', auth.authenticate, myBlog.editArticle)
+router.post('/article/delete', auth.authenticate, myBlog.deleteArticle)
+router.post('/article/uploadImage', myBlog.uploadImage)
+
+module.exports = router

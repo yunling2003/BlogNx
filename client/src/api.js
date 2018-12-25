@@ -2,18 +2,18 @@ import http from './utils/http'
 import crypt from './utils/crypt'
 
 export function getRecaptcha() {
-    return http.get('/recaptcha')
+    return http.get('/auth/recaptcha')
 }
 
 export function signIn(loginObj) {
-    return http.post('/signin', {
+    return http.post('/auth/signin', {
         userName: loginObj.userName,
         password: loginObj.password
     })
 }
 
 export function register(registerObj) {
-    return http.post('/register', {
+    return http.post('/auth/register', {
         email: registerObj.email,
         userName: registerObj.userName,
         password: registerObj.password,
@@ -23,11 +23,11 @@ export function register(registerObj) {
 }
 
 export function checkDuplicateName(name) {
-    return http.get('/register/checkDuplicate?userName=' + name)
+    return http.get('/auth/register/checkDuplicate?userName=' + name)
 }
 
 export function getAllArticles(filters) {
-    return http.get('/articles?' + filters)
+    return http.get('/article?' + filters)
 }
 
 export function getMyPublishedArticles(credentials) {

@@ -7,10 +7,22 @@ const common = require('./webpack.common.js');
 module.exports = merge(common, {
     devtool: 'source-map',
     mode: 'production',
-    plugins: [
-        new UglifyJSPlugin({            
-            sourceMap: true
-        }),
+    optimization:{
+        minimizer: [
+            new UglifyJSPlugin({
+                uglifyOptions: {
+                    compress: {
+                        inline: 1,
+                        keep_fnames: true
+                    },
+                    mangle: {
+                        keep_fnames: true
+                    }
+                }
+            })
+        ]
+    },
+    plugins: [        
         new CleanWebpackPlugin(['dist']),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),
@@ -19,6 +31,6 @@ module.exports = merge(common, {
     ],
     output: {
         filename: '[name].[chunkhash].js',
-        publicPath: './'    
+        publicPath: '/'    
     }, 
 })

@@ -1,11 +1,9 @@
-const webpack = require('webpack')
 const path = require('path')
 const join = require('path').join
 const resolve = require('path').resolve
 const existsSync = require('fs').existsSync
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const extractAppCSS = new ExtractTextPlugin('style.css');
 const extractVendorCSS = new ExtractTextPlugin('vendor.css');
 
@@ -21,8 +19,7 @@ module.exports = {
             favicon: './assets/images/favicon.ico'
         }),
         extractAppCSS,
-        extractVendorCSS,
-        new BundleAnalyzerPlugin()
+        extractVendorCSS        
     ],
     optimization: {
         runtimeChunk: {

@@ -11,6 +11,8 @@
 
 /server/resource
 
+/build/node_modules
+
 /.vscode
 
 .DS_Store

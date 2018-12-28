@@ -1,0 +1,17 @@
+{
+  "name": "blognx-build",
+  "version": "1.0.0",
+  "description": "Build and deploy blognx client application and api to server",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Leon Ling",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "devDependencies": {
+    "shelljs": "^0.8.2"
+  }
+}

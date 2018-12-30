@@ -13,6 +13,8 @@
 
 /build/node_modules
 
+/build/tmp
+
 /.vscode
 
 .DS_Store

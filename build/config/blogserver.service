@@ -1,14 +1,13 @@
-#!/usr/bin/env node
 
 [Unit]
-Description=BlogNx Server
+//Description=BlogNx Server
 
 [Service]
-ExecStart=/var/www/blogserver/server.js
-Restart=on-failure
-Environment=PATH=/usr/bin:/usr/local/bin
-Environment=PORT=3000
-WorkingDirectory=/var/www/blogserver
+//ExecStart=/usr/local/bin/node /var/www/blogserver/src/server.js
+//Restart=on-failure
+//Environment=PATH=/usr/bin:/usr/local/bin
+//Environment=PORT=3000
+//WorkingDirectory=/var/www/blogserver
 
 [Install]
-WantedBy=multi-user.target
+//WantedBy=multi-user.target

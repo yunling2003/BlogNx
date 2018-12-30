@@ -11,7 +11,8 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
+    "build-local": "webpack --config webpack_local.prod.js",
+    "build-server": "webpack --config webpack_server.prod.js",
     "test": "jest --no-cache",
     "coverage": "jest --colors --coverage"
   },

@@ -9,5 +9,5 @@ osascript -e 'tell app "Terminal"
 end tell'
 
 cd /Users/leon/Applications/BlogNx/client
-npm run build
+npm run build-local
 open 'http://localhost'

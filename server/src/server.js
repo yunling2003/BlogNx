@@ -33,8 +33,7 @@ app.get('/', (req, res) => {
     res.json({"message": "Welcome to BlogNx application."})
 })
 
-app.use(express.static(path.join(__dirname, "../resource")))
-
+app.use('/api/image', express.static(path.join(__dirname, "../resource/image")))
 app.use('/api/article', article)
 app.use('/api/auth', authentication)
 app.use('/api/myblog', myblog)

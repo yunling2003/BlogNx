@@ -109,7 +109,7 @@ exports.uploadImage = (req, res) => {
             let imgFile = req.file                
             res.send({
                 data: {
-                    link: `http://${configKeys.host}:${configKeys.port}/image/${imgFile.filename}`
+                    link: `${configKeys.url}/image/${imgFile.filename}`
                 }                
             })
         }        

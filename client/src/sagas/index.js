@@ -5,6 +5,7 @@ import { GET_COMMENTSCOUNT,
     receiveCommentsCount,
     receiveComments,
     loadComments,
+    clearComments,
     getCommentsCount } from '../actions/article'
 import {     
     ARTICLE_FETCH_REQUESTED,
@@ -112,7 +113,7 @@ function* getCommentsCountAsync() {
 function* loadArticleComments(action) {
     const res = yield call(API.loadComments, action.articleId, action.page, action.pageSize)
     if(res) {
-        yield put(receiveComments(action.articleId, res.data.comments))
+        yield put(receiveComments(action.articleId, action.page, res.data.comments))
     }
 }
 
@@ -124,6 +125,7 @@ function* createComment(action) {
     const res = yield call(API.createComment, action.articleId, action.reviewer, action.content, yield call(getCredentials))        
     if(res) {            
         yield put(refreshToken(res.headers.authtoken))
+        yield put(clearComments(action.articleId))
         yield put(loadComments(action.articleId, 0, 10))
         yield put(getCommentsCount(action.articleId))
     } else {

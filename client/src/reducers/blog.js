@@ -5,7 +5,8 @@ import { REQUEST_ARTICLES,
     SET_ARTICLEFILTER,
     CLEAR_ARTICLES,
     RECEIVE_COMMENTSCOUNT,
-    RECEIVE_COMMENTS } from '../actions/article'
+    RECEIVE_COMMENTS,
+    CLEAR_COMMENTS } from '../actions/article'
 import { BEGIN_SIGNIN, 
     SIGNIN_SUCCESS, 
     SIGNIN_ERROR, 
@@ -68,7 +69,21 @@ export function articles(state = {}, action) {
                 items: state.items.map(item => {
                     if(item._id === action.articleId) {
                         return Object.assign({}, item, {
-                            comments: action.comments
+                            comments: [...(item.comments || []), ...action.comments],
+                            commentPage: action.commentPage
+                        })
+                    }
+                    return item
+                })
+            })
+            break
+        case CLEAR_COMMENTS:
+            newState = Object.assign({}, state, {
+                items: state.items.map(item => {
+                    if(item._id === action.articleId) {
+                        return Object.assign({}, item, {
+                            comments: [],
+                            commentPage: 0
                         })
                     }
                     return item

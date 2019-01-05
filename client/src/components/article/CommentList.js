@@ -2,14 +2,26 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Comment from './Comment'
 import { getCommentsCount, loadComments } from '../../actions/article'
+import { Button } from 'antd'
 import CSSModules from 'react-css-modules'
 import styles from './CommentList.css'
 
-export class CommentList extends Component {    
+export class CommentList extends Component {        
+    pageSize = 10
 
     componentDidMount() {                  
         this.props.retrieveCommentsCount(this.props.articleId)
-        this.props.retrieveComments(this.props.articleId, 0, 10)
+        this.props.retrieveComments(this.props.articleId, this.props.commentPage, this.pageSize)
+    }
+
+    loadMoreComments = (e) => {        
+        this.props.retrieveComments(this.props.articleId, this.props.commentPage + 1, this.pageSize)
+    }
+
+    displayLoadMoreButton() {
+        const totalCommentsCount = this.props.commentsCount || 0
+        const currentCommentsCount = (this.props.comments || []).length
+        return totalCommentsCount > currentCommentsCount
     }
 
     render() {        
@@ -25,6 +37,12 @@ export class CommentList extends Component {
                             {...comment}/>
                     )}
                 </ul>
+                {this.displayLoadMoreButton() ?
+                    <div styleName='loadMore'>
+                        <Button type="primary" ghost onClick={this.loadMoreComments}>更多评论</Button>
+                    </div>                                        
+                    : null
+                }
             </div>
         )
     }
@@ -36,7 +54,8 @@ const getArticle = (articles, selectedId) => {
 
 const mapStateToProps = (state, ownProps) => ({
     commentsCount: getArticle(state.articles, ownProps.articleId).commentsCount,
-    comments: getArticle(state.articles, ownProps.articleId).comments
+    comments: getArticle(state.articles, ownProps.articleId).comments,
+    commentPage: getArticle(state.articles, ownProps.articleId).commentPage || 0
 })
 
 const mapDispatchToProps = (dispatch) => ({ 

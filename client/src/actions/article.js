@@ -11,6 +11,7 @@ export const RECEIVE_COMMENTSCOUNT = 'RECEIVE_COMMENTSCOUNT'
 export const LOAD_COMMENTS = 'LOAD_COMMENTS'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 export const CREATE_COMMENT = 'CREATE_COMMENT'
+export const CLEAR_COMMENTS = 'CLEAR_COMMENT'
 
 export function setArticleFilters(filter) {
     return {
@@ -102,10 +103,11 @@ export function loadComments(articleId, page, pageSize) {
     }
 }
 
-export function receiveComments(articleId, comments) {
+export function receiveComments(articleId, commentPage, comments) {
     return {
         type: RECEIVE_COMMENTS,
         articleId,
+        commentPage,
         comments
     }
 }
@@ -116,5 +118,12 @@ export function createComment(articleId, reviewer, content) {
         articleId,
         reviewer,
         content
+    }
+}
+
+export function clearComments(articleId) {
+    return {
+        type: CLEAR_COMMENTS,
+        articleId
     }
 }

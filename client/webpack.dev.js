@@ -3,8 +3,8 @@ const common = require('./webpack.common.js')
 const webpack = require('webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-module.exports = merge(common, {
-    devtool: 'inline-source-map',
+module.exports = merge(common, {   
+    devtool: 'cheap-module-source-map', 
     mode: 'development',
     devServer: {
         contentBase: ['./dist', './assets'],
@@ -17,8 +17,7 @@ module.exports = merge(common, {
         new BundleAnalyzerPlugin({ 
             openAnalyzer: false 
         }),
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('development'),
+        new webpack.DefinePlugin({            
             'process.env.API_URL': JSON.stringify('http://localhost:3000/api')
         })
     ]

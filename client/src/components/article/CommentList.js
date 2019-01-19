@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Comment from './Comment'
-import { getCommentsCount, loadComments } from '../../actions/article'
+import { getCommentsCount, loadComments, clearComments } from '../../actions/article'
 import { Button } from 'antd'
 import CSSModules from 'react-css-modules'
 import styles from './CommentList.css'
 
 export class CommentList extends Component {        
-    pageSize = 10
+    pageSize = 10    
 
-    componentDidMount() {                  
+    componentDidMount() {              
+        this.props.emptyComments(this.props.articleId)
         this.props.retrieveCommentsCount(this.props.articleId)
-        this.props.retrieveComments(this.props.articleId, this.props.commentPage, this.pageSize)
+        this.props.retrieveComments(this.props.articleId, 0, this.pageSize)
     }
 
     loadMoreComments = (e) => {        
@@ -59,6 +60,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({ 
+    emptyComments: (articleId) => dispatch(clearComments(articleId)),
     retrieveCommentsCount: (articleId) => dispatch(getCommentsCount(articleId)),   
     retrieveComments: (articleId, page, pageSize) => dispatch(loadComments(articleId, page, pageSize))            
 })

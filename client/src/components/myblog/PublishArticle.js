@@ -1,16 +1,14 @@
-import React, {Component}  from 'react'
+import React, { Component }  from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { requestPublishArticle, 
     clearArticlePublishStatus,
     selectMenu } from '../../actions/myblog'
-import * as API from '../../api'
 import { Row, Col, Form, Input, Button } from 'antd'
 import { EditorState, convertToRaw } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
-import { Editor } from 'react-draft-wysiwyg'
-import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+import ArticleEditor from './control/ArticleEditor'
 
 function validateField(value, message) {
     if(value) {
@@ -82,23 +80,7 @@ export class PublishArticle extends Component {
             title: this.state.title.value,
             content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
         })
-    }
-
-    uploadImageCallBack = (file) => {
-        return new Promise(
-          (resolve, reject) => {
-            let imgObj = new FormData()
-            imgObj.append('file', file, file.name)                        
-            let config = {
-              headers:{'Content-Type':'multipart/form-data'}
-            }
-            API.uploadImage(imgObj, config)
-                .then(res=>{                    
-                    resolve(res.data)
-                }) 
-          }
-        )
-    }
+    }    
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.articles.publish.status === 'success') {            
@@ -136,23 +118,7 @@ export class PublishArticle extends Component {
                             <Form.Item
                                 validateStatus={content.validateStatus}
                                 help={content.errorMsg || ''}>
-                                <Editor editorState={editorState}
-                                        editorStyle={{ height: '400px', border: '1px solid #F1F1F1', lineHeight: '1em' }}
-                                        localization={{ locale: 'zh' }}
-                                        placeholder='输入正文'
-                                        toolbar={{     
-                                            fontFamily: {
-                                                options: ['Arial', 'Georgia', 'Impact', 'Tahoma', 'Times New Roman', 
-                                                    'Verdana', 'SimSun', 'SimHei', 'FangSong', 'KaiTi', 'Microsoft YaHei', 
-                                                    'STXihei', 'STHeiti', 'STKaiti', 'STSong', 'STFangsong'],                                                
-                                            },                                                                                  
-                                            image: { 
-                                                uploadCallback: this.uploadImageCallBack, 
-                                                inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg', 
-                                                alt: { present: true, mandatory: true } 
-                                            },
-                                        }}
-                                        onEditorStateChange={this.onEditorStateChange} />
+                                <ArticleEditor state={editorState} editorStateChanged={this.onEditorStateChange} /> 
                             </Form.Item>
                         </Col>
                     </Row>

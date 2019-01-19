@@ -54,7 +54,10 @@ class ArticleHeader extends Component {
         switch(e.key) {
             case '.$home':
                 this.props.history.push('/')
-                break
+                break      
+            case '.$github':
+                window.location.href = 'https://github.com/yunling2003/BlogNx'
+                break      
             default:
                 return
         }
@@ -137,12 +140,9 @@ class ArticleHeader extends Component {
                                     <Menu.Item style={{ backgroundColor: '#bae7ff', margin: '0' }} key="recommend">
                                         <Icon type="star-o" />推荐
                                     </Menu.Item>
-                                    <Menu.Item style={{ backgroundColor: '#e6f7ff', margin: '0' }} key="latest">
-                                        <Icon type="exclamation-circle-o" />最新
-                                    </Menu.Item>
-                                    <Menu.Item style={{ backgroundColor: '#bae7ff', margin: '0' }} key="news">
-                                        <Icon type="book" />新闻
-                                    </Menu.Item>
+                                    <Menu.Item style={{ backgroundColor: '#e6f7ff', margin: '0' }} key="github">
+                                        <Icon type="github" />GitHub                                        
+                                    </Menu.Item>                                    
                                 </Menu>
                             </Col>
                         </Row>
@@ -168,12 +168,9 @@ class ArticleHeader extends Component {
                             <Menu.Item key="recommend" style={{ padding: '0 10px', borderBottom: '0' }}>
                                 <Icon type="star-o" />推荐
                             </Menu.Item>
-                            <Menu.Item key="latest" style={{ padding: '0 10px', borderBottom: '0' }}>
-                                <Icon type="exclamation-circle-o" />最新
-                            </Menu.Item>
-                            <Menu.Item key="news" style={{ padding: '0 10px', borderBottom: '0' }}>
-                                <Icon type="book" />新闻
-                            </Menu.Item>
+                            <Menu.Item key="github" style={{ padding: '0 10px', borderBottom: '0' }}>                                
+                                <Icon type="github" />GitHub                                
+                            </Menu.Item>                            
                         </Menu>
                     </Col>
                     <Col span={4}>

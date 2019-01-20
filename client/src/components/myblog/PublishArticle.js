@@ -9,6 +9,7 @@ import { Row, Col, Form, Input, Button } from 'antd'
 import { EditorState, convertToRaw } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
 import ArticleEditor from './control/ArticleEditor'
+import EditableTag from './control/EditableTag'
 
 function validateField(value, message) {
     if(value) {
@@ -43,11 +44,22 @@ export class PublishArticle extends Component {
             title: {
                 value: ''
             },
+            tags: {
+                value: []
+            },
             content: {
                 value: ''
             },
             editorState: EditorState.createEmpty()
         }
+    }
+
+    onTagsChange = (tags) => {
+        this.setState({
+            tags: {
+                value: tags
+            }
+        })
     }
 
     onEditorStateChange = (editorState) => {
@@ -78,6 +90,7 @@ export class PublishArticle extends Component {
         e.preventDefault()
         this.props.publishArticle({
             title: this.state.title.value,
+            tags: this.state.tags.value,
             content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
         })
     }    
@@ -112,6 +125,13 @@ export class PublishArticle extends Component {
                             </Form.Item>
                         </Col>
                         <Col span={4}></Col>
+                    </Row>
+                    <Row>
+                        <Col span={24}>
+                            <Form.Item>
+                                <EditableTag tags={[]} tagsChanged={this.onTagsChange} />
+                            </Form.Item>
+                        </Col>
                     </Row>
                     <Row>
                         <Col span={24}>

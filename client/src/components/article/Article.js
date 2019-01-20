@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import htmlToText from 'html-to-text'
+import { Tag, Tooltip } from 'antd'
 import CSSModules from 'react-css-modules'
 import styles from './Article.css'
 
 class Article extends Component {
     constructor(props) {
         super(props)
-        this.state = {digest: ''}
+        this.state = {            
+            digest: ''
+        }
     }
 
     componentDidMount() {
@@ -16,11 +19,25 @@ class Article extends Component {
     }
 
     render() {
+        const { _id, tags, title } = this.props
         return (
             <li styleName='listItem'>
-                <Link styleName='link' to={`/article/${this.props._id}`}>{this.props.title}</Link>
+                <Link styleName='link' to={`/article/${_id}`}>{title}</Link>
                 <div>
-                    <p styleName='text'>{this.state.digest}</p>
+                    <div styleName='text'>
+                        {this.state.digest}                        
+                    </div>
+                    <div>
+                        {tags.map((tag, index) => {
+                            const isLongTag = tag.length > 10
+                            const tagElem = (
+                                <Tag key={tag} color="#108ee9" style={{fontSize: '9px', borderRadius: '5px'}} closable={false}>
+                                    {isLongTag ? `${tag.slice(0, 10)}...` : tag}                   
+                                </Tag>
+                            )
+                            return isLongTag ? <Tooltip title={tag} key={tag}>{tagElem}</Tooltip> : tagElem
+                        })}
+                    </div>
                 </div>        
             </li>
         )

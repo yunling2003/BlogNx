@@ -6,7 +6,7 @@ import styles from './ArticleDetail.css'
 import CommentList from './CommentList'
 import PublishComment from './PublishComment'
 import { getFormatDate } from '../../utils/date'
-
+import { Tag, Tooltip } from 'antd'
 
 const ArticleDetail = ({ article }) => (
     <div>
@@ -21,10 +21,20 @@ const ArticleDetail = ({ article }) => (
             <Row>
                 <Col span={24}>
                     <div styleName='subTitle'>
-                        <span styleName='subItem'>{getFormatDate(article.publishDate)}</span><span styleName='subItem'>{article.author}</span>
+                        <div styleName='subItem'>{getFormatDate(article.publishDate)}</div>
+                        <div styleName='subItem'>{article.author}</div>                                             
+                        {article.tags.map((tag, index) => {
+                            const isLongTag = tag.length > 10
+                            const tagElem = (
+                                <Tag key={tag} color="#108ee9" style={{fontSize: '9px', borderRadius: '5px'}} closable={false}>
+                                    {isLongTag ? `${tag.slice(0, 10)}...` : tag}                   
+                                </Tag>
+                            )
+                            return isLongTag ? <Tooltip title={tag} key={tag}>{tagElem}</Tooltip> : tagElem
+                        })}
                     </div>
                 </Col>
-            </Row>        
+            </Row>                  
             <Row>
                 <Col span={24}>
                     <div styleName='content' dangerouslySetInnerHTML={{__html: article.content}}>                    

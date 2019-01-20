@@ -16,6 +16,7 @@ export const fakeState = {
         items: [{
             "_id": "23478fdsljkl423",
             "title": "vue项目如何刷新当前页面",
+            "tags": ["vue"],
             "author": 1,
             "publishDate": "2018-05-21 17:30:00",
             "content": `<p><strong>1.场景</strong></p>
@@ -33,6 +34,7 @@ export const fakeState = {
         {
             "_id": "hkl3458dfg0dfg",
             "title": "cooke, session, token",
+            "tags": ["web"],
             "author": 2,
             "publishDate": "2018-04-07 8:16:39",
             "content": `<p><strong><span>发展史</span></strong></p>
@@ -46,6 +48,7 @@ export const fakeState = {
         {
             "_id": "2345jkldfuiotre",
             "title": "纯前端实现图片背景透明化",
+            "tags": ["html", "C#"],
             "author": 3,
             "publishDate": "2018-03-11 12:08:00",
             "content": `<h4 id="前言">前言</h4>
@@ -61,6 +64,7 @@ export const fakeState = {
         {
             "_id": "cvjkl234789dfgdfg",
             "title": "HTML5基础知识总结(一)",
+            "tags": ["html"],
             "author": 4,
             "publishDate": "2017-11-11 21:54:00",
             "content": `<p>新增的标签和属性</p>
@@ -76,6 +80,7 @@ export const fakeState = {
         {
             "_id": "234jlkdfsg908dsf",
             "title": "HTML5移动开发即学即用(双色)",
+            "tags": ["javascript"],
             "author": 5,
             "publishDate": "2018-01-31 10:22:00",
             "content": `<p>《HTML5移动Web开发实战》提供了应对这一挑战的解决方案。通过阅读本书，你将了解如何有效地利用最新的HTML5的那些针对移动网站的功能，横跨多个移动平台。全书共分10章，从移动Web、设备端配置和优化，变互、响应式设计、设备访问，调试、性能测试、富媒体等角度出发，包含了60多个实用的示倒，详细阐释如何构建快速、响应式的HTML5移动网站，适用于iOS、Android、WindowsPhone和BlackBerry等众多主流移动应用平台。&nbsp;</p>
@@ -99,6 +104,7 @@ export const fakeState = {
         items: [{
             "_id": "345jkldfg90890df890g",
             "title": "vue项目如何刷新当前页面",
+            "tags": [],
             "author": "ling",
             "publishDate": "2018-05-21 17:30:00",
             "content": `<p><strong>1.场景</strong></p>
@@ -114,6 +120,7 @@ export const fakeState = {
         {
             "_id": "2345jkldfsg908sdfsd",
             "title": "cooke, session, token",
+            "tags": [],
             "author": "ling",
             "publishDate": "2018-04-07 8:16:39",
             "content": `<p><strong><span>发展史</span></strong></p>

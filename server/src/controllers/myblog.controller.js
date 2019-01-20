@@ -8,7 +8,7 @@ exports.findAllArticles = (req, res) => {
     const sortCol = 'publishDate'
     const sortSeq = -1    
     const sortObj = JSON.parse("{ \"" + sortCol + "\": " + sortSeq + "}")
-    Article.find({ author: uid }, 'title author content publishDate')
+    Article.find({ author: uid }, 'title tags author content publishDate')
             .sort(sortObj)
             .then(articles => {        
                 res.send({             
@@ -28,6 +28,7 @@ exports.publishArticle = (req, res) => {
 
     const article = new Article({
         title: articleObj.title,
+        tags: articleObj.tags,
         author: uid,
         publishDate: Date.now().toString(),
         content: articleObj.content,
@@ -52,6 +53,7 @@ exports.editArticle = (req, res) => {
     Article.findById({ _id: articleObj.id }).then(article => {
         if(article) {
             article.title = articleObj.title
+            article.tags = articleObj.tags
             article.content = articleObj.content
             article.save().then(result => {
                 res.send({

@@ -15,7 +15,7 @@ exports.findAll = (req, res) => {
     const sortSeq = req.query.sortSeq || -1    
     const sortObj = JSON.parse("{ \"" + sortCol + "\": " + sortSeq + "}")
     const pageSize = +req.query.pageSize || defaultPageSize
-    const findPromise = Article.find({}, 'title author content publishDate')                            
+    const findPromise = Article.find({}, 'title tags author content publishDate')                            
                             .sort(sortObj)
                             .skip(pageNum * pageSize)
                             .limit(pageSize)

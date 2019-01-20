@@ -8,6 +8,7 @@ import { EditorState, convertToRaw, ContentState } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
 import htmlToDraft from 'html-to-draftjs'
 import ArticleEditor from './control/ArticleEditor'
+import EditableTag from './control/EditableTag'
 
 function validateField(value, message) {
     if(value) {
@@ -43,6 +44,9 @@ export class EditArticle extends Component {
                 value: this.props.article.title,
                 validateStatus: 'success'
             },
+            tags: {
+                value: this.props.article.tags
+            },
             content: {
                 value: ''
             },
@@ -56,6 +60,14 @@ export class EditArticle extends Component {
             this.state.content.value = editorState.getCurrentContent()
             this.state.content.validateStatus = 'success'         
         }
+    }
+
+    onTagsChange = (tags) => {
+        this.setState({
+            tags: {
+                value: tags
+            }
+        })
     }
 
     onEditorStateChange = (editorState) => {
@@ -87,6 +99,7 @@ export class EditArticle extends Component {
         this.props.editArticle({
             id: this.props.article._id,
             title: this.state.title.value,
+            tags: this.state.tags.value,
             content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
         })
     }    
@@ -102,7 +115,7 @@ export class EditArticle extends Component {
     }
 
     render() {
-        const { title, content, editorState } = this.state        
+        const { title, content, tags, editorState } = this.state        
         const { status, publishMessage } = this.props.publish        
 
         return (            
@@ -119,6 +132,13 @@ export class EditArticle extends Component {
                             </Form.Item>
                         </Col>
                         <Col span={4}></Col>
+                    </Row>
+                    <Row>
+                        <Col span={24}>
+                            <Form.Item>
+                                <EditableTag tags={tags.value} tagsChanged={this.onTagsChange} />
+                            </Form.Item>
+                        </Col>
                     </Row>
                     <Row>
                         <Col span={24}>

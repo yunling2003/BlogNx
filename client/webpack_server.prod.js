@@ -26,7 +26,7 @@ module.exports = merge(common, {
     plugins: [        
         new CleanWebpackPlugin(['dist']),
         new webpack.DefinePlugin({           
-            'process.env.API_URL': JSON.stringify('http://39.106.198.51/api')
+            'process.env.API_URL': JSON.stringify('http://www.blognx.com/api')
         })        
     ],
     output: {

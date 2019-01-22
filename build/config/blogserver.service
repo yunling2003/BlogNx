@@ -6,7 +6,7 @@
 //ExecStart=/usr/local/bin/node /var/www/blogserver/src/server.js
 //Restart=on-failure
 //Environment=PATH=/usr/bin:/usr/local/bin
-//Environment=API_URL=http://39.106.198.51/api
+//Environment=API_URL=http://www.blognx.com/api
 //Environment=PORT=3000
 //WorkingDirectory=/var/www/blogserver
 

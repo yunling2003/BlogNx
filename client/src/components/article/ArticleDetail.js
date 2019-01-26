@@ -5,12 +5,14 @@ import CSSModules from 'react-css-modules'
 import styles from './ArticleDetail.css'
 import CommentList from './CommentList'
 import PublishComment from './PublishComment'
-import { getFormatDate } from '../../utils/date'
-import { Tag, Tooltip } from 'antd'
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
+import { Tag, Tooltip, BackTop } from 'antd'
 
 const ArticleDetail = ({ article }) => (
     <div>
         <div styleName='main'>
+            <BackTop />
             <Row>
                 <Col span={24}>
                     <div styleName='title'>
@@ -21,7 +23,7 @@ const ArticleDetail = ({ article }) => (
             <Row>
                 <Col span={24}>
                     <div styleName='subTitle'>
-                        <div styleName='subItem'>{getFormatDate(article.publishDate)}</div>
+                        <div styleName='subItem'>{dayjs(article.publishDate).locale('zh-cn').format('YYYY-MMM-DD')}</div>
                         <div styleName='subItem'>{article.author}</div>                                             
                         {article.tags.map((tag, index) => {
                             const isLongTag = tag.length > 10

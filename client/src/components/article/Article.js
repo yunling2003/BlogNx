@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import htmlToText from 'html-to-text'
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
 import { Tag, Tooltip } from 'antd'
 import CSSModules from 'react-css-modules'
 import styles from './Article.css'
@@ -19,7 +21,7 @@ class Article extends Component {
     }
 
     render() {
-        const { _id, tags, title } = this.props
+        const { _id, tags, title, publishDate } = this.props
         return (
             <li styleName='listItem'>
                 <Link styleName='link' to={`/article/${_id}`}>{title}</Link>
@@ -27,7 +29,8 @@ class Article extends Component {
                     <div styleName='text'>
                         {this.state.digest}                        
                     </div>
-                    <div>
+                    <div styleName='text'>
+                        <span>发表于: {dayjs(publishDate).locale('zh-cn').format('YYYY-MMM-DD')}</span>&nbsp;&nbsp;
                         {tags.map((tag, index) => {
                             const isLongTag = tag.length > 10
                             const tagElem = (

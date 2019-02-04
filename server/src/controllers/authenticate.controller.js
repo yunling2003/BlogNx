@@ -1,6 +1,6 @@
 const User = require('../models/user.model.js')
-const tokenHelper = require('../tokenHelper.js')
-const signHelper = require('../signHelper.js')
+const tokenHelper = require('../utils/tokenHelper.js')
+const signHelper = require('../utils/signHelper.js')
 const svgCaptcha = require('svg-captcha')
 
 exports.signOut = (req, res) => {

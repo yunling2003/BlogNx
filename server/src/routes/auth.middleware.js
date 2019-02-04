@@ -1,6 +1,6 @@
 const User = require('../models/user.model.js')
-const signHelper = require('../signHelper.js')
-const tokenHelper = require('../tokenHelper.js')
+const signHelper = require('../utils/signHelper.js')
+const tokenHelper = require('../utils/tokenHelper.js')
 
 exports.authenticate = (req, res, next) => {
     const uid = req.query.uid || ''

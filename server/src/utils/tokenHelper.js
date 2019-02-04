@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const ck = require('./constkeys.js')
+const ck = require('../constkeys.js')
 
 exports.createToken = (uid) => {
     return jwt.sign({ user: uid }, ck.secretKey, { expiresIn: '1h' })

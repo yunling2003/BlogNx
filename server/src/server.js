@@ -7,6 +7,7 @@ const configKeys = require('./constkeys.js')
 const article = require('./routes/article.routes.js')
 const authentication = require('./routes/authenticate.routes.js')
 const myblog = require('./routes/myblog.routes.js')
+const weixin = require('./routes/weixin.routes.js')
 const app = express()
 
 mongoose.Promise = global.Promise
@@ -37,6 +38,7 @@ app.use('/api/image', express.static(path.join(__dirname, "../resource/image")))
 app.use('/api/article', article)
 app.use('/api/auth', authentication)
 app.use('/api/myblog', myblog)
+app.use('/api/weixin', weixin)
 
 app.listen(configKeys.port, () => {
     console.log("Server is listening on port 3000!")

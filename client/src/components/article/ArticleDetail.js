@@ -5,6 +5,7 @@ import CSSModules from 'react-css-modules'
 import styles from './ArticleDetail.css'
 import CommentList from './CommentList'
 import PublishComment from './PublishComment'
+import Share from './Share'
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
 import { Tag, Tooltip, BackTop } from 'antd'
@@ -41,6 +42,15 @@ const ArticleDetail = ({ article }) => (
                 <Col span={24}>
                     <div styleName='content' dangerouslySetInnerHTML={{__html: article.content}}>                    
                     </div>
+                </Col>
+            </Row>
+            <Row>
+                <Col span={24}>
+                    <Share content={{
+                        title: 'blognx.com',
+                        desc: article.title,
+                        url: location.href
+                    }}></Share>
                 </Col>
             </Row>
         </div>

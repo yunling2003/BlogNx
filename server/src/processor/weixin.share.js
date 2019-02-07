@@ -48,7 +48,7 @@ async function getAccessToken() {
 exports.getJsapiTicket = async () => {
     var ticket = cache.get('ticket')
     if(!ticket) {
-        var token = await getAccessToken();
+        var token = await getAccessToken()
         var ticketRes = await http.get(ck.weixin_ticketurl, {
             params: {
                 type: 'jsapi',
@@ -66,11 +66,12 @@ exports.getJsapiTicket = async () => {
 exports.createSignature = (jsapi_ticket, url) => {
     var ret = {
         jsapi_ticket: jsapi_ticket,
+        appId: ck.weixin_appid,
         nonceStr: createNonceStr(),
         timestamp: createTimestamp(),
         url: url
     }
-    var retStr = raw(ret);    
-    ret.signature = crypt.genSha1Sign(retStr);
+    var retStr = raw(ret)
+    ret.signature = crypt.genSha1Sign(retStr)
     return ret
-}
+}   

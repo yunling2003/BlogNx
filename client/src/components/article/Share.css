@@ -1,0 +1,12 @@
+.share-list {    
+    list-style: none;
+}
+
+.share-list li {
+    display: inline;
+    margin-right: 10px;    
+}
+
+.pull-right {
+    float: right;    
+}

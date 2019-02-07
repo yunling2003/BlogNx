@@ -22,6 +22,7 @@
         "curly": ["error", "all"]
     },
     "globals": {
-        "Promise": true        
+        "Promise": true,
+        "wx": true
     }
 }

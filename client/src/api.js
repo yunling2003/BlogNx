@@ -118,3 +118,11 @@ export function createComment(articleId, reviewer, content, credentials) {
 export function uploadImage(imgObj, config) {
     return http.post('/myblog/article/uploadImage', imgObj, config)
 }
+
+export function getWeixinSignature(url) {
+    return http.get('/weixin/getShare', {
+        params: {
+            url
+        }
+    })
+}

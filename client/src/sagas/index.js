@@ -2,11 +2,13 @@ import { call, put, all, takeEvery, select } from 'redux-saga/effects'
 import { GET_COMMENTSCOUNT,
     LOAD_COMMENTS,
     CREATE_COMMENT,    
+    GET_ARTICLEBYID,
+    receiveArticle,
     receiveCommentsCount,
     receiveComments,
     loadComments,
     clearComments,
-    getCommentsCount } from '../actions/article'
+    getCommentsCount} from '../actions/article'
 import {     
     ARTICLE_FETCH_REQUESTED,
     beginFetchArticles,
@@ -79,6 +81,17 @@ function* editArticleAsync() {
     yield takeEvery(ARTICLE_EDIT_REQUESTED, editArticle)
 }
 
+function* fetchArticleById(action) {
+    const res = yield call(API.getArticleById, action.articleId)
+    if(res) {
+        yield put(receiveArticle(action.articleId, res.data.article))
+    }
+}
+
+function* fetchArticleByIdAsync() {
+    yield takeEvery(GET_ARTICLEBYID, fetchArticleById)
+}
+
 function* deleteArticle(action) {
     yield put(beginDeleteArticle())    
     const res = yield call(API.deleteArticle, action.id, yield call(getCredentials))        
@@ -142,6 +155,7 @@ export default function* rootSaga() {
         fetchMyArticlesAsync(), 
         publishArticleAsync(),
         editArticleAsync(),
+        fetchArticleByIdAsync(),
         deleteArticleAndRefreshAsync(),
         getCommentsCountAsync(),
         loadCommentsAsync(),

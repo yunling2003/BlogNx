@@ -30,6 +30,14 @@ export function getAllArticles(filters) {
     return http.get('/article?' + filters)
 }
 
+export function getArticleById(articleId) {
+    return http.get('/article/getbyid', {
+        params: {
+            id: articleId
+        }
+    })
+}
+
 export function getMyPublishedArticles(credentials) {
     return http.get('/myblog/articles', {
         params: {

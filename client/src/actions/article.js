@@ -5,6 +5,8 @@ export const RECEIVE_ARTICLES = 'RECEIVE_ARTICLES'
 export const INVALIDATE_ARTICLES = 'INVALIDATE_ARTICLES'
 export const SET_ARTICLEFILTER = 'SET_ARTICLEFILTER'
 export const CLEAR_ARTICLES = 'CLEAR_ARTICLES'
+export const GET_ARTICLEBYID = 'GET_ARTICLEBYID'
+export const RECEIVE_ARTICLE = 'RECEIVE_ARTICLE'
 
 export const GET_COMMENTSCOUNT = 'GET_COMMENTSCOUNT'
 export const RECEIVE_COMMENTSCOUNT = 'RECEIVE_COMMENTSCOUNT'
@@ -76,6 +78,21 @@ export function fetchArticlesIfNeeded() {
         if (shouldFetchArticles(getState())) {
             return dispatch(fetchArticles(getState()))
         }
+    }
+}
+
+export function getArticleById(articleId) {
+    return {
+        type: GET_ARTICLEBYID,
+        articleId
+    }
+}
+
+export function receiveArticle(articleId, article) {
+    return {
+        type: RECEIVE_ARTICLE,
+        articleId,
+        article
     }
 }
 

@@ -33,6 +33,16 @@ exports.findAll = (req, res) => {
     })
 }
 
+exports.findArticleById = (req, res) => {
+    const articleId = req.query.id
+    Article.findOne({ '_id': articleId }, 'title tags author content publishDate')
+        .then(result => {
+            res.send({
+                article: result
+            })
+        })
+}
+
 exports.getCommentsCount = (req, res) => {
     const articleId = req.query.id
     Article.findOne({ '_id': articleId })

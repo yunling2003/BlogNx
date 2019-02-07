@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { REQUEST_ARTICLES, 
+    RECEIVE_ARTICLE,
     RECEIVE_ARTICLES, 
     INVALIDATE_ARTICLES, 
     SET_ARTICLEFILTER,
@@ -46,6 +47,22 @@ export function articles(state = {}, action) {
                 totalCount: action.totalCount,
                 items: action.articles
             })
+            break
+        case RECEIVE_ARTICLE:
+            if(state.items.length === 0) {
+                newState = Object.assign({}, state, {
+                    items: [action.article]
+                })
+            } else {
+                newState = Object.assign({}, state, {
+                    items: state.items.map(item => {
+                        if(item._id === action.articleId) {
+                            return Object.assign({}, item, action.article)
+                        }
+                        return item
+                    }) 
+                })
+            }            
             break
         case CLEAR_ARTICLES:
             newState = Object.assign({}, state, {

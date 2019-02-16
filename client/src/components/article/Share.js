@@ -48,7 +48,7 @@ class Share extends Component {
                 </ul>
                 <Modal
                     visible={this.state.qrCodeVisible}
-                    title="微信二维码"                    
+                    title="扫二维码分享文章"                    
                     onCancel={this.handleCancel}
                     footer={null}
                     >

@@ -29,7 +29,7 @@ class ArticleHeader extends Component {
         this.setState({
           viewportWidth: window.innerWidth,
         })
-      }, this.applyViewportChange)
+      }, this.applyViewportChangeInterval)
 
     handleMenuVisibility = (visible) => {
         this.setState({            

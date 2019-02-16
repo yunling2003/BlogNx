@@ -5,7 +5,7 @@ export async function prepareWeixinShare(shareObj) {
 
     if(retObj.data && retObj.data.share) {
         wx.config({
-            debug: true, 
+            debug: false, 
             appId: retObj.data.share.appId, 
             timestamp: retObj.data.share.timestamp, 
             nonceStr: retObj.data.share.nonceStr, 

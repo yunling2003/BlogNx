@@ -65,13 +65,13 @@ exports.getJsapiTicket = async () => {
 
 exports.createSignature = (jsapi_ticket, url) => {
     var ret = {
-        jsapi_ticket: jsapi_ticket,
-        appId: ck.weixin_appid,
+        jsapi_ticket: jsapi_ticket,        
         nonceStr: createNonceStr(),
         timestamp: createTimestamp(),
         url: url
     }
-    var retStr = raw(ret)
+    var retStr = raw(ret)    
     ret.signature = crypt.genSha1Sign(retStr)
+    ret.appId = ck.weixin_appid    
     return ret
 }   

@@ -4,10 +4,10 @@ const resolve = require('path').resolve
 const existsSync = require('fs').existsSync
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const extractAppCSS = new ExtractTextPlugin('style.css');
-const extractVendorCSS = new ExtractTextPlugin('vendor.css');
+const extractAppCSS = new ExtractTextPlugin('style.css')
+const extractVendorCSS = new ExtractTextPlugin('vendor.css')
 
-let theme = getTheme();
+let theme = getTheme()
 
 module.exports = {
     entry: {
@@ -35,22 +35,17 @@ module.exports = {
                 }
             }
         }
-    },
-    output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: '/'        
-    },
+    },    
     module: {
         rules: [{
                 enforce: 'pre',
                 test: /\.js$/,
-                include: path.resolve(__dirname, 'src'),
+                include: path.resolve(__dirname, '../src'),
                 loader: 'eslint-loader'
             },
             {
                 test: /\.js$/,
-                include: path.resolve(__dirname, 'src'),
+                include: path.resolve(__dirname, '../src'),
                 use: {
                     loader: 'babel-loader'                                      
                 }
@@ -104,22 +99,22 @@ module.exports = {
     }    
 }
 
-function getTheme() {
-    let theme = {};
-    const pkgPath = join(process.cwd(), 'package.json');    
-    const pkg = existsSync(pkgPath) ? require(pkgPath) : {};
+function getTheme() {    
+    let theme = {}
+    const pkgPath = join(process.cwd(), 'package.json')    
+    const pkg = existsSync(pkgPath) ? require(pkgPath) : {}
 
     if (pkg.theme && typeof (pkg.theme) === 'string') {
-        let cfgPath = pkg.theme;
-        // relative path
+        let cfgPath = pkg.theme
+        // relative path        
         if (cfgPath.charAt(0) === '.') {
-            cfgPath = resolve(process.cwd(), cfgPath);
+            cfgPath = resolve(process.cwd(), cfgPath)
         }
-        const getThemeConfig = require(cfgPath);
-        theme = getThemeConfig();
+        const getThemeConfig = require(cfgPath)
+        theme = getThemeConfig()        
     }
     else if (pkg.theme && typeof (pkg.theme) === 'object') {
-        theme = pkg.theme;
+        theme = pkg.theme
     }
-    return theme;
+    return theme
 }

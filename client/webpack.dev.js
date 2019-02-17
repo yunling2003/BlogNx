@@ -16,9 +16,6 @@ module.exports = merge(common, {
         new webpack.HotModuleReplacementPlugin(),
         new BundleAnalyzerPlugin({ 
             openAnalyzer: false 
-        }),
-        new webpack.DefinePlugin({            
-            'process.env.API_URL': JSON.stringify('http://localhost:3000/api')
-        })
+        })        
     ]
 })

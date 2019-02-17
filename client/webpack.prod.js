@@ -5,8 +5,8 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {   
-    devtool: 'source-map', 
-    mode: 'production',    
+    devtool: 'source-map',
+    mode: 'production',
     optimization:{
         minimizer: [
             new UglifyJSPlugin({
@@ -24,10 +24,7 @@ module.exports = merge(common, {
         ]
     },
     plugins: [        
-        new CleanWebpackPlugin(['dist']),
-        new webpack.DefinePlugin({            
-            'process.env.API_URL': JSON.stringify('http://localhost/api')
-        })        
+        new CleanWebpackPlugin(['dist'])              
     ],
     output: {
         filename: '[name].[chunkhash].js',

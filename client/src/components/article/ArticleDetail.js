@@ -13,7 +13,11 @@ import 'dayjs/locale/zh-cn'
 import { Tag, Tooltip, BackTop } from 'antd'
 
 export class ArticleDetail extends Component {
-    componentWillMount() {
+    static asyncData(store, params) {        
+        return store.dispatch(getArticleById(params.id))
+    }
+
+    componentDidMount() {
         this.props.retrieveArticleById(this.props.computedMatch.params.id)
     }
 

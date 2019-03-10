@@ -13,9 +13,13 @@ import styles from './VisibleArticleList.css'
 export class VisibleArticleList extends Component {
     constructor(props) {
         super(props)
+    }    
+
+    static asyncData(store) {
+        return store.dispatch(fetchArticlesIfNeeded())
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.clearArticles()                  
         this.props.fetchArticlesIfNeeded()
     }

@@ -8,7 +8,7 @@ export default function requireAuth(WrappedComponent) {
             super(props)
         }
 
-        componentWillMount() {
+        componentDidMount() {
             this.checkAuth()
         }
 

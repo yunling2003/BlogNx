@@ -10,6 +10,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "dev": "node server/server.js",
     "start": "cross-env NODE_ENV=development && webpack-dev-server --open --config ./config/webpack.dev.js",
     "build-local": "cross-env NODE_ENV=development && webpack --config ./config/webpack.prod.js",
     "build-server": "cross-env NODE_ENV=production && webpack --config ./config/webpack.prod.js",
@@ -22,6 +23,7 @@
     "crypto-js": "^3.1.9-1",
     "dayjs": "^1.8.0",
     "draftjs-to-html": "^0.8.4",
+    "express": "^4.16.4",
     "html-to-draftjs": "^1.4.0",
     "html-to-text": "^4.0.0",
     "lodash.throttle": "^4.1.1",
@@ -31,6 +33,7 @@
     "react-dom": "^16.3.0",
     "react-draft-wysiwyg": "^1.12.13",
     "react-redux": "^5.0.7",
+    "react-router-config": "^4.4.0-beta.6",
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
@@ -73,7 +76,9 @@
     "webpack": "^4.4.1",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^2.0.14",
+    "webpack-dev-middleware": "^3.6.0",
     "webpack-dev-server": "^3.1.3",
+    "webpack-hot-middleware": "^2.24.3",
     "webpack-merge": "^4.1.2"
   },
   "theme": "./theme.js",

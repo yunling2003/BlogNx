@@ -9,33 +9,15 @@ const extractVendorCSS = new ExtractTextPlugin('vendor.css')
 
 let theme = getTheme()
 
-module.exports = {
-    entry: {
-        app: './src/index.js'
-    },
+module.exports = {    
     plugins: [
         new HtmlWebpackPlugin({
-            template: './index.html',
-            favicon: './assets/images/favicon.ico'
+            template: path.resolve(__dirname, '../index.html'),
+            favicon: path.resolve(__dirname, '../assets/images/favicon.ico')
         }),
         extractAppCSS,
         extractVendorCSS        
-    ],
-    optimization: {
-        runtimeChunk: {
-            name: 'manifest'
-        },
-        splitChunks: {
-            cacheGroups: {
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendor',
-                    priority: -20,
-                    chunks: 'initial'
-                }
-            }
-        }
-    },    
+    ],       
     module: {
         rules: [{
                 enforce: 'pre',
@@ -57,15 +39,15 @@ module.exports = {
                     fallback: 'style-loader',
                     use: 'css-loader'
                 })
-            },
-            {
+            },            
+            {                
                 test: /\.css$/,
                 include: [/src/],
                 use: extractAppCSS.extract({
                     fallback: 'style-loader',
-                    use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+                    use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]'
                 })
-            },
+            },               
             {
                 test: /\.less$/,
                 exclude: [/src/],

@@ -41,25 +41,18 @@ export class EditArticle extends Component {
         super(props)
         this.state = {            
             title: {
-                value: this.props.article.title,
+                value: '',
                 validateStatus: 'success'
             },
             tags: {
-                value: this.props.article.tags
+                value: []
             },
             content: {
                 value: ''
             },
-            editorState: EditorState.createEmpty()            
-        }
-        const contentBlock = htmlToDraft(this.props.article.content)
-        if(contentBlock) {
-            const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks)
-            const editorState = EditorState.createWithContent(contentState)
-            this.state.editorState = editorState
-            this.state.content.value = editorState.getCurrentContent()
-            this.state.content.validateStatus = 'success'         
-        }
+            editorState: EditorState.createEmpty(),
+            init: false            
+        }        
     }
 
     onTagsChange = (tags) => {
@@ -102,19 +95,51 @@ export class EditArticle extends Component {
             tags: this.state.tags.value,
             content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
         })
-    }    
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.publish.status === 'success') {            
-            this.props.history.push('/myblog/article/list')            
-        }
-    }
+    }       
 
     componentWillUnmount() {
         this.props.clearPublishStatus()
     }
 
-    render() {
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.publish.status === 'success') {            
+            this.props.history.push('/myblog/article/list')            
+        }  
+    }
+
+    static getEditorState(content) {
+        if(content) {
+            const contentBlock = htmlToDraft(content)
+            if(contentBlock) {
+                const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks)
+                return EditorState.createWithContent(contentState)                               
+            }
+        }
+        return EditorState.createEmpty()
+    }    
+
+    static getDerivedStateFromProps(nextProps, prevState) {              
+        if(nextProps.article && !prevState.init) {
+            return {
+                title: {
+                    value: nextProps.article.title || '',
+                    validateStatus: 'success'
+                },
+                tags: {
+                    value: nextProps.article.tags || []
+                },
+                content: {
+                    value: EditArticle.getEditorState(nextProps.article.content).getCurrentContent(),
+                    validateStatus: 'success'
+                },
+                editorState: EditArticle.getEditorState(nextProps.article.content),
+                init: true
+            }                        
+        }
+        return null
+    }
+
+    render() {        
         const { title, content, tags, editorState } = this.state        
         const { status, publishMessage } = this.props.publish        
 

@@ -111,9 +111,11 @@ export function articles(state = {}, action) {
             newState = Object.assign({}, state)                
     }
 
-    if(Object.keys(newState).length > 0) {  //Not an empty object
-        sessionStorage.setItem("articles", JSON.stringify(newState))
-    }    
+    if (process.env.REACT_ENV !== "server") {
+        if(Object.keys(newState).length > 0) {  //Not an empty object
+            sessionStorage.setItem("articles", JSON.stringify(newState))
+        }    
+    }
     return newState
 }
 
@@ -127,8 +129,10 @@ export function articleFilters(state = {}, action) {
             newState = Object.assign({}, state)
     }
 
-    if(Object.keys(newState).length > 0) {
-        sessionStorage.setItem("articleFilters", JSON.stringify(newState))
+    if (process.env.REACT_ENV !== "server") {
+        if(Object.keys(newState).length > 0) {
+            sessionStorage.setItem("articleFilters", JSON.stringify(newState))
+        }
     }
     return newState
 }
@@ -174,9 +178,11 @@ export function currentUser(state = {}, action) {
         default:
             newState = Object.assign({}, state)
     }
-
-    if(Object.keys(newState).length > 0) {
-        sessionStorage.setItem("currentUser", JSON.stringify(newState))
+    
+    if (process.env.REACT_ENV !== "server") {
+        if(Object.keys(newState).length > 0) {
+            sessionStorage.setItem("currentUser", JSON.stringify(newState))
+        }
     }
     return newState
 }
@@ -262,8 +268,10 @@ export function myArticles(state = {}, action) {
             newState = Object.assign({}, state)
     }
 
-    if(Object.keys(newState).length > 0) {
-        sessionStorage.setItem("myArticles", JSON.stringify(newState))
+    if (process.env.REACT_ENV !== "server") {
+        if(Object.keys(newState).length > 0) {
+            sessionStorage.setItem("myArticles", JSON.stringify(newState))
+        }
     }
     return newState
 }

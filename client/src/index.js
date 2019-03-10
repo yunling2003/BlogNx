@@ -1,64 +1,52 @@
 import React from 'react'
-import { render } from 'react-dom'
+import ReactDOM from 'react-dom'
 import blogStore from './blogStore'
+import { Provider } from 'react-redux'
+import { BrowserRouter as Router } from 'react-router-dom'
 import Root from './components/Root'
 import 'antd/dist/antd.less'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
 import { LocaleProvider } from 'antd'
 
-const currentUserDefault = {
-    userName: null,
-    isLoggingIn: false,
-    logInMessage: null,
-    token: null
-}
+const initState = window.__INITIAL_STATE__
 
-const articleFiltersDefault = {
-    page: 0,
-    pageSize: 7
-}
-
-const articlesDefault = { 
-    isFetching: false, 
-    didInvalidate: true, 
-    totalCount: 0, 
-    items: [] 
-}
-
-const myArticlesDefault = {
-    publish: {
-        isPublishing: false,
-        status: 'init',
-        publishMessage: ''
-    },
-    selectedMenu: 'article_list',
-    isFetching: false,
-    isDeleting: false,
-    didInvalidate: true,
-    totalCount: 0,
-    items: []
-}
-
-const initState = {
-    currentUser: sessionStorage.getItem("currentUser") ? 
+initState.currentUser = sessionStorage.getItem("currentUser") ? 
                 JSON.parse(sessionStorage.getItem("currentUser"))
-                : currentUserDefault,
-    articleFilters: sessionStorage.getItem("articleFilters") ?
+                : initState.currentUser,
+initState.articleFilters = sessionStorage.getItem("articleFilters") ?
                 JSON.parse(sessionStorage.getItem("articleFilters"))
-                : articleFiltersDefault,
-    articles: sessionStorage.getItem("articles") ?
+                : initState.articleFilters,
+initState.articles = sessionStorage.getItem("articles") ?
                 JSON.parse(sessionStorage.getItem("articles"))
-                : articlesDefault,
-    myArticles: sessionStorage.getItem("myArticles") ?
+                : initState.articles,
+initState.myArticles = sessionStorage.getItem("myArticles") ?
                 JSON.parse(sessionStorage.getItem("myArticles"))
-                : myArticlesDefault
-}
+                : initState.myArticles
 
-const store = blogStore(initState)
+const createApp = (Component) => {        
+    const store = blogStore(initState)
+    const App = () => {
+      return (
+        <LocaleProvider locale={zhCN}>
+            <Provider store={store}>
+                <Router>
+                    <Component />
+                </Router>
+            </Provider>
+        </LocaleProvider>
+      )
+    }
+    return <App />
+  }
 
-render(
-    <LocaleProvider locale={zhCN}>
-        <Root store={store} />
-    </LocaleProvider>,
+ReactDOM.hydrate(
+    createApp(Root),
     document.getElementById('app')
 )
+
+if (module.hot) {
+    module.hot.accept("./components/Root", () => {
+        const NewApp = require("./components/Root").default
+        ReactDOM.hydrate(createApp(NewApp), document.getElementById("app"))
+    })
+}

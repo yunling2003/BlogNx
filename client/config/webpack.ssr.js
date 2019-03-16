@@ -3,10 +3,8 @@ const path = require('path')
 const merge = require('webpack-merge')
 const common = require('./webpack.common.js')
 
-const isProd = process.env.NODE_ENV === "production"
-
-module.exports = merge(common, {
-    mode: isProd ? 'production' : 'development',
+module.exports = merge(common, {    
+    mode: 'production',
     entry: {
         app: path.resolve(__dirname, '../src/index_server.js')
     },

@@ -1,6 +1,6 @@
 const ReactDOMServer = require("react-dom/server")
 const { matchRoutes } = require("react-router-config")
-const initState = require('../src/initialState.js')
+const initState = require('./initialState.js')
 
 class ServerRenderer {
     constructor(serverEntry, template) {

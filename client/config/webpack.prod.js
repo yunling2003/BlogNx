@@ -1,7 +1,7 @@
 const path = require('path')
 const merge = require('webpack-merge')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const common = require('./webpack.common.js')
 
 module.exports = merge(common, {   
@@ -13,8 +13,14 @@ module.exports = merge(common, {
     output: {
         filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, '../dist'),
-        publicPath: '/'    
+        publicPath: '/dist/'    
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, '../index.html'),
+            favicon: path.resolve(__dirname, '../assets/images/favicon.ico')
+        })        
+    ],
     optimization:{
         runtimeChunk: {
             name: 'manifest'
@@ -43,8 +49,5 @@ module.exports = merge(common, {
                 }
             })
         ]
-    },   
-    plugins: [        
-        new CleanWebpackPlugin(['dist'])              
-    ]    
+    }    
 })

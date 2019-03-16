@@ -3,18 +3,13 @@ const join = require('path').join
 const resolve = require('path').resolve
 const existsSync = require('fs').existsSync
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const extractAppCSS = new ExtractTextPlugin('style.css')
 const extractVendorCSS = new ExtractTextPlugin('vendor.css')
 
 let theme = getTheme()
 
 module.exports = {    
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, '../index.html'),
-            favicon: path.resolve(__dirname, '../assets/images/favicon.ico')
-        }),
+    plugins: [        
         extractAppCSS,
         extractVendorCSS        
     ],       

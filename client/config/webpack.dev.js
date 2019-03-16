@@ -2,6 +2,7 @@ const path = require('path')
 const merge = require('webpack-merge')
 const common = require('./webpack.common.js')
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = merge(common, {   
@@ -36,6 +37,10 @@ module.exports = merge(common, {
         }
     },     
     plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, '../index.html'),
+            favicon: path.resolve(__dirname, '../assets/images/favicon.ico')
+        }),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new BundleAnalyzerPlugin({ 

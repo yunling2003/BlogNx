@@ -25,6 +25,6 @@ module.exports = merge(common, {
     plugins: [        
         new webpack.DefinePlugin({
             'process.env.REACT_ENV': JSON.stringify('server')
-        })         
+        })           
     ]    
 })

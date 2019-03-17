@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const path = require('path')
 const merge = require('webpack-merge')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
@@ -19,7 +20,10 @@ module.exports = merge(common, {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '../index.html'),
             favicon: path.resolve(__dirname, '../assets/images/favicon.ico')
-        })        
+        }),
+        new webpack.DefinePlugin({
+            'process.env.SERVER_ENV': JSON.stringify('remote')
+        })
     ],
     optimization:{
         runtimeChunk: {

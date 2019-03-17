@@ -1,0 +1,18 @@
+{
+  "name": "blogssr",
+  "version": "1.0.0",
+  "description": "blog server rendering server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Leon",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-router": "^4.4.0",
+    "react-router-config": "^4.4.0"
+  }
+}

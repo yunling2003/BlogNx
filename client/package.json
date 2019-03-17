@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "node server/server.js",
-    "start": "cross-env NODE_ENV=production SERVER_ENV=local node server/server.js",
+    "start": "cd server && cross-env NODE_ENV=production SERVER_ENV=local node server.js",
     "build": "rimraf dist && npm run build:client && npm run build:server",    
     "build:client": "webpack --config config/webpack.prod.js",    
     "build:server": "webpack --config config/webpack.ssr.js",         

@@ -12,7 +12,7 @@ let readyPromise
 if (isProd) {
     app.use("/dist", express.static(path.join(__dirname, "../dist")))
     let serverEntry = require("../dist/index_server")    
-    let template = fs.readFileSync("./dist/index.html", "utf-8")    
+    let template = fs.readFileSync("../dist/index.html", "utf-8")    
     renderer = new ServerRenderer(serverEntry, template)
 } else {
     readyPromise = require("./setup-dev-server")(app, (serverEntry, template) => {

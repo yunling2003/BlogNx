@@ -1,6 +1,8 @@
 
 /client/node_modules
 
+/client/server/node_modules
+
 /client/dist
 
 /client/coverage

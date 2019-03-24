@@ -51,11 +51,11 @@ const SidePanel = (state = {}) => (
                     <Collapse defaultActiveKey={['1']}>
                         <Panel disabled={true} showArrow={false} header="网站链接" key="1" style={customPanelStyle}>
                             <ul styleName='linkList'>
-                                <li><a href="#">新浪微博&nbsp;<Icon type="weibo" /></a></li>
-                                <li><a href="#">Twitter&nbsp;<Icon type="twitter" /></a></li>
-                                <li><a href="#">腾讯微博&nbsp;<Icon type="qq" /></a></li>
-                                <li><a href="#">FaceBook&nbsp;<Icon type="facebook" /></a></li>
-                                <li><a href="#">LinkedIn&nbsp;<Icon type="linkedin" /></a></li>                                
+                                <li><a href="https://www.iamstoneshi.com" target="_blank">Stone的技术博客</a></li>
+                                <li><a href="https://www.csdn.net/" target="_blank">CSDN</a></li>
+                                <li><a href="https://www.cnblogs.com/" target="_blank">博客中国</a></li>
+                                <li><a href="https://www.zhihu.com" target="_blank">知乎</a></li>
+                                <li><a href="https://segmentfault.com/" target="_blank">segmentfault</a></li>                                                                                               
                             </ul>
                         </Panel>                    
                     </Collapse>

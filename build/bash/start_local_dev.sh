@@ -9,4 +9,4 @@ osascript -e 'tell app "Terminal"
 end tell'
 
 cd /Users/leon/Applications/BlogNx/client
-npm start
+npm run dev

@@ -5,6 +5,7 @@ import { fetchArticlesIfNeeded,
     setArticleFilters, 
     invalidateArticles, 
     clearArticles } from '../../actions/article'
+import { Helmet } from 'react-helmet'
 import Article from './Article'
 import { Row, Col, Pagination, Icon } from 'antd'
 import CSSModules from 'react-css-modules'
@@ -44,7 +45,13 @@ export class VisibleArticleList extends Component {
     render() {
         const { articles, filters } = this.props
         return (
-            <div styleName='list'>                
+            <div styleName='list'>
+                <Helmet>                
+                    <title>Everest极客空间</title>    
+                    <meta name="keywords" content="极客空间" />
+                    <meta name="keywords" content="IT技术" />
+                    <meta name="keywords" content="前端开发, Frontend" />
+                </Helmet>                
                 <Row>
                     <Col span={4} offset={20}>
                         <div styleName='action'>

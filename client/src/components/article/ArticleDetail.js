@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Row, Col } from 'antd'
+import { Helmet } from 'react-helmet'
 import CSSModules from 'react-css-modules'
 import styles from './ArticleDetail.css'
 import CommentList from './CommentList'
@@ -25,7 +26,13 @@ export class ArticleDetail extends Component {
         const { article } = this.props
         if(article) {
             return (            
-                <div>                
+                <div>       
+                    <Helmet>                
+                        <title>Everest极客空间</title>    
+                        <meta name="keywords" content="极客空间" />
+                        <meta name="keywords" content="IT技术" />
+                        <meta name="keywords" content="前端开发, Frontend" />
+                    </Helmet>         
                     <div styleName='main'>
                         <BackTop />
                         <Row>

@@ -12,9 +12,9 @@
   "scripts": {
     "dev": "node server/server.js",
     "start": "cd server && cross-env NODE_ENV=production SERVER_ENV=local node server.js",
-    "build": "rimraf dist && npm run build:client && npm run build:server",   
-    "build:client": "webpack --config config/webpack.prod.js",    
-    "build:server": "webpack --config config/webpack.ssr.js",         
+    "build": "rimraf dist && npm run build:client && npm run build:server",
+    "build:client": "webpack --config config/webpack.prod.js",
+    "build:server": "webpack --config config/webpack.ssr.js",
     "test": "jest --no-cache",
     "coverage": "jest --colors --coverage"
   },
@@ -33,6 +33,7 @@
     "react-css-modules": "^4.7.2",
     "react-dom": "^16.3.0",
     "react-draft-wysiwyg": "^1.12.13",
+    "react-helmet": "^5.2.0",
     "react-redux": "^5.0.7",
     "react-router-config": "^4.4.0-beta.6",
     "react-router-dom": "^4.2.2",

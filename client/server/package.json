@@ -12,6 +12,7 @@
     "express": "^4.16.4",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-helmet": "^5.2.0",
     "react-router": "^4.4.0",
     "react-router-config": "^4.4.0"
   }

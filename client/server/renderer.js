@@ -1,5 +1,6 @@
 const ReactDOMServer = require("react-dom/server")
 const { matchRoutes } = require("react-router-config")
+const { Helmet } = require("react-helmet")
 const initState = require('./initialState.js')
 
 class ServerRenderer {
@@ -56,8 +57,11 @@ class ServerRenderer {
   }
   
 _generateHTML(root, initialState) {    
+    let head = Helmet.renderStatic()
     return this.template    
-        .replace("<!--react-ssr-head-->", `<script type="text/javascript">window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}</script>`)
+        .replace(/<title>.*<\/title>/, `${head.title.toString()}`)
+        .replace("<!--react-ssr-head-->", 
+            `${head.meta.toString()}\n${head.link.toString()}<script type="text/javascript">window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}</script>`)
         .replace("<!--react-ssr-outlet-->", `<div id="app">${root}</div>`)
     }
 }

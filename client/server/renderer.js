@@ -59,7 +59,7 @@ class ServerRenderer {
 _generateHTML(root, initialState) {    
     let head = Helmet.renderStatic()
     return this.template    
-        .replace(/<title>.*<\/title>/, `${head.title.toString()}`)
+        .replace(/<title>.*<\/title>/, '<title>Everest极客空间</title>')
         .replace("<!--react-ssr-head-->", 
             `${head.meta.toString()}\n${head.link.toString()}<script type="text/javascript">window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}</script>`)
         .replace("<!--react-ssr-outlet-->", `<div id="app">${root}</div>`)

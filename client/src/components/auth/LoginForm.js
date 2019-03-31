@@ -110,11 +110,13 @@ export class LoginForm extends Component {
                             <Form.Item>
                                 <Checkbox>记住密码</Checkbox>
                                 <a style={{float: 'right'}} href="">忘记密码</a>
+                            </Form.Item>
+                            <Form.Item>
                                 <Button type="primary" 
                                     htmlType="submit"
                                     disabled={this.hasErrors()} 
-                                    style={{width: '100%'}}>登录</Button>
-                                或者 <Link to="/register">现在注册!</Link>
+                                    style={{width: '30%'}}>登录</Button>
+                                <Link style={{float: 'right'}} to="/register">新注册</Link>
                             </Form.Item>
                         </Form>
                     </Col>

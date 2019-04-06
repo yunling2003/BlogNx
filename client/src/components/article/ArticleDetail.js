@@ -29,9 +29,9 @@ export class ArticleDetail extends Component {
                 <div>       
                     <Helmet>                
                         <title>Everest极客空间</title>    
-                        <meta name="keywords" content="极客空间" />
-                        <meta name="keywords" content="IT技术" />
-                        <meta name="keywords" content="前端开发, Frontend" />
+                        {article.tags.map(tag => {
+                            return <meta name="keywords" content={tag} />
+                        })}                        
                     </Helmet>         
                     <div styleName='main'>
                         <BackTop />

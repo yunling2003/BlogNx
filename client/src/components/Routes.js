@@ -6,6 +6,7 @@ import RegisterResult from './auth/RegisterResult'
 import ArticleList from './myblog/ArticleList'
 import PublishArticle from './myblog/PublishArticle'
 import EditArticle from './myblog/EditArticle'
+import Profile from './myblog/Profile'
 
 const Routes = [
     {
@@ -40,7 +41,11 @@ const Routes = [
     {
         path: '/myblog/article/edit/:id',
         component: EditArticle    
+    },
+    {
+        path: '/myblog/info/profile',
+        component: Profile
     }
-  ]
+]
   
   export default Routes

@@ -1,4 +1,5 @@
 const Article = require('../models/article.model.js')
+const User = require('../models/user.model.js')
 const multer = require('multer')
 const path = require('path')
 const configKeys = require('../constkeys.js')
@@ -87,6 +88,50 @@ exports.deleteArticle = (req, res) => {
         res.status(500).send({
             status: 'fail',
             message: err.message || 'Error occurs when delete article'
+        })
+    })
+}
+
+exports.getProfile = (req, res) => {
+    const user = req.query.uid
+    User.findOne({ userName: user }).then(user => {
+        res.send({ user })
+    }).catch(err => {
+        res.status(500).send({
+            status: 'fail',
+            message: err.message || 'Error occurs when get profile'
+        })
+    })
+}
+
+exports.saveProfile = (req, res) => {
+    const profileObj = req.body.profile
+    User.findOne({ userName: profileObj.user }).then(user => {
+        if(user) {
+            user.email = profileObj.email
+            user.chineseName = profileObj.chineseName
+            user.mobilePhone = profileObj.mobilePhone
+            user.save().then(result => {
+                res.send({
+                    status: 'success'
+                })
+            }).catch(err => {
+                console.log(err)
+                res.status(500).send({
+                    status: 'fail',
+                    message: err.message || 'Error occurs when save user profile'
+                })
+            })
+        } else {
+            res.status(500).send({
+                status: 'fail',
+                message: 'User does not exists'                
+            })
+        }
+    }).catch(err => {
+        res.status(500).send({
+            status: 'fail',
+            message: err.message || 'Error occurs when save profile'
         })
     })
 }

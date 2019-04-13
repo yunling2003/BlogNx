@@ -9,6 +9,10 @@ const { SubMenu } = Menu
 class LeftMenu extends Component {
     handleClick = (e) => {
         switch(e.key) {
+            case 'info_profile':
+                this.props.history.push('/myblog/info/profile')
+                this.props.selectMenu('info_profile')
+                break
             case 'article_list':
                 this.props.history.push('/myblog/article/list')
                 this.props.selectMenu('article_list')

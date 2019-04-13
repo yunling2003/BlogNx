@@ -172,7 +172,12 @@ export class RegisterForm extends Component {
                     )}
                 </FormItem>
                 <FormItem {...formItemLayout} label='手机号码'>
-                    {getFieldDecorator('phone')(
+                    {getFieldDecorator('phone', {
+                        rules: [
+                            { pattern: /^[0-9]+$/, message: '手机必须由数字组成!' },
+                            { required: true, message: '请输入你的手机号码!' }
+                        ]
+                    })(
                         <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                     )}
                 </FormItem>

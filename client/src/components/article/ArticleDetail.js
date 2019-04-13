@@ -29,8 +29,8 @@ export class ArticleDetail extends Component {
                 <div>       
                     <Helmet>                
                         <title>Everest极客空间</title>    
-                        {article.tags.map(tag => {
-                            return <meta name="keywords" content={tag} />
+                        {article.tags.map((tag, key) => {
+                            return <meta key={key} name="keywords" content={tag} />
                         })}                        
                     </Helmet>         
                     <div styleName='main'>
@@ -47,10 +47,10 @@ export class ArticleDetail extends Component {
                                 <div styleName='subTitle'>
                                     <div styleName='subItem'>{dayjs(article.publishDate).locale('zh-cn').format('YYYY-MMM-DD')}</div>
                                     <div styleName='subItem'>{article.author}</div>                                             
-                                    {article.tags.map((tag, index) => {
+                                    {article.tags.map((tag, key) => {
                                         const isLongTag = tag.length > 10
                                         const tagElem = (
-                                            <Tag key={tag} color="#108ee9" style={{fontSize: '9px', borderRadius: '5px'}} closable={false}>
+                                            <Tag key={key} color="#108ee9" style={{fontSize: '9px', borderRadius: '5px'}} closable={false}>
                                                 {isLongTag ? `${tag.slice(0, 10)}...` : tag}                   
                                             </Tag>
                                         )

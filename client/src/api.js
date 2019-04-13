@@ -38,6 +38,29 @@ export function getArticleById(articleId) {
     })
 }
 
+export function getProfile(credentials) {
+    return http.get('/myblog/profile', {
+        params: {
+            uid: credentials.uid,
+            sign: crypt.genSha256Sign(credentials.uid + credentials.token),            
+        }
+    })
+}
+
+export function saveProfile(profileObj, credentials) {
+    return http({
+        method: 'post',
+        url: '/myblog/profile/save',
+        params: {
+            uid: credentials.uid,
+            sign: crypt.genSha256Sign(credentials.uid + credentials.token)
+        },
+        data: {
+            profile: profileObj
+        }
+    })
+}
+
 export function getMyPublishedArticles(credentials) {
     return http.get('/myblog/articles', {
         params: {

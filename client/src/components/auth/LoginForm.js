@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { signIn, clearError } from '../../actions/auth'
+import { selectMenu } from '../../actions/myblog'
 import { Form, Icon, Input, Button, Checkbox, Row, Col } from 'antd'
 
 function validateField(value, message) {
@@ -58,21 +59,22 @@ export class LoginForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        this.props.dispatch(signIn({
+        this.props.signIn({
             userName: this.state.userName,
             password: this.state.password
-        }))
+        })
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.currentUser.userName && nextProps.currentUser.userName !== this.props.currentUser.userName) {
+            this.props.selectMenu('article_list')
             this.props.history.push('/myblog/article/list')
         }
     }
 
     componentWillUnmount() {
         if(this.props.currentUser.logInMessage) {
-            this.props.dispatch(clearError())
+            this.props.clearError()
         }        
     }
 
@@ -144,4 +146,15 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(withRouter(LoginForm))
+function mapDispatchToProps(dispatch) {
+    return {
+        selectMenu: (menu) => dispatch(selectMenu(menu)),
+        signIn: (signInObj) => dispatch(signIn(signInObj)),
+        clearError: () => dispatch(clearError())
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withRouter(LoginForm))

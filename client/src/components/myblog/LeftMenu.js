@@ -13,6 +13,10 @@ class LeftMenu extends Component {
                 this.props.history.push('/myblog/info/profile')
                 this.props.selectMenu('info_profile')
                 break
+            case 'info_portrait':
+                this.props.history.push('/myblog/info/portrait')
+                this.props.selectMenu('info_portrait')
+                break
             case 'article_list':
                 this.props.history.push('/myblog/article/list')
                 this.props.selectMenu('article_list')
@@ -36,7 +40,8 @@ class LeftMenu extends Component {
                 onClick={this.handleClick}
                 style={{ height: '100%', borderRight: 0 }}>
                 <SubMenu key="info" title={<span><Icon type="profile" />基本信息</span>}>
-                    <Menu.Item key="info_profile">个人档案</Menu.Item>                                    
+                    <Menu.Item key="info_profile">个人档案</Menu.Item>  
+                    <Menu.Item key="info_portrait">头像设置</Menu.Item>                                  
                 </SubMenu>
                 <SubMenu key="article" title={<span><Icon type="laptop" />博文管理</span>}>
                     <Menu.Item key="article_list">我的发布</Menu.Item>

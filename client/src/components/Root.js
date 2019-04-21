@@ -10,6 +10,7 @@ import ArticleList from './myblog/ArticleList'
 import PublishArticle from './myblog/PublishArticle'
 import EditArticle from './myblog/EditArticle'
 import Profile from './myblog/Profile'
+import Portrait from './myblog/Portrait'
 import { ArticleListLayout, LoginLayout, MyBlogLayout } from './Layout'
 
 class Root extends Component {    
@@ -25,6 +26,7 @@ class Root extends Component {
                 <MyBlogLayout path="/myblog/article/publish" component={requireAuth(PublishArticle)} />
                 <MyBlogLayout path="/myblog/article/edit/:id" component={requireAuth(EditArticle)} />
                 <MyBlogLayout path='/myblog/info/profile' component={requireAuth(Profile)} />
+                <MyBlogLayout path='/myblog/info/portrait' component={requireAuth(Portrait)} />
             </Switch>                
         )
     }

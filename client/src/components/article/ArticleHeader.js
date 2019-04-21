@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Menu, Popover, Icon, Row, Col } from 'antd'
 import { signOut } from '../../actions/auth'
+import { selectMenu } from '../../actions/myblog'
 import throttle from 'lodash.throttle'
 import CSSModules from 'react-css-modules'
 import styles from './ArticleHeader.css'
@@ -67,6 +68,7 @@ class ArticleHeader extends Component {
         switch(e.key) {
             case '.$myblog':
                 this.props.history.push('/myblog/article/list')
+                this.props.selectMenu('article_list')
                 break
             case '.$logout':
                 this.props.signOut()
@@ -207,7 +209,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        signOut: () => dispatch(signOut())
+        signOut: () => dispatch(signOut()),
+        selectMenu: (menu) => dispatch(selectMenu(menu))
     }
 }
 

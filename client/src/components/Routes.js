@@ -7,6 +7,7 @@ import ArticleList from './myblog/ArticleList'
 import PublishArticle from './myblog/PublishArticle'
 import EditArticle from './myblog/EditArticle'
 import Profile from './myblog/Profile'
+import Portrait from './myblog/Portrait'
 
 const Routes = [
     {
@@ -45,6 +46,10 @@ const Routes = [
     {
         path: '/myblog/info/profile',
         component: Profile
+    },
+    {
+        path: '/myblog/info/portrait',
+        component: Portrait
     }
 ]
   

@@ -7,7 +7,8 @@ const UserSchema = mongoose.Schema({
     salt: String,
     token: String,
     chineseName: String,
-    mobilePhone: String
+    mobilePhone: String,
+    portrait: String
 }, {
     timestamps: true
 })

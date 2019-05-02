@@ -10,5 +10,6 @@ router.post('/article/publish', auth.authenticate, myBlog.publishArticle)
 router.post('/article/edit', auth.authenticate, myBlog.editArticle)
 router.post('/article/delete', auth.authenticate, myBlog.deleteArticle)
 router.post('/article/uploadImage', myBlog.uploadImage)
+router.post('/info/uploadPortrait', myBlog.uploadPortrait)
 
 module.exports = router

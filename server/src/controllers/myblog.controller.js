@@ -136,7 +136,7 @@ exports.saveProfile = (req, res) => {
     })
 }
 
-const storage = multer.diskStorage({
+const imageStorage = multer.diskStorage({
     destination: function (req, file, cb) {      
       cb(null, path.join(__dirname, "../../resource/image"))
     },
@@ -145,10 +145,10 @@ const storage = multer.diskStorage({
     }
   })
 
-const upload = multer({ storage : storage}).single('file')
+const saveImage = multer({ storage : imageStorage }).single('file')
 
 exports.uploadImage = (req, res) => {
-    upload(req, res, function(err) {
+    saveImage(req, res, function(err) {
         if(err) {
             console.error(err)
             res.status(500).send('upload image failed!')            
@@ -161,4 +161,42 @@ exports.uploadImage = (req, res) => {
             })
         }        
     })        
+}
+
+const portraitStorage = multer.diskStorage({
+    destination: function (req, file, cb) {      
+        cb(null, path.join(__dirname, "../../resource/portrait"))
+    },
+    filename: function (req, file, cb) {
+        cb(null, req.query.user + '.jpg')
+    }
+})
+
+const savePortrait = multer({ storage: portraitStorage }).single('file')
+
+exports.uploadPortrait = (req, res) => {        
+    savePortrait(req, res, function(err) {
+        if(err) {
+            console.error(err)
+            res.status(500).send('upload portrait failed!')            
+        } else {
+            let imgFile = req.file
+            let imgUrl = `${configKeys.url}/portrait/${imgFile.filename}`
+            User.findOne({ userName: req.query.user }).then(user => {
+                if(user) {
+                    user.portrait = imgUrl
+                    return user.save()
+                }             
+            }).then(result => {
+                res.send({                    
+                    status: 'success'                    
+                })
+            }).catch(err => {
+                res.status(500).send({
+                    status: 'fail',
+                    message: err.message || 'Error occurs when upload portrait'
+                })
+            })
+        }        
+    })
 }

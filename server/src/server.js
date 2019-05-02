@@ -35,6 +35,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/image', express.static(path.join(__dirname, "../resource/image")))
+app.use('/api/portrait', express.static(path.join(__dirname, "../resource/portrait")))
 app.use('/api/article', article)
 app.use('/api/auth', authentication)
 app.use('/api/myblog', myblog)

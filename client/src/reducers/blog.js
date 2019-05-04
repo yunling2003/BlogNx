@@ -13,7 +13,8 @@ import { BEGIN_SIGNIN,
     SIGNIN_ERROR, 
     CLEAR_ERROR,
     REFRESH_TOKEN,
-    SIGN_OUT } from '../actions/auth'
+    SIGN_OUT,
+    SET_PORTRAIT } from '../actions/auth'
 import { ARTICLE_FETCH_BEGIN,
     ARTICLE_FETCH_REQUESTED,
     ARTICLE_FETCH_END,
@@ -149,7 +150,8 @@ export function currentUser(state = {}, action) {
             newState = Object.assign({}, state, {
                 isLoggingIn: false,
                 userName: action.userName,
-                token: action.token
+                token: action.token,
+                profile: action.profile
             })
             break
         case SIGNIN_ERROR:
@@ -167,7 +169,17 @@ export function currentUser(state = {}, action) {
             newState = Object.assign({}, state, {
                 userName: null,
                 token: null,
-                logInMessage: ''
+                logInMessage: '',
+                profile: {
+                    portrait: null
+                }
+            })
+            break
+        case SET_PORTRAIT:
+            newState = Object.assign({}, state, {
+                profile: {
+                    portrait: action.url
+                }
             })
             break
         case REFRESH_TOKEN:

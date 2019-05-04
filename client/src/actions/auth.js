@@ -6,6 +6,7 @@ export const SIGNIN_ERROR = 'SIGNIN_ERROR'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 export const SIGN_OUT = 'SIGN_OUT'
 export const REFRESH_TOKEN = 'REFRESH_TOKEN'
+export const SET_PORTRAIT = 'SET_PORTRAIT'
 
 export function refreshToken(token) {
     return {
@@ -24,7 +25,8 @@ export function signInSuccess(loginObj) {
     return {
         type: SIGNIN_SUCCESS,
         userName: loginObj.userName,
-        token: loginObj.token
+        token: loginObj.token,
+        profile: loginObj.profile
     }
 }
 
@@ -58,7 +60,8 @@ function signInUser(loginObj) {
             if(res.data.code === 'success') {
                 dispatch(signInSuccess({
                     userName: userName.value,
-                    token: res.data.authToken
+                    token: res.data.authToken,
+                    profile: res.data.profile
                 }))
             }
             if(res.data.code === 'error') {
@@ -77,5 +80,12 @@ function signInUser(loginObj) {
 export function signIn(loginObj) {
     return dispatch => {
         return dispatch(signInUser(loginObj))
+    }
+}
+
+export function setPortrait(url) {
+    return {
+        type: SET_PORTRAIT,
+        url
     }
 }

@@ -2,7 +2,10 @@ const currentUserDefault = {
     userName: null,
     isLoggingIn: false,
     logInMessage: null,
-    token: null
+    token: null,
+    profile: {
+        portrait: null
+    }
 }
 
 const articleFiltersDefault = {

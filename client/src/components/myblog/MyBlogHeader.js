@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Menu, Icon, Row, Col } from 'antd'
+import { Menu, Icon, Row, Col, Avatar } from 'antd'
 import { signOut } from '../../actions/auth'
 import CSSModules from 'react-css-modules'
 import styles from './MyBlogHeader.css'
@@ -39,7 +39,10 @@ class MyBlogHeader extends Component {
                                     <Icon type="home" />首页
                                 </Menu.Item>                                                          
                                 <Menu.Item key="welcome" style={{ padding: '0 5px', borderBottom: '0' }}>
-                                    <Icon type="user" />{ user.userName }
+                                    {user.profile.portrait != null ?
+                                        <Avatar size="small" src={user.profile.portrait} />
+                                        : <Avatar size="small">U</Avatar>
+                                    } { user.userName }                                  
                                 </Menu.Item>
                                 <Menu.Item key="logout" style={{ padding: '0 5px', borderBottom: '0' }}>
                                     <Icon type="logout" />注销

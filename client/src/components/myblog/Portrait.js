@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Upload, Icon, Modal, message } from 'antd'
 import { API_URL } from '../../utils/http'
-import { refreshToken } from '../../actions/auth'
-import * as API from '../../api'
+import { refreshToken, setPortrait } from '../../actions/auth'
 
 class Portrait extends Component {
     state = {
@@ -42,7 +41,8 @@ class Portrait extends Component {
                 loading: true 
             })            
         }
-        if (file.status === 'done') {            
+        if (file.status === 'done') {
+            this.props.setPortrait(file.response.url)  
             this.setState({              
                 loading: false,
             })
@@ -60,28 +60,16 @@ class Portrait extends Component {
     }
 
     componentDidMount(){
-        API.getProfile({ 
-            uid: this.props.user.userName, 
-            token: this.props.user.token 
-        }).then(res => {
-            if(res) {
-                this.props.refreshToken(res.headers.authtoken)
-                if(res.data && res.data.user) {     
-                    if(res.data.user.portrait) {
-                        this.setState({
-                            imgList: [{
-                                uid: res.data.user.userName,
-                                name: `${res.data.user.userName}_portrait`,
-                                status: 'done',
-                                url: res.data.user.portrait
-                            }]
-                        })
-                    }                                   
-                }                
-            }
-        }).catch(err => {
-            console.log(err)
-        })
+        if(this.props.user.profile.portrait != null) {
+            this.setState({
+                imgList: [{
+                    uid: this.props.user.userName,
+                    name: `${this.props.user.userName}_portrait`,
+                    status: 'done',
+                    url: this.props.user.profile.portrait
+                }]
+            })        
+        }        
     }
 
     render(){
@@ -126,7 +114,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        refreshToken: (token) => dispatch(refreshToken(token))        
+        refreshToken: (token) => dispatch(refreshToken(token)),
+        setPortrait: (url) => dispatch(setPortrait(url))    
     }
 }
 

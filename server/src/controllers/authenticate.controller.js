@@ -23,7 +23,10 @@ exports.signIn = (req, res) => {
             user.save().then(user => {
                 res.status(200).send({ 
                     code: 'success',
-                    authToken: user.token 
+                    authToken: user.token,
+                    profile: {
+                        portrait: user.portrait
+                    }
                 })
             })            
         } else {

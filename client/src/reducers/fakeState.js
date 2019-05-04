@@ -3,7 +3,10 @@ export const fakeState = {
         userName: 'ling',
         isLoggingIn: false,
         logInMessage: '',
-        token: 'cxrliwe.23dvsk.23sflkf'
+        token: 'cxrliwe.23dvsk.23sflkf',
+        profile: {
+            portrait: null
+        }
     },
     articleFilters: {
         page: 0,

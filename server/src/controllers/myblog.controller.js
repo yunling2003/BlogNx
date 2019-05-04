@@ -181,7 +181,7 @@ exports.uploadPortrait = (req, res) => {
             res.status(500).send('upload portrait failed!')            
         } else {
             let imgFile = req.file
-            let imgUrl = `${configKeys.url}/portrait/${imgFile.filename}`
+            let imgUrl = `${configKeys.url}/portrait/${imgFile.filename}?t=${Date.now()}`
             User.findOne({ userName: req.query.user }).then(user => {
                 if(user) {
                     user.portrait = imgUrl
@@ -189,7 +189,8 @@ exports.uploadPortrait = (req, res) => {
                 }             
             }).then(result => {
                 res.send({                    
-                    status: 'success'                    
+                    status: 'success',
+                    url: imgUrl                    
                 })
             }).catch(err => {
                 res.status(500).send({

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Menu, Popover, Icon, Row, Col } from 'antd'
+import { Menu, Popover, Icon, Row, Col, Avatar } from 'antd'
 import { signOut } from '../../actions/auth'
 import { selectMenu } from '../../actions/myblog'
 import throttle from 'lodash.throttle'
@@ -105,7 +105,10 @@ class ArticleHeader extends Component {
                             <Col span={6}>
                                 {currentUser.userName ? 
                                     <Popover placement="bottomRight" content={userArea}>
-                                        <Icon type="user" style={{ color: '#fff' }} />
+                                        {currentUser.profile.portrait != null ?
+                                            <Avatar size="small" src={currentUser.profile.portrait} />
+                                            : <Avatar size="small">U</Avatar>
+                                        }
                                         <span style={{ color: '#fff' }}>{ currentUser.userName }</span>
                                     </Popover>
                                     :  <Menu mode="horizontal" onClick={this.handleAuthClick}
@@ -178,7 +181,10 @@ class ArticleHeader extends Component {
                     <Col span={4}>
                         {currentUser.userName ?
                             <Popover placement="bottomRight" content={userArea}>
-                                <Icon type="user" style={{ color: '#fff' }} />
+                                {currentUser.profile.portrait != null ?
+                                    <Avatar size="small" src={currentUser.profile.portrait} />
+                                    : <Avatar size="small">U</Avatar>
+                                }
                                 <span style={{ color: '#fff' }}>{ currentUser.userName }</span>
                             </Popover> 
                             :   <Menu mode="horizontal" onClick={this.handleAuthClick}

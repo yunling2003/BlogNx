@@ -4,54 +4,59 @@ const signHelper = require('../utils/signHelper.js')
 const svgCaptcha = require('svg-captcha')
 
 exports.signOut = (req, res) => {
-
+    //todo: sign out logic
 }
 
 exports.signIn = (req, res) => {
     const userName = req.body.userName
     const password = req.body.password
-    User.findOne({ 'userName': userName }).then(user => {
+
+    User.findOne({ 'userName': userName })
+    .then(user => {
         if(user) {               
             if(user.password !== signHelper.genMd5Sign(password + user.salt)) {
-                res.status(403).send({
-                    code: 'error',
-                    message: 'Authentication failed'
-                })
-                return
+                throw 'User name or password not match'
             }            
             user.token = tokenHelper.createToken(user.userName)
-            user.save().then(user => {
-                res.status(200).send({ 
-                    code: 'success',
-                    authToken: user.token,
-                    profile: {
-                        portrait: user.portrait
-                    }
-                })
-            })            
+            return user.save()  
         } else {
-            res.status(401).send({
-                code: 'error',
-                message: 'Authenticate failed'
-            })
+            throw 'User name or password not match'
         }
+    }).then(user => {
+        res.send({ 
+            code: 'success',
+            authToken: user.token,
+            profile: {
+                portrait: user.portrait
+            }
+        })
     }).catch(err => {
-        res.status(500).send({
+        res.status(403).send({
             code: 'error',
-            message: err
+            message: err || 'Authenticate failed!'
         })
     })
 }
 
 exports.checkDuplicate = (req, res) => {
     const userName = req.query.userName
-    User.find({ 'userName': userName }).then(user => {
-        res.send({duplicate: user.length > 0 ? true : false})
+
+    User.find({ 'userName': userName })
+    .then(user => {
+        res.send({
+            duplicate: user.length > 0 ? true : false
+        })
+    }).catch(err => {
+        res.status(500).send({
+            code: 'error',
+            message: err || 'Error occurs when check duplicate'
+        })
     })
 }
 
 exports.register = (req, res) => {
-    const sVal = signHelper.genSalt()  
+    const sVal = signHelper.genSalt()
+
     new User({
         email: req.body.email,
         userName: req.body.userName,
@@ -60,7 +65,8 @@ exports.register = (req, res) => {
         token: '',
         chineseName: req.body.chineseName,
         mobilePhone: req.body.mobilePhone
-    }).save().then(user => {
+    }).save()
+    .then(user => {
         res.send({
             code: 'success',
             message: `User ${user.userName} saved`
@@ -68,7 +74,7 @@ exports.register = (req, res) => {
     }).catch(err => {
         res.status(500).send({
             code: 'error',
-            message: err.message || 'Error occurs when register'
+            message: err || 'Error occurs when register'
         })
     })    
 }

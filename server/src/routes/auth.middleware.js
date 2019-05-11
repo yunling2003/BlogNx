@@ -5,29 +5,29 @@ const tokenHelper = require('../utils/tokenHelper.js')
 exports.authenticate = (req, res, next) => {
     const uid = req.query.uid || ''
     const sign = req.query.sign || ''
-    validateCredential(uid, sign).then(valid => {
+
+    validateCredential(uid, sign)
+    .then(valid => {
         if(valid) {
-            refreshToken(uid).then(token => {
-                res.header('AuthToken', token)
-                next()
-            })
+            return refreshToken(uid)
         } else {
-            res.status(401).send({
-                code: 'error',
-                message: 'Authentication failed'
-            })
+            throw 'Credential invalid'            
         }
+    }).then(token => {
+        res.header('AuthToken', token)
+        next()
     }).catch(err => {
         res.status(401).send({
             code: 'error',
-            message: err
+            message: err || 'Validate failed!'
         })
     })        
 }    
 
 function validateCredential(uid, sign) {
     return new Promise(resolve => {
-        User.findOne({ 'userName': uid }).then(user => {
+        User.findOne({ 'userName': uid })
+        .then(user => {
             if(user) {                
                 if(sign === signHelper.genSha256Sign(uid + user.token)) {                    
                     if(tokenHelper.verifyToken(user.token).user === uid) {
@@ -50,16 +50,19 @@ function validateCredential(uid, sign) {
 
 function refreshToken(uid) {
     return new Promise((resolve, reject) => {
-        User.findOne({ 'userName': uid }).then(user => {
+        User.findOne({ 'userName': uid })
+        .then(user => {
             if(user) {
                 const token = tokenHelper.createToken(uid)
-                user.token = token
-                user.save().then(user => {
+                user.token = token                
+                user.save().then(result => {
                     resolve(token)
-                })                
+                })                  
             } else {                
-                reject('Authentication failed')
+                reject('User not exists')
             }
-        })
+        }).catch(err => {
+            reject(`Refresh token failed! ${err}`)            
+        })       
     })
 }

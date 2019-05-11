@@ -1,6 +1,7 @@
 mkdir -p /var/www/blogserver
 mkdir -p /var/www/blogserver/resource
 mkdir -p /var/www/blogserver/resource/image
+mkdir -p /var/www/blogserver/resource/portrait
 systemctl stop blogserver
 tar -xvzf /var/www/upload/blogserver/blog-server.tar.gz -C /var/www/blogserver
 chmod 755 /var/www/blogserver

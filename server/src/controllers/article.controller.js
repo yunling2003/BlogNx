@@ -21,36 +21,47 @@ exports.findAll = (req, res) => {
                             .limit(pageSize)
     const countPromise = Article.count()    
 
-    Promise.all([findPromise, countPromise]).then(result => {        
+    Promise.all([findPromise, countPromise])
+    .then(result => {        
         res.send({ 
             totalCount: result[1], 
             articles: result[0] 
         })
     }).catch(err => {
         res.status(500).send({
-            message: err.message || 'Error occurs when retrieving articles'
+            message: err || 'Error occurs when retrieving articles'
         })
     })
 }
 
 exports.findArticleById = (req, res) => {
     const articleId = req.query.id
+
     Article.findOne({ '_id': articleId }, 'title tags author content publishDate')
-        .then(result => {
-            res.send({
-                article: result
-            })
+    .then(article => {
+        res.send({
+            article
         })
+    }).catch(err => {
+        res.status(500).send({
+            message: err || 'Error occurs when find article'
+        })
+    })
 }
 
 exports.getCommentsCount = (req, res) => {
     const articleId = req.query.id
+
     Article.findOne({ '_id': articleId })
-        .then(result => {
-            res.send({
-                count: result.comments.length
-            })
+    .then(result => {
+        res.send({
+            count: result.comments.length
         })
+    }).catch(err => {
+        res.status(500).send({
+            message: err || 'Error occurs when get comments count'
+        })
+    })
 }
 
 exports.loadComments = (req, res) => {
@@ -58,18 +69,22 @@ exports.loadComments = (req, res) => {
     const pageNum = +req.query.page || 0    
     const pageSize = +req.query.pageSize || defaultCommentsPerPage
     Article.findOne({ '_id': articleId })
-        .populate({
-            path: 'comments',
-            options: { 
-                sort: { commentDate: -1 },
-                skip: pageNum * pageSize,
-                limit: pageSize 
-            }
-        }).then(result => {
-            res.send({
-                comments: result.comments
-            })
+    .populate({
+        path: 'comments',
+        options: { 
+            sort: { commentDate: -1 },
+            skip: pageNum * pageSize,
+            limit: pageSize 
+        }
+    }).then(result => {
+        res.send({
+            comments: result.comments
         })
+    }).catch(err => {
+        res.status(500).send({
+            message: err || 'Error occurs when load comments'
+        })
+    })
 }
 
 exports.createComment = (req, res) => {
@@ -80,21 +95,28 @@ exports.createComment = (req, res) => {
         commentDate: Date.now().toString()
     })
     
-    comment.save().then(newComment => {                
-        Article.findOne({'_id': newComment.article})
-            .then(a => {
-                a.comments.push(newComment._id)
-                a.save().then(result => {
-                    res.send({ 
-                        status: 'success'
-                    })
+    comment.save()
+    .then(newComment => {                
+        return new Promise(resolve => {
+            Article.findOne({'_id': newComment.article})
+            .then(article => {
+                resolve({
+                    article,
+                    newComment
                 })
             })
-    }).catch(err => {
-        console.error(err)
+        })
+    }).then(acObj => {
+        acObj.article.comments.push(acObj.newComment._id)
+        return acObj.article.save()
+    }).then(result => {
+        res.send({ 
+            status: 'success'
+        })
+    }).catch(err => {        
         res.status(500).send({
             status: 'fail',
-            message: err.message || 'Error occurs when create comment'
+            message: err || 'Error occurs when create comment'
         })
-    })
+    })    
 }

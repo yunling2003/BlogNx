@@ -9,18 +9,18 @@ exports.findAllArticles = (req, res) => {
     const sortCol = 'publishDate'
     const sortSeq = -1    
     const sortObj = JSON.parse("{ \"" + sortCol + "\": " + sortSeq + "}")
+
     Article.find({ author: uid }, 'title tags author content publishDate')
-            .sort(sortObj)
-            .then(articles => {        
-                res.send({             
-                    articles
-                })
-            }).catch(err => {
-                console.error(err)
-                res.status(500).send({
-                    message: err.message || 'Error occurs when retrieving articles'
-                })
-            })    
+    .sort(sortObj)
+    .then(articles => {        
+        res.send({             
+            articles
+        })
+    }).catch(err => {       
+        res.status(500).send({
+            message: err || 'Error occurs when retrieving articles'
+        })
+    })    
 }
 
 exports.publishArticle = (req, res) => {
@@ -36,102 +36,98 @@ exports.publishArticle = (req, res) => {
         selected: false
     })
 
-    article.save().then(result => {
+    article.save()
+    .then(result => {
         res.send({
             status: 'success'
         })
-    }).catch(err => {
-        console.error(err)
+    }).catch(err => {        
         res.status(500).send({
             status: 'fail',
-            message: err.message || 'Error occurs when pubilsh article'
+            message: err || 'Error occurs when pubilsh article'
         })
     })
 }
 
 exports.editArticle = (req, res) => {
     const articleObj = req.body.article
-    Article.findById({ _id: articleObj.id }).then(article => {
+    Article.findById({ _id: articleObj.id })
+    .then(article => {
         if(article) {
             article.title = articleObj.title
             article.tags = articleObj.tags
             article.content = articleObj.content
-            article.save().then(result => {
-                res.send({
-                    status: 'success'
-                })
-            }).catch(err => {
-                console.error(err)
-                res.status(500).send({
-                    status: 'fail',
-                    message: err.message || 'Error occurs when edit article'
-                })
-            })
+            return article.save()
         } else {
-            res.status(500).send({
-                status: 'fail',
-                message: 'Article does not exists'
-            })
+            throw 'Article does not exists'            
         }    
-    })    
+    }).then(result => {
+        res.send({
+            status: 'success'
+        })
+    }).catch(err => {
+        res.status(500).send({
+            status: 'fail',
+            message: err || 'Error occurs'
+        })
+    })  
 }
 
 exports.deleteArticle = (req, res) => {
     const id = req.body.id
-    Article.findById(id).then(article => {
-        article.remove().then(result => {
-            res.send({
-                status: 'success'
-            })
-        })        
+
+    Article.findById(id)
+    .then(article => {
+        return article.remove()
+    }).then(result => {
+        res.send({
+            status: 'success'
+        })
     }).catch(err => {
         res.status(500).send({
             status: 'fail',
-            message: err.message || 'Error occurs when delete article'
+            message: err || 'Error occurs when delete article'
         })
     })
 }
 
 exports.getProfile = (req, res) => {
     const user = req.query.uid
-    User.findOne({ userName: user }).then(user => {
-        res.send({ user })
+    
+    User.findOne({ userName: user })
+    .then(user => {
+        res.send({ 
+            user 
+        })
     }).catch(err => {
         res.status(500).send({
             status: 'fail',
-            message: err.message || 'Error occurs when get profile'
+            message: err || 'Error occurs when get profile'
         })
     })
 }
 
 exports.saveProfile = (req, res) => {
     const profileObj = req.body.profile
-    User.findOne({ userName: profileObj.user }).then(user => {
+
+    User.findOne({ userName: profileObj.user })
+    .then(user => {
         if(user) {
             user.email = profileObj.email
             user.chineseName = profileObj.chineseName
             user.mobilePhone = profileObj.mobilePhone
-            user.save().then(result => {
-                res.send({
-                    status: 'success'
-                })
-            }).catch(err => {
-                console.log(err)
-                res.status(500).send({
-                    status: 'fail',
-                    message: err.message || 'Error occurs when save user profile'
-                })
-            })
+            return user.save()
         } else {
-            res.status(500).send({
-                status: 'fail',
-                message: 'User does not exists'                
-            })
+            throw 'User does not exists'            
         }
+    }).then(result => {
+        res.send({
+            status: 'success'
+        })
     }).catch(err => {
         res.status(500).send({
             status: 'fail',
-            message: err.message || 'Error occurs when save profile'
+            message: err || 'Error occurs when save profile'
         })
     })
 }
@@ -182,10 +178,14 @@ exports.uploadPortrait = (req, res) => {
         } else {
             let imgFile = req.file
             let imgUrl = `${configKeys.url}/portrait/${imgFile.filename}?t=${Date.now()}`
-            User.findOne({ userName: req.query.user }).then(user => {
+
+            User.findOne({ userName: req.query.user })
+            .then(user => {
                 if(user) {
                     user.portrait = imgUrl
                     return user.save()
+                } else {
+                    throw 'User not exists'
                 }             
             }).then(result => {
                 res.send({                    
@@ -195,7 +195,7 @@ exports.uploadPortrait = (req, res) => {
             }).catch(err => {
                 res.status(500).send({
                     status: 'fail',
-                    message: err.message || 'Error occurs when upload portrait'
+                    message: err || 'Error occurs when upload portrait'
                 })
             })
         }        

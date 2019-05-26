@@ -4,34 +4,15 @@ import { withRouter } from 'react-router-dom'
 import { Menu, Popover, Icon, Row, Col, Avatar } from 'antd'
 import { signOut } from '../../actions/auth'
 import { selectMenu } from '../../actions/myblog'
-import throttle from 'lodash.throttle'
 import CSSModules from 'react-css-modules'
 import styles from './ArticleHeader.css'
 import logo from '../../../assets/images/logo.png'
 
-class ArticleHeader extends Component {    
-    mobileBreakPoint = 576
-    applyViewportChangeInterval = 250
-    state = {
-        viewportWidth: 0,
+class ArticleHeader extends Component {        
+    state = {        
         menuVisible: true
-    }  
-
-    componentDidMount() {
-        this.saveViewportDimensions()
-        window.addEventListener('resize', this.saveViewportDimensions)
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.saveViewportDimensions)
-    }
-
-    saveViewportDimensions = throttle(() => {
-        this.setState({
-          viewportWidth: window.innerWidth,
-        })
-      }, this.applyViewportChangeInterval)
-
+    }    
+    
     handleMenuVisibility = (visible) => {
         this.setState({            
             menuVisible: visible
@@ -92,46 +73,46 @@ class ArticleHeader extends Component {
                 </Menu.Item>                
             </Menu>
         )
-
-        if (this.state.viewportWidth <= this.mobileBreakPoint) {
-            return (
-                <div>
-                    <div styleName='layout'>
-                        <Row>
-                            <Col span={7} offset={1}>
-                                <img src={logo} width='45px' height='45px' alt='logo'/>
-                            </Col>
-                            <Col span={8}></Col>
-                            <Col span={6}>
-                                {currentUser.userName ? 
-                                    <Popover placement="bottomRight" content={userArea}>
-                                        {currentUser.profile.portrait != null ?
-                                            <Avatar size="small" src={currentUser.profile.portrait} />
-                                            : <Avatar size="small">U</Avatar>
-                                        }
-                                        <span style={{ color: '#fff' }}>{ currentUser.userName }</span>
-                                    </Popover>
-                                    :  <Menu mode="horizontal" onClick={this.handleAuthClick}
-                                        style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
-                                            <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0' }}>
-                                                登录
-                                            </Menu.Item>
-                                            <Menu.Item key="seperator" style={{ padding: '0', borderBottom: '0' }}>
-                                                |
-                                            </Menu.Item>
-                                            <Menu.Item key="register" style={{ padding: '0 5px', borderBottom: '0' }}>
-                                                注册
-                                            </Menu.Item>
-                                        </Menu>
-                                }                                
-                            </Col>
-                            <Col span={2}>
-                                <Icon style={{ fontSize: '25px', cursor: 'pointer', color: 'white', verticalAlign: 'middle' }} 
-                                    onClick={() => this.handleMenuVisibility(!this.state.menuVisible)}
-                                    type="bars" />
-                            </Col>
-                        </Row>
-                    </div>
+        
+        return (
+            <div>                    
+                <div styleName='layout layout-small'>
+                    <Row>
+                        <Col span={7} offset={1}>
+                            <img src={logo} width='45px' height='45px' alt='logo'/>
+                        </Col>
+                        <Col span={8}></Col>
+                        <Col span={6}>
+                            {currentUser.userName ? 
+                                <Popover placement="bottomRight" content={userArea}>
+                                    {currentUser.profile.portrait != null ?
+                                        <Avatar size="small" src={currentUser.profile.portrait} />
+                                        : <Avatar size="small">U</Avatar>
+                                    }
+                                    <span style={{ color: '#fff' }}>{ currentUser.userName }</span>
+                                </Popover>
+                                :  <Menu mode="horizontal" onClick={this.handleAuthClick}
+                                    style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
+                                        <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0' }}>
+                                            登录
+                                        </Menu.Item>
+                                        <Menu.Item key="seperator" style={{ padding: '0', borderBottom: '0' }}>
+                                            |
+                                        </Menu.Item>
+                                        <Menu.Item key="register" style={{ padding: '0 5px', borderBottom: '0' }}>
+                                            注册
+                                        </Menu.Item>
+                                    </Menu>
+                            }                                
+                        </Col>
+                        <Col span={2}>
+                            <Icon style={{ fontSize: '25px', cursor: 'pointer', color: 'white', verticalAlign: 'middle' }} 
+                                onClick={() => this.handleMenuVisibility(!this.state.menuVisible)}
+                                type="bars" />
+                        </Col>
+                    </Row>
+                </div>
+                <div styleName='layout-small'>
                     <div styleName={this.state.menuVisible ? 'visible' : 'hide'}>
                         <Row>
                             <Col span={24}>
@@ -151,59 +132,56 @@ class ArticleHeader extends Component {
                                 </Menu>
                             </Col>
                         </Row>
-                    </div>
-                </div>
-            )
-        }
-
-        return (
-            <div styleName='layout'>
-                <Row>
-                    <Col span={5} offset={1}>
-                        <img src={logo} width='45px' height='45px' alt='logo'/>
-                    </Col>
-                    <Col span={14}>
-                        <Menu mode="horizontal" 
-                            defaultSelectedKeys={['home']} 
-                            onClick={this.handleMenuClick}
-                            style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
-                            <Menu.Item key="home" style={{ padding: '0 10px', borderBottom: '0' }}>
-                                <Icon type="home" />首页
-                            </Menu.Item>
-                            <Menu.Item key="recommend" style={{ padding: '0 10px', borderBottom: '0' }}>
-                                <Icon type="star-o" />推荐
-                            </Menu.Item>
-                            <Menu.Item key="github" style={{ padding: '0 10px', borderBottom: '0' }}>                                
-                                <Icon type="github" />GitHub                                
-                            </Menu.Item>                            
-                        </Menu>
-                    </Col>
-                    <Col span={4}>
-                        {currentUser.userName ?
-                            <Popover placement="bottomRight" content={userArea}>
-                                {currentUser.profile.portrait != null ?
-                                    <Avatar size="small" src={currentUser.profile.portrait} />
-                                    : <Avatar size="small">U</Avatar>
-                                }
-                                <span style={{ color: '#fff' }}>{ currentUser.userName }</span>
-                            </Popover> 
-                            :   <Menu mode="horizontal" onClick={this.handleAuthClick}
-                                    style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
-                                    <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0' }}>
-                                        登录
-                                    </Menu.Item>
-                                    <Menu.Item key="seperator" style={{ padding: '0', borderBottom: '0' }}>
-                                        |
-                                    </Menu.Item>
-                                    <Menu.Item key="register" style={{ padding: '0 5px', borderBottom: '0' }}>
-                                        注册
-                                    </Menu.Item>
-                                </Menu>
-                        }                        
-                    </Col>
-                </Row>
-            </div>
-        )
+                    </div>                    
+                </div>                    
+                <div styleName='layout layout-large'>
+                    <Row>
+                        <Col span={5} offset={1}>
+                            <img src={logo} width='45px' height='45px' alt='logo'/>
+                        </Col>
+                        <Col span={14}>
+                            <Menu mode="horizontal" 
+                                defaultSelectedKeys={['home']} 
+                                onClick={this.handleMenuClick}
+                                style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
+                                <Menu.Item key="home" style={{ padding: '0 10px', borderBottom: '0' }}>
+                                    <Icon type="home" />首页
+                                </Menu.Item>
+                                <Menu.Item key="recommend" style={{ padding: '0 10px', borderBottom: '0' }}>
+                                    <Icon type="star-o" />推荐
+                                </Menu.Item>
+                                <Menu.Item key="github" style={{ padding: '0 10px', borderBottom: '0' }}>                                
+                                    <Icon type="github" />GitHub                                
+                                </Menu.Item>                            
+                            </Menu>
+                        </Col>
+                        <Col span={4}>
+                            {currentUser.userName ?
+                                <Popover placement="bottomRight" content={userArea}>
+                                    {currentUser.profile.portrait != null ?
+                                        <Avatar size="small" src={currentUser.profile.portrait} />
+                                        : <Avatar size="small">U</Avatar>
+                                    }
+                                    <span style={{ color: '#fff' }}>{ currentUser.userName }</span>
+                                </Popover> 
+                                :   <Menu mode="horizontal" onClick={this.handleAuthClick}
+                                        style={{ lineHeight: '64px', backgroundColor: '#1890ff', color: '#fff', border: '1px' }}>
+                                        <Menu.Item key="login" style={{ padding: '0 5px', borderBottom: '0' }}>
+                                            登录
+                                        </Menu.Item>
+                                        <Menu.Item key="seperator" style={{ padding: '0', borderBottom: '0' }}>
+                                            |
+                                        </Menu.Item>
+                                        <Menu.Item key="register" style={{ padding: '0 5px', borderBottom: '0' }}>
+                                            注册
+                                        </Menu.Item>
+                                    </Menu>
+                            }                        
+                        </Col>
+                    </Row>
+                </div>                    
+            </div>                
+        )                
     }
 }
 
@@ -223,4 +201,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withRouter(CSSModules(ArticleHeader, styles)))
+)(withRouter(CSSModules(ArticleHeader, styles, { allowMultiple: true })))

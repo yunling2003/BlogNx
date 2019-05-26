@@ -14,3 +14,20 @@
 .hide {
     display: none;
 }
+
+.layout-small {
+    display: none;
+}
+
+.layout-large {
+    display: block;
+}
+
+@media (max-width: 576px) {
+    .layout-small {
+        display: block;
+    }
+    .layout-large {
+        display: none
+    }
+}

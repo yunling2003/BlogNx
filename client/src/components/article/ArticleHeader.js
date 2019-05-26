@@ -9,6 +9,7 @@ import styles from './ArticleHeader.css'
 import logo from '../../../assets/images/logo.png'
 
 class ArticleHeader extends Component {        
+    keyRegEx = /^\..*\$(.*)/gi
     state = {        
         menuVisible: true
     }    
@@ -20,44 +21,53 @@ class ArticleHeader extends Component {
     }    
 
     handleAuthClick = (e) => {
-        switch(e.key) {
-            case '.$login':
-                this.props.history.push('/login')
-                break
-            case '.$register':
-                this.props.history.push('/register')
-                break
-            default:
-                return
-        }        
+        let isMatch = this.keyRegEx.test(e.key)
+        if(isMatch) {
+            switch(RegExp.$1) {
+                case 'login':
+                    this.props.history.push('/login')
+                    break
+                case 'register':
+                    this.props.history.push('/register')
+                    break
+                default:
+                    return
+            }  
+        }              
     }
 
     handleMenuClick = (e) => {
-        switch(e.key) {
-            case '.$home':
-                this.props.history.push('/')
-                break      
-            case '.$github':
-                window.location.href = 'https://github.com/yunling2003/BlogNx'
-                break      
-            default:
-                return
-        }
+        let isMatch = this.keyRegEx.test(e.key)
+        if(isMatch) {
+            switch(RegExp.$1) {
+                case 'home':
+                    this.props.history.push('/')
+                    break      
+                case 'github':
+                    window.location.href = 'https://github.com/yunling2003/BlogNx'
+                    break      
+                default:
+                    return
+            }
+        }        
     }
 
     handleUserAreaClick = (e) => {
-        switch(e.key) {
-            case '.$myblog':
-                this.props.history.push('/myblog/article/list')
-                this.props.selectMenu('article_list')
-                break
-            case '.$logout':
-                this.props.signOut()
-                this.props.history.push('/login')
-                break
-            default:
-                return
-        }
+        let isMatch = this.keyRegEx.test(e.key)
+        if(isMatch) {
+            switch(RegExp.$1) {
+                case 'myblog':
+                    this.props.history.push('/myblog/article/list')
+                    this.props.selectMenu('article_list')
+                    break
+                case 'logout':
+                    this.props.signOut()
+                    this.props.history.push('/login')
+                    break
+                default:
+                    return
+            }
+        }        
     }
 
     render() {
